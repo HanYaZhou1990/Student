@@ -10,7 +10,6 @@
 		CFB7BB9D1A713BC000535476 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB7BB9C1A713BC000535476 /* main.m */; };
 		CFB7BBA01A713BC000535476 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB7BB9F1A713BC000535476 /* AppDelegate.m */; };
 		CFB7BBA31A713BC100535476 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB7BBA21A713BC100535476 /* ViewController.m */; };
-		CFB7BBA61A713BC100535476 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFB7BBA41A713BC100535476 /* Main.storyboard */; };
 		CFB7BBA81A713BC100535476 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFB7BBA71A713BC100535476 /* Images.xcassets */; };
 		CFB7BBAB1A713BC100535476 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFB7BBA91A713BC100535476 /* LaunchScreen.xib */; };
 		CFB7BBB71A713BC100535476 /* StudentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB7BBB61A713BC100535476 /* StudentTests.m */; };
@@ -34,7 +33,6 @@
 		CFB7BB9F1A713BC000535476 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CFB7BBA11A713BC000535476 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		CFB7BBA21A713BC100535476 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		CFB7BBA51A713BC100535476 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CFB7BBA71A713BC100535476 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CFB7BBAA1A713BC100535476 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		CFB7BBB01A713BC100535476 /* StudentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,7 +83,6 @@
 				CFB7BB9F1A713BC000535476 /* AppDelegate.m */,
 				CFB7BBA11A713BC000535476 /* ViewController.h */,
 				CFB7BBA21A713BC100535476 /* ViewController.m */,
-				CFB7BBA41A713BC100535476 /* Main.storyboard */,
 				CFB7BBA71A713BC100535476 /* Images.xcassets */,
 				CFB7BBA91A713BC100535476 /* LaunchScreen.xib */,
 				CFB7BB9A1A713BC000535476 /* Supporting Files */,
@@ -199,7 +196,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFB7BBA61A713BC100535476 /* Main.storyboard in Resources */,
 				CFB7BBAB1A713BC100535476 /* LaunchScreen.xib in Resources */,
 				CFB7BBA81A713BC100535476 /* Images.xcassets in Resources */,
 			);
@@ -244,14 +240,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		CFB7BBA41A713BC100535476 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CFB7BBA51A713BC100535476 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CFB7BBA91A713BC100535476 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -344,6 +332,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Student/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -354,6 +343,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Student/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -412,6 +402,7 @@
 				CFB7BBBC1A713BC100535476 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CFB7BBBD1A713BC100535476 /* Build configuration list for PBXNativeTarget "StudentTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +411,7 @@
 				CFB7BBBF1A713BC100535476 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
