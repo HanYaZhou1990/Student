@@ -19,10 +19,25 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES]; //偏移
+    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xF0F0F0)];//设置导航栏背景颜色
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    if (IOS7)
+        {
+            //标题颜色
+        
+        [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:166.0/255.0 green:166.0/255.0 blue:166.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+                                                               nil, NSShadowAttributeName,
+                                                               [UIFont systemFontOfSize:10], NSFontAttributeName, nil]];
+        }
     
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[ViewController new]];
-    self.window.rootViewController = nav;
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    RootBarViewController *rootViewController = [[RootBarViewController alloc] init];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    controller.navigationBarHidden = YES;
+    self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
     
     return YES;
