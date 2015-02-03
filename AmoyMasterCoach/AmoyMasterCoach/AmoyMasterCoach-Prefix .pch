@@ -1,0 +1,21 @@
+//
+//  AmoyMasterCoach-Prefix .pch
+//  AmoyMasterCoach
+//
+//  Created by julong on 15/2/3.
+//  Copyright (c) 2015年 renbing. All rights reserved.
+//
+
+#ifndef __IPHONE_4_0
+//#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "Define.h"
+#import "PublicConfig.h"
+#import "MBProgressHUD.h"
+#import "SVProgressHUD.h"
+
+#endif

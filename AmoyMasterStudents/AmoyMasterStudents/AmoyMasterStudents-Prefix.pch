@@ -1,0 +1,29 @@
+//
+//  AmoyMasterStudents-Prefix.pch
+//  AmoyMasterStudents
+//
+//  Created by julong on 15/2/3.
+//  Copyright (c) 2015年 renbing. All rights reserved.
+//
+
+#ifndef AmoyMasterStudents_AmoyMasterStudents_Prefix_pch
+#define AmoyMasterStudents_AmoyMasterStudents_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif
+
+#ifndef __IPHONE_4_0
+//#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "Define.h"
+#import "PublicConfig.h"
+#import "MBProgressHUD.h"
+#import "SVProgressHUD.h"
+
+#endif
