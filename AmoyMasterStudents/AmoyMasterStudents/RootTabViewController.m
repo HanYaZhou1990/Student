@@ -29,22 +29,22 @@
 {
     NSMutableArray *viewControllers = [[NSMutableArray alloc]init];
     
-    /**/
+    /*学车知识*/
     KnowledgeViewController *knowledgeVC = [[KnowledgeViewController alloc]init];
     UINavigationController *knowledgeNav = [[UINavigationController alloc]initWithRootViewController:knowledgeVC];
     [viewControllers addObject:knowledgeNav];
     
-    /**/
+    /*教练广场*/
     CoachViewController *coachVC = [[CoachViewController alloc]init];
     UINavigationController *coachNav = [[UINavigationController alloc]initWithRootViewController:coachVC];
     [viewControllers addObject:coachNav];
     
-    /**/
+    /*学车进程*/
     ProcessViewController *processVC = [[ProcessViewController alloc]init];
     UINavigationController *processNav = [[UINavigationController alloc]initWithRootViewController:processVC];
     [viewControllers addObject:processNav];
     
-    /**/
+    /*个人中心*/
     MemberCenterViewController *memberVC = [[MemberCenterViewController alloc]init];
     UINavigationController *memberNav = [[UINavigationController alloc]initWithRootViewController:memberVC];
     [viewControllers addObject:memberNav];
@@ -63,17 +63,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
