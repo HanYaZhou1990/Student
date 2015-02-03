@@ -140,6 +140,8 @@
 		3EBB46081A80C1AA001E534B /* icon_trainee_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB45DA1A80C1AA001E534B /* icon_trainee_active.png */; };
 		3EBB46091A80C1AA001E534B /* icon_trainee.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB45DB1A80C1AA001E534B /* icon_trainee.png */; };
 		3EBB460A1A80C1AA001E534B /* icon_trip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB45DC1A80C1AA001E534B /* icon_trip.png */; };
+		3EBB46E41A80DD35001E534B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E01A80DD35001E534B /* LaunchScreen.xib */; };
+		3EBB46E51A80DD35001E534B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E21A80DD35001E534B /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -344,6 +346,8 @@
 		3EBB45DA1A80C1AA001E534B /* icon_trainee_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_trainee_active.png; sourceTree = "<group>"; };
 		3EBB45DB1A80C1AA001E534B /* icon_trainee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_trainee.png; sourceTree = "<group>"; };
 		3EBB45DC1A80C1AA001E534B /* icon_trip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_trip.png; sourceTree = "<group>"; };
+		3EBB46E11A80DD35001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ../AmoyMasterCoach/AmoyMasterCoach/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		3EBB46E31A80DD35001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../AmoyMasterCoach/AmoyMasterCoach/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,6 +375,8 @@
 		3EBB44881A80BB5F001E534B = {
 			isa = PBXGroup;
 			children = (
+				3EBB46E01A80DD35001E534B /* LaunchScreen.xib */,
+				3EBB46E21A80DD35001E534B /* Main.storyboard */,
 				3EBB44CC1A80BDC2001E534B /* CFNetwork.framework */,
 				3EBB44CA1A80BDBA001E534B /* QuartzCore.framework */,
 				3EBB44C81A80BD89001E534B /* Foundation.framework */,
@@ -888,6 +894,7 @@
 				3EBB45A01A80C182001E534B /* modelTest_next.png in Resources */,
 				3EBB45F21A80C1AA001E534B /* icon_main_person@2x.png in Resources */,
 				3EBB45DE1A80C1AA001E534B /* icon_book_active.png in Resources */,
+				3EBB46E51A80DD35001E534B /* Main.storyboard in Resources */,
 				3EBB459C1A80C177001E534B /* square_detail_timetable_bg.png in Resources */,
 				3EBB45991A80C177001E534B /* square_detail_bg.png in Resources */,
 				3EBB45F11A80C1AA001E534B /* icon_main_person.png in Resources */,
@@ -910,6 +917,7 @@
 				3EBB458E1A80C15A001E534B /* radio_default.png in Resources */,
 				3EBB45EA1A80C1AA001E534B /* icon_license_active.png in Resources */,
 				3EBB46091A80C1AA001E534B /* icon_trainee.png in Resources */,
+				3EBB46E41A80DD35001E534B /* LaunchScreen.xib in Resources */,
 				3EBB45FE1A80C1AA001E534B /* icon_police.png in Resources */,
 				3EBB458A1A80C15A001E534B /* checkbox_default.png in Resources */,
 				3EBB45A61A80C18D001E534B /* course_btn_confirm_active.png in Resources */,
@@ -1043,6 +1051,25 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		3EBB46E01A80DD35001E534B /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3EBB46E11A80DD35001E534B /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		3EBB46E21A80DD35001E534B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3EBB46E31A80DD35001E534B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		3EBB44B21A80BB5F001E534B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1126,7 +1153,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/renbing/Desktop/AmoyMasterStudents/AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
+				GCC_PREFIX_HEADER = "AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
 				INFOPLIST_FILE = AmoyMasterStudents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1140,7 +1167,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/renbing/Desktop/AmoyMasterStudents/AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
+				GCC_PREFIX_HEADER = "AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
 				INFOPLIST_FILE = AmoyMasterStudents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1201,6 +1228,7 @@
 				3EBB44B61A80BB5F001E534B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3EBB44B71A80BB5F001E534B /* Build configuration list for PBXNativeTarget "AmoyMasterStudentsTests" */ = {
 			isa = XCConfigurationList;
@@ -1209,6 +1237,7 @@
 				3EBB44B91A80BB5F001E534B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

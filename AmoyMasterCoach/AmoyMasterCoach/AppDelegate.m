@@ -28,7 +28,7 @@
     {
         //标题颜色
         
-        [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:166.0/255.0 green:166.0/255.0 blue:166.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+        [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
                                                                nil, NSShadowAttributeName,
                                                                [UIFont systemFontOfSize:10], NSFontAttributeName, nil]];
     }

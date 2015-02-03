@@ -61,6 +61,8 @@
 		3EBB46DA1A80C4B9001E534B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB46B51A80C4B9001E534B /* SVProgressHUD.m */; };
 		3EBB46DC1A80C50D001E534B /* icon_previous.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46DB1A80C50D001E534B /* icon_previous.png */; };
 		3EBB46DF1A80C584001E534B /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB46DE1A80C584001E534B /* BaseViewController.m */; };
+		3EBB46EA1A80DD7E001E534B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E61A80DD7E001E534B /* LaunchScreen.xib */; };
+		3EBB46EB1A80DD7E001E534B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E81A80DD7E001E534B /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +184,8 @@
 		3EBB46DB1A80C50D001E534B /* icon_previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_previous.png; sourceTree = "<group>"; };
 		3EBB46DD1A80C584001E534B /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3EBB46DE1A80C584001E534B /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		3EBB46E71A80DD7E001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = AmoyMasterCoach/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		3EBB46E91A80DD7E001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = AmoyMasterCoach/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +213,8 @@
 		3EBB460B1A80C268001E534B = {
 			isa = PBXGroup;
 			children = (
+				3EBB46E61A80DD7E001E534B /* LaunchScreen.xib */,
+				3EBB46E81A80DD7E001E534B /* Main.storyboard */,
 				3EBB464C1A80C39D001E534B /* UIKit.framework */,
 				3EBB464A1A80C395001E534B /* Foundation.framework */,
 				3EBB46481A80C38F001E534B /* QuartzCore.framework */,
@@ -552,6 +558,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EBB46EA1A80DD7E001E534B /* LaunchScreen.xib in Resources */,
+				3EBB46EB1A80DD7E001E534B /* Main.storyboard in Resources */,
 				3EBB46251A80C268001E534B /* Images.xcassets in Resources */,
 				3EBB46D91A80C4B9001E534B /* SVProgressHUD.bundle in Resources */,
 				3EBB46DC1A80C50D001E534B /* icon_previous.png in Resources */,
@@ -639,6 +647,25 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		3EBB46E61A80DD7E001E534B /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3EBB46E71A80DD7E001E534B /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		3EBB46E81A80DD7E001E534B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3EBB46E91A80DD7E001E534B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		3EBB46351A80C269001E534B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -722,7 +749,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/renbing/Desktop/AmoyMasterCoach/AmoyMasterCoach/AmoyMasterCoach-Prefix .pch";
+				GCC_PREFIX_HEADER = "AmoyMasterCoach/AmoyMasterCoach-Prefix .pch";
 				INFOPLIST_FILE = AmoyMasterCoach/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -736,7 +763,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/renbing/Desktop/AmoyMasterCoach/AmoyMasterCoach/AmoyMasterCoach-Prefix .pch";
+				GCC_PREFIX_HEADER = "AmoyMasterCoach/AmoyMasterCoach-Prefix .pch";
 				INFOPLIST_FILE = AmoyMasterCoach/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -797,6 +824,7 @@
 				3EBB46391A80C269001E534B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3EBB463A1A80C269001E534B /* Build configuration list for PBXNativeTarget "AmoyMasterCoachTests" */ = {
 			isa = XCConfigurationList;
@@ -805,6 +833,7 @@
 				3EBB463C1A80C269001E534B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
