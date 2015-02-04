@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E8F162D1A81BB1800F9BE6C /* memberBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E8F162C1A81BB1800F9BE6C /* memberBg.png */; };
 		3EBB44971A80BB5F001E534B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB44961A80BB5F001E534B /* main.m */; };
 		3EBB449A1A80BB5F001E534B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB44991A80BB5F001E534B /* AppDelegate.m */; };
 		3EBB44A21A80BB5F001E534B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB44A11A80BB5F001E534B /* Images.xcassets */; };
@@ -155,6 +156,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E8F162C1A81BB1800F9BE6C /* memberBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = memberBg.png; sourceTree = "<group>"; };
 		3EBB44911A80BB5F001E534B /* AmoyMasterStudents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmoyMasterStudents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EBB44951A80BB5F001E534B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EBB44961A80BB5F001E534B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -372,6 +374,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E8F16271A81A7A400F9BE6C /* 学车知识_Knowledge */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "学车知识_Knowledge";
+			sourceTree = "<group>";
+		};
+		3E8F16281A81A7D500F9BE6C /* 教练广场_Coach */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "教练广场_Coach";
+			sourceTree = "<group>";
+		};
+		3E8F16291A81A7EA00F9BE6C /* 学车进程_Process */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "学车进程_Process";
+			sourceTree = "<group>";
+		};
+		3E8F162A1A81A80300F9BE6C /* 个人中心_MemberCenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "个人中心_MemberCenter";
+			sourceTree = "<group>";
+		};
+		3E8F162B1A81A83900F9BE6C /* 公共_Public */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "公共_Public";
+			sourceTree = "<group>";
+		};
 		3EBB44881A80BB5F001E534B = {
 			isa = PBXGroup;
 			children = (
@@ -447,16 +484,21 @@
 		3EBB44BE1A80BC38001E534B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3E8F162B1A81A83900F9BE6C /* 公共_Public */,
+				3E8F16271A81A7A400F9BE6C /* 学车知识_Knowledge */,
+				3E8F16281A81A7D500F9BE6C /* 教练广场_Coach */,
+				3E8F16291A81A7EA00F9BE6C /* 学车进程_Process */,
+				3E8F162A1A81A80300F9BE6C /* 个人中心_MemberCenter */,
 				3EBB455A1A80C02E001E534B /* BaseViewController.h */,
 				3EBB455B1A80C02E001E534B /* BaseViewController.m */,
-				3EBB455C1A80C02E001E534B /* CoachViewController.h */,
-				3EBB455D1A80C02E001E534B /* CoachViewController.m */,
 				3EBB455E1A80C02E001E534B /* KnowledgeViewController.h */,
 				3EBB455F1A80C02E001E534B /* KnowledgeViewController.m */,
-				3EBB45601A80C02E001E534B /* MemberCenterViewController.h */,
-				3EBB45611A80C02E001E534B /* MemberCenterViewController.m */,
+				3EBB455C1A80C02E001E534B /* CoachViewController.h */,
+				3EBB455D1A80C02E001E534B /* CoachViewController.m */,
 				3EBB45621A80C02E001E534B /* ProcessViewController.h */,
 				3EBB45631A80C02E001E534B /* ProcessViewController.m */,
+				3EBB45601A80C02E001E534B /* MemberCenterViewController.h */,
+				3EBB45611A80C02E001E534B /* MemberCenterViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -672,6 +714,7 @@
 		3EBB456A1A80C0B5001E534B /* 个人中心 */ = {
 			isa = PBXGroup;
 			children = (
+				3E8F162C1A81BB1800F9BE6C /* memberBg.png */,
 				3EBB45811A80C15A001E534B /* btn_confirm.png */,
 				3EBB45821A80C15A001E534B /* checkbox_default_checked.png */,
 				3EBB45831A80C15A001E534B /* checkbox_default.png */,
@@ -883,6 +926,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E8F162D1A81BB1800F9BE6C /* memberBg.png in Resources */,
 				3EBB45E61A80C1AA001E534B /* icon_evaluation.png in Resources */,
 				3EBB457C1A80C13A001E534B /* register_btn_send_code.png in Resources */,
 				3EBB45911A80C165001E534B /* square_avatar_cover.png in Resources */,

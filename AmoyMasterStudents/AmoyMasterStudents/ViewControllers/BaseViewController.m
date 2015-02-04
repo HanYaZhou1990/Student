@@ -18,11 +18,15 @@
 {
     [super viewDidLoad];
     
+    [PublicConfig removerCoverView:self];
+    
     self.view.backgroundColor = RGBA(244, 244, 244, 1);
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
     {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

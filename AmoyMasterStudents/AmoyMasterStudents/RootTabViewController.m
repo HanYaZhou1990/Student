@@ -51,12 +51,12 @@
     
     self.viewControllers = viewControllers;
     
-    self.tabBar.tintColor = UIColorFromRGB(0xca1407);//取tabItem颜色
+    self.tabBar.tintColor = RGBA(1, 188, 142, 1);//取tabItem颜色
     
     //选中字体颜色
     [[UITabBarItem appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      UIColorFromRGB(0xca1407), NSForegroundColorAttributeName,
+      RGBA(1, 188, 142, 1), NSForegroundColorAttributeName,
       nil]forState:UIControlStateSelected];
 
 }
