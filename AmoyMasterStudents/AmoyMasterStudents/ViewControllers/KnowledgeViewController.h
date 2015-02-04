@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "YZCollectionReusableView.h"
 
-@interface KnowledgeViewController : BaseViewController
+@interface KnowledgeViewController : BaseViewController<UICollectionViewDataSource,UICollectionViewDelegate,YZCollectionReusableViewDelegate>
+
+@property (nonatomic, strong) UICollectionView    *collectionView;
 
 @end

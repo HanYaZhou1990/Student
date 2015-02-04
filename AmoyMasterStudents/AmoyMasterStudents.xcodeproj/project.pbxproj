@@ -143,6 +143,9 @@
 		3EBB460A1A80C1AA001E534B /* icon_trip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB45DC1A80C1AA001E534B /* icon_trip.png */; };
 		3EBB46E41A80DD35001E534B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E01A80DD35001E534B /* LaunchScreen.xib */; };
 		3EBB46E51A80DD35001E534B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E21A80DD35001E534B /* Main.storyboard */; };
+		CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */; };
+		CF797BD41A8276BF003581BC /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD31A8276BF003581BC /* UIImage+Color.m */; };
+		CF797BD71A82811E003581BC /* YZCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD61A82811E003581BC /* YZCollectionReusableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -350,6 +353,12 @@
 		3EBB45DC1A80C1AA001E534B /* icon_trip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_trip.png; sourceTree = "<group>"; };
 		3EBB46E11A80DD35001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ../AmoyMasterCoach/AmoyMasterCoach/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3EBB46E31A80DD35001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../AmoyMasterCoach/AmoyMasterCoach/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CF797BCE1A826A3A003581BC /* EMBAMineMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMBAMineMenuView.h; sourceTree = "<group>"; };
+		CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMBAMineMenuView.m; sourceTree = "<group>"; };
+		CF797BD21A8276BF003581BC /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
+		CF797BD31A8276BF003581BC /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
+		CF797BD51A82811E003581BC /* YZCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZCollectionReusableView.h; sourceTree = "<group>"; };
+		CF797BD61A82811E003581BC /* YZCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZCollectionReusableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -557,6 +566,12 @@
 		3EBB44C31A80BD0F001E534B /* ToolKit */ = {
 			isa = PBXGroup;
 			children = (
+				CF797BD51A82811E003581BC /* YZCollectionReusableView.h */,
+				CF797BD61A82811E003581BC /* YZCollectionReusableView.m */,
+				CF797BCE1A826A3A003581BC /* EMBAMineMenuView.h */,
+				CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */,
+				CF797BD21A8276BF003581BC /* UIImage+Color.h */,
+				CF797BD31A8276BF003581BC /* UIImage+Color.m */,
 				3EBB44D11A80BE31001E534B /* ValidateTool.h */,
 				3EBB44D21A80BE31001E534B /* ValidateTool.m */,
 			);
@@ -1066,10 +1081,13 @@
 				3EBB45411A80BF5A001E534B /* AFSecurityPolicy.m in Sources */,
 				3EBB453E1A80BF5A001E534B /* AFHTTPRequestOperationManager.m in Sources */,
 				3EBB453F1A80BF5A001E534B /* AFHTTPSessionManager.m in Sources */,
+				CF797BD71A82811E003581BC /* YZCollectionReusableView.m in Sources */,
+				CF797BD41A8276BF003581BC /* UIImage+Color.m in Sources */,
 				3EBB450B1A80BF2A001E534B /* UIImage+MultiFormat.m in Sources */,
 				3EBB450D1A80BF2A001E534B /* UIImageView+HighlightedWebCache.m in Sources */,
 				3EBB453D1A80BF5A001E534B /* AFHTTPRequestOperation.m in Sources */,
 				3EBB45171A80BF4A001E534B /* CWStarRateView.m in Sources */,
+				CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */,
 				3EBB45581A80BFB4001E534B /* SizeToLeftLabelCell.m in Sources */,
 				3EBB45441A80BF5A001E534B /* AFURLResponseSerialization.m in Sources */,
 				3EBB450A1A80BF2A001E534B /* UIImage+GIF.m in Sources */,
