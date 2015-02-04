@@ -112,7 +112,7 @@
     }
     else
     {
-        cell.textLabel.textColor = RGBA(1, 188, 142, 1);
+        cell.textLabel.textColor = RGBA(0, 165, 109, 1);
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
