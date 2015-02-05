@@ -35,9 +35,10 @@
 //        [button setBackgroundImage:[UIImage initWithColor:[UIColor orangeColor]] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(itemClick:) forControlEvents:UIControlEventTouchUpInside];
         [button setMultipleTouchEnabled:YES];
-        button.imageEdgeInsets = UIEdgeInsetsMake(10, (CGRectGetWidth(button.frame)-40)/2, 34, (CGRectGetWidth(button.frame)-40)/2);
+        button.imageEdgeInsets = UIEdgeInsetsMake(10.f, (CGRectGetWidth(button.frame)-40.f)/2.f, 34.f, (CGRectGetWidth(button.frame)-40.f)/2.f);
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
-        button.titleEdgeInsets = UIEdgeInsetsMake(52, -(40 +(CGRectGetWidth(button.frame)-40)/2), 2, 0);
+        CGSize titleSize = [btnInformationAry[i][0] sizeWithFont:button.titleLabel.font];
+        button.titleEdgeInsets = UIEdgeInsetsMake(52.f, -titleSize.width+10.f, 2.f, (CGRectGetWidth(button.frame)-titleSize.width)/2.f-10.f);
         /*初始化的时候，设置的默认选中按钮,这个地方不需要，舍弃此方法*/
         if (i == [[btnInformationAry lastObject][0] intValue]) {button.selected = YES;}
         button.tag = i +10;
