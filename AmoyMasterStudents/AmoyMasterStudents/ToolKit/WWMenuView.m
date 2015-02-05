@@ -1,45 +1,58 @@
 //
-//  EMBAMineMenuView.m
-//  Sunflower
+//  WWMenuView.m
+//  AmoyMasterStudents
 //
-//  Created by Han_YaZhou on 14/12/16.
-//  Copyright (c) 2014年 韩亚周. All rights reserved.
+//  Created by julong on 15/2/5.
+//  Copyright (c) 2015年 renbing. All rights reserved.
 //
 
-#import "EMBAMineMenuView.h"
+#import "WWMenuView.h"
 
-@implementation EMBAMineMenuView
+@interface WWMenuView()
 {
     NSMutableArray       *btnArray;
 }
+@end
 
-- (instancetype)initWithFrame:(CGRect)frame{
+
+@implementation WWMenuView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
     }
     return self;
 }
 
-- (void)setBtnInformationAry:(NSMutableArray *)btnInformationAry{
-    if (!btnArray) {
+- (void)setBtnInformationAry:(NSMutableArray *)btnInformationAry
+{
+    if (!btnArray)
+    {
         btnArray = [@[]mutableCopy];
     }
-    for (int i = 0; i < btnInformationAry.count - 1; i ++) {
+    for (int i = 0; i < btnInformationAry.count; i ++)
+    {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(self.frame.size.width/(btnInformationAry.count - 1)*i, 0, self.frame.size.width/(btnInformationAry.count - 1), self.frame.size.height);
+        button.frame = CGRectMake(self.frame.size.width/btnInformationAry.count*i, 0, self.frame.size.width/btnInformationAry.count, self.frame.size.height);
         button.titleLabel.font = [UIFont systemFontOfSize:13];
         [button setTitle:btnInformationAry[i][0] forState:UIControlStateNormal];
-        [button setTitleColor:UIColorFromRGB(0x333333) forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+        [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
         [button setImage:btnInformationAry[i][1] forState:UIControlStateNormal];
-        [button setBackgroundImage:[btnInformationAry lastObject][1] forState:UIControlStateNormal];
-//        [button setBackgroundImage:[UIImage initWithColor:[UIColor orangeColor]] forState:UIControlStateSelected];
+        [button setImage:btnInformationAry[i][2] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(itemClick:) forControlEvents:UIControlEventTouchUpInside];
         [button setMultipleTouchEnabled:YES];
-        button.imageEdgeInsets = UIEdgeInsetsMake(10.f, (CGRectGetWidth(button.frame)-40.f)/2.f, 34.f, (CGRectGetWidth(button.frame)-40.f)/2.f);
+        
+        CGFloat btnWidth  =CGRectGetWidth(button.frame);
+        CGFloat btnHeight =CGRectGetHeight(button.frame);
+        button.imageEdgeInsets = UIEdgeInsetsMake((btnHeight-_imageWidth-20)/2, (btnWidth-_imageWidth)/2, btnHeight-(_imageWidth+(btnHeight-_imageWidth-20)/2), (btnWidth-_imageWidth)/2);
+        
+//        NSString *contentString = btnInformationAry[i][0];
+//        CGFloat useWidth = [PublicConfig width:contentString heightOfFatherView:20 textFont:[UIFont systemFontOfSize:13]];
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
-        CGSize titleSize = [btnInformationAry[i][0] sizeWithFont:button.titleLabel.font];
-        button.titleEdgeInsets = UIEdgeInsetsMake(52.f, -titleSize.width+10.f, 2.f, (CGRectGetWidth(button.frame)-titleSize.width)/2.f-10.f);
+        button.titleEdgeInsets = UIEdgeInsetsMake(btnHeight-20, -_imageWidth, 2, 0);
         /*初始化的时候，设置的默认选中按钮,这个地方不需要，舍弃此方法*/
         if (i == [[btnInformationAry lastObject][0] intValue])
         {
@@ -77,5 +90,4 @@
         }
     }
 }
-
 @end

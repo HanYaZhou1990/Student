@@ -74,6 +74,6 @@
 
 #pragma mark - YZCollectionReusableViewDelagete
 - (void)collectionView:(YZCollectionReusableView *)collectionView view:(UIView *)view buttonSeleectIndex:(NSInteger)indexOfButton {
-    NSLog(@"%d",indexOfButton);
+    DLog(@"%d",indexOfButton);
 }
 @end
