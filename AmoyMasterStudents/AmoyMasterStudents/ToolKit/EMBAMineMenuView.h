@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "UIImage+Color.h"
 
+@class YYButton;
+
 @protocol EMBAMineMenuViewDelegate  <NSObject>
 
 @required
@@ -25,4 +27,27 @@
  代理
  */
 @property (nonatomic, assign) id <EMBAMineMenuViewDelegate>      delegate;
+@end
+
+
+
+@interface YYButton  : UIButton
+
+/*!
+ 图片
+*/
+@property (nonatomic, strong,readonly) UIImageView *iconImageView;
+/*!
+ 图片
+ */
+@property (nonatomic, strong) UIImage     *iconImage;
+/*!
+ 标题
+ */
+@property (nonatomic, strong,readonly) UILabel     *titleLab;
+/*!
+ 标题
+ */
+@property (nonatomic, strong) NSString     *titleString;
+
 @end
