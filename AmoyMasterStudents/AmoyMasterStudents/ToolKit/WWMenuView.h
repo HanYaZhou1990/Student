@@ -15,6 +15,8 @@
 
 @end
 
+// ************不通用 慎用*********//
+
 @interface WWMenuView : UIView
 /*!
  按钮的图片，和title

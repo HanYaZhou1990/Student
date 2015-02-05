@@ -56,6 +56,8 @@
 - (void)view:(UIView *)view didSelectIndex:(NSInteger)indexOfButton
 {
     DLog(@"%ld",(long)indexOfButton);
+    
+    
 }
 
 

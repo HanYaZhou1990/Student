@@ -49,10 +49,10 @@
         CGFloat btnHeight =CGRectGetHeight(button.frame);
         button.imageEdgeInsets = UIEdgeInsetsMake((btnHeight-_imageWidth-20)/2, (btnWidth-_imageWidth)/2, btnHeight-(_imageWidth+(btnHeight-_imageWidth-20)/2), (btnWidth-_imageWidth)/2);
         
-//        NSString *contentString = btnInformationAry[i][0];
-//        CGFloat useWidth = [PublicConfig width:contentString heightOfFatherView:20 textFont:[UIFont systemFontOfSize:13]];
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
-        button.titleEdgeInsets = UIEdgeInsetsMake(btnHeight-20, -_imageWidth, 2, 0);
+        CGSize titleSize = [btnInformationAry[i][0] sizeWithFont:button.titleLabel.font];
+        NSString *titleStr =btnInformationAry[i][0];
+        button.titleEdgeInsets = UIEdgeInsetsMake(btnHeight-20, -titleSize.width-15-(4-titleStr.length)*5, 2.f, (btnWidth-titleSize.width)/2.f-10.f);
         /*初始化的时候，设置的默认选中按钮,这个地方不需要，舍弃此方法*/
         if (i == [[btnInformationAry lastObject][0] intValue])
         {
