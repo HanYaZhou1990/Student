@@ -24,15 +24,20 @@
         btnArray = [@[]mutableCopy];
     }
     for (int i = 0; i < btnInformationAry.count - 1; i ++) {
-        YYButton *button = [YYButton buttonWithType:UIButtonTypeCustom];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(self.frame.size.width/(btnInformationAry.count - 1)*i, 0, self.frame.size.width/(btnInformationAry.count - 1), self.frame.size.height);
         button.titleLabel.font = [UIFont systemFontOfSize:13];
-        [button setIconImage:btnInformationAry[i][1]];
-        [button setTitleString:btnInformationAry[i][0]];
+        [button setTitle:btnInformationAry[i][0] forState:UIControlStateNormal];
+        [button setTitleColor:UIColorFromRGB(0x333333) forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+        [button setImage:btnInformationAry[i][1] forState:UIControlStateNormal];
         [button setBackgroundImage:[btnInformationAry lastObject][1] forState:UIControlStateNormal];
 //        [button setBackgroundImage:[UIImage initWithColor:[UIColor orangeColor]] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(itemClick:) forControlEvents:UIControlEventTouchUpInside];
         [button setMultipleTouchEnabled:YES];
+        button.imageEdgeInsets = UIEdgeInsetsMake(10, (CGRectGetWidth(button.frame)-40)/2, 34, (CGRectGetWidth(button.frame)-40)/2);
+        button.titleLabel.textAlignment = NSTextAlignmentCenter;
+        button.titleEdgeInsets = UIEdgeInsetsMake(52, -(40 +(CGRectGetWidth(button.frame)-40)/2), 2, 0);
         /*初始化的时候，设置的默认选中按钮,这个地方不需要，舍弃此方法*/
         if (i == [[btnInformationAry lastObject][0] intValue]) {button.selected = YES;}
         button.tag = i +10;
@@ -60,38 +65,3 @@
 }
 
 @end
-
-@implementation YYButton
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        _iconImageView = [[UIImageView alloc] init];
-        _iconImageView.backgroundColor = [UIColor clearColor];
-        [self addSubview:_iconImageView];
-        
-        _titleLab = [[UILabel alloc] init];
-        _titleLab.backgroundColor = [UIColor clearColor];
-        _titleLab.textAlignment = NSTextAlignmentCenter;
-        _titleLab.textColor = [UIColor blackColor];
-        [self addSubview:_titleLab];
-    }
-    return self;
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    _iconImageView.frame = CGRectMake((CGRectGetWidth(self.frame)-40)/2, 10, 40, 40);
-    _iconImageView.image = _iconImage;
-    _titleLab.frame = CGRectMake(10, 52, CGRectGetWidth(self.frame) - 20, 20);
-    _titleLab.text = _titleString;
-    if (self.selected == YES) {
-        _titleLab.textColor = [UIColor orangeColor];
-    }else{
-        _titleLab.textColor = [UIColor blackColor];
-    }
-}
-
-@end
-
