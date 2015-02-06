@@ -9,6 +9,7 @@
 #import "CoachViewController.h"
 #import "WWMenuView.h"
 #import "CoachCell.h"
+#import "CoachDetailViewController.h"
 
 @interface CoachViewController ()<WWMenuViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -150,6 +151,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CoachDetailViewController *vc = [[CoachDetailViewController alloc]init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
