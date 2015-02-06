@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E8F162D1A81BB1800F9BE6C /* memberBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E8F162C1A81BB1800F9BE6C /* memberBg.png */; };
+		3EA59D2D1A84537900DA9472 /* CoachCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA59D2C1A84537900DA9472 /* CoachCell.m */; };
 		3EBB44971A80BB5F001E534B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB44961A80BB5F001E534B /* main.m */; };
 		3EBB449A1A80BB5F001E534B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB44991A80BB5F001E534B /* AppDelegate.m */; };
 		3EBB44A21A80BB5F001E534B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB44A11A80BB5F001E534B /* Images.xcassets */; };
@@ -161,6 +162,8 @@
 
 /* Begin PBXFileReference section */
 		3E8F162C1A81BB1800F9BE6C /* memberBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = memberBg.png; sourceTree = "<group>"; };
+		3EA59D2B1A84537900DA9472 /* CoachCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachCell.h; sourceTree = "<group>"; };
+		3EA59D2C1A84537900DA9472 /* CoachCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachCell.m; sourceTree = "<group>"; };
 		3EBB44911A80BB5F001E534B /* AmoyMasterStudents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmoyMasterStudents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EBB44951A80BB5F001E534B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EBB44961A80BB5F001E534B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -562,6 +565,8 @@
 				3EBB45541A80BFB4001E534B /* SizeToLeftLabelCell.m */,
 				3EBB45551A80BFB4001E534B /* SizeToRightLabelCell.h */,
 				3EBB45561A80BFB4001E534B /* SizeToRightLabelCell.m */,
+				3EA59D2B1A84537900DA9472 /* CoachCell.h */,
+				3EA59D2C1A84537900DA9472 /* CoachCell.m */,
 			);
 			path = BaseCell;
 			sourceTree = "<group>";
@@ -1051,6 +1056,7 @@
 				3EBB45071A80BF2A001E534B /* SDWebImageManager.m in Sources */,
 				3EBB45141A80BF38001E534B /* MBProgressHUD.m in Sources */,
 				3EBB45021A80BF2A001E534B /* SDImageCache.m in Sources */,
+				3EA59D2D1A84537900DA9472 /* CoachCell.m in Sources */,
 				3EBB45421A80BF5A001E534B /* AFURLConnectionOperation.m in Sources */,
 				3EBB45471A80BF5A001E534B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				3EBB45061A80BF2A001E534B /* SDWebImageDownloaderOperation.m in Sources */,

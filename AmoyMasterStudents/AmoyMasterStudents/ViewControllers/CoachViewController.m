@@ -8,10 +8,11 @@
 
 #import "CoachViewController.h"
 #import "WWMenuView.h"
+#import "CoachCell.h"
 
-@interface CoachViewController ()<WWMenuViewDelegate>
+@interface CoachViewController ()<WWMenuViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
-    
+    UITableView *myTableView;
 }
 @end
 
@@ -33,6 +34,7 @@
     self.title = @"教练广场";
     
     [self setTopBtnView];
+    [self setTheTableView];
 }
 
 -(void)setTopBtnView
@@ -51,16 +53,110 @@
     
 }
 
+- (void)setTheTableView
+{
+    myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT-60) style:UITableViewStylePlain];
+    [myTableView setDelegate:self];
+    [myTableView setDataSource:self];
+    myTableView.backgroundColor = [UIColor clearColor];
+    myTableView.showsVerticalScrollIndicator = NO;//隐藏垂直滚动条
+    myTableView.separatorColor = [UIColor clearColor];
+    [self.view addSubview:myTableView];
+}
+
 #pragma mark WWMenuViewDelegate
 
 - (void)view:(UIView *)view didSelectIndex:(NSInteger)indexOfButton
 {
-    DLog(@"%ld",(long)indexOfButton);
-    
+    switch (indexOfButton)
+    {
+        case 0:
+        {
+            //附近
+        }
+            break;
+        case 1:
+        {
+            //最便宜
+        }
+            break;
+        case 2:
+        {
+            //评价最好
+        }
+            break;
+        case 3:
+        {
+            //学员最多
+        }
+            break;
+        case 4:
+        {
+            //驾照类型
+        }
+            break;
+            
+        default:
+            break;
+    }
     
 }
 
+#pragma mark 获取表格数据
+-(void)getTableDataByType:(NSString *)typeStr
+{
+    
+}
 
+#pragma mark -
+#pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 5;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"cellIdentifier";
+    CoachCell *cell = (CoachCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell==nil)
+    {
+        cell = [[CoachCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+    }
+    
+    NSString *heasImageStr = @"http://img4.duitang.com/uploads/item/201404/15/20140415233353_WwtCY.thumb.700_0.jpeg";
+    NSString *userNameStr = @"韩亚周";
+    NSString *drivingSchoolStr = @"友谊驾校 C照";
+    NSString *scoreStr = @"4.8分";
+    NSString *feesStr = @"3000元 / 12节";
+    NSString *goNumberStr = @"128人上过";
+    NSString *studyNumberStr = @"1280人正在学习";
+    [cell setHeadImageStr:heasImageStr andNameStr:userNameStr andDrivingSchoolStr:drivingSchoolStr andScoreStr:scoreStr andFeesStr:feesStr andGoNumberStr:goNumberStr andStudyNumberStr:studyNumberStr];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundView = nil;
+    
+    return cell;
+}
+
+#pragma mark -
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 93;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

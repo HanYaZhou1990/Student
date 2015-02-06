@@ -36,24 +36,24 @@
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(self.frame.size.width/btnInformationAry.count*i, 0, self.frame.size.width/btnInformationAry.count, self.frame.size.height);
-        button.titleLabel.font = [UIFont systemFontOfSize:13];
-        [button setTitle:btnInformationAry[i][0] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
+        
         [button setImage:btnInformationAry[i][1] forState:UIControlStateNormal];
         [button setImage:btnInformationAry[i][2] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(itemClick:) forControlEvents:UIControlEventTouchUpInside];
-        [button setMultipleTouchEnabled:YES];
-        
         CGFloat btnWidth  =CGRectGetWidth(button.frame);
         CGFloat btnHeight =CGRectGetHeight(button.frame);
         button.imageEdgeInsets = UIEdgeInsetsMake((btnHeight-_imageWidth-20)/2, (btnWidth-_imageWidth)/2, btnHeight-(_imageWidth+(btnHeight-_imageWidth-20)/2), (btnWidth-_imageWidth)/2);
         
-        button.titleLabel.textAlignment = NSTextAlignmentCenter;
-        CGSize titleSize = [btnInformationAry[i][0] sizeWithFont:button.titleLabel.font];
-        NSString *titleStr =btnInformationAry[i][0];
-        button.titleEdgeInsets = UIEdgeInsetsMake(btnHeight-20, -titleSize.width-15-(4-titleStr.length)*5, 2.f, (btnWidth-titleSize.width)/2.f-10.f);
-        /*初始化的时候，设置的默认选中按钮,这个地方不需要，舍弃此方法*/
+        UILabel *titleLabel = [[UILabel alloc]init];
+        titleLabel.frame = CGRectMake(5, btnHeight-20, btnWidth-10, 20);
+        titleLabel.backgroundColor = [UIColor clearColor];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.font = [UIFont systemFontOfSize:13];
+        titleLabel.text = btnInformationAry[i][0];
+        titleLabel.textColor = [UIColor grayColor];
+        [button addSubview:titleLabel];
+        [button setMultipleTouchEnabled:YES];
+        
         if (i == [[btnInformationAry lastObject][0] intValue])
         {
             button.selected = YES;
@@ -66,27 +66,20 @@
 
 -(void)itemClick:(UIButton *)sender
 {
-    if (sender.selected)
+    for (int i = 0; i < btnArray.count; i ++)
     {
-        return;
-    }
-    else
-    {
-        for (int i = 0; i < btnArray.count; i ++)
+        UIButton *btn = (UIButton *)btnArray[i];
+        if (sender.tag == btn.tag)
         {
-            UIButton *btn = (UIButton *)btnArray[i];
-            if (sender.tag == btn.tag)
+            [btn setSelected:YES];
+            if ([_delegate respondsToSelector:@selector(view:didSelectIndex:)])
             {
-                [btn setSelected:YES];
-                if ([_delegate respondsToSelector:@selector(view:didSelectIndex:)])
-                {
-                    [_delegate view:self didSelectIndex:sender.tag-10];
-                }
+                [_delegate view:self didSelectIndex:sender.tag-10];
             }
-            else
-            {
-                [btn setSelected:NO];
-            }
+        }
+        else
+        {
+            [btn setSelected:NO];
         }
     }
 }
