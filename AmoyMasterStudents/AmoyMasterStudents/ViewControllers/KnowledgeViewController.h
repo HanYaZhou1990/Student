@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "YZCollectionReusableView.h"
+#import "KnoledgeCollectionViewCell.h"
 
 @interface KnowledgeViewController : BaseViewController<UICollectionViewDataSource,UICollectionViewDelegate,YZCollectionReusableViewDelegate>
 
