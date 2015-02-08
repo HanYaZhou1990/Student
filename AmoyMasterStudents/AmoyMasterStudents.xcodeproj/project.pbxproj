@@ -575,13 +575,10 @@
 				3EBB45541A80BFB4001E534B /* SizeToLeftLabelCell.m */,
 				3EBB45551A80BFB4001E534B /* SizeToRightLabelCell.h */,
 				3EBB45561A80BFB4001E534B /* SizeToRightLabelCell.m */,
-<<<<<<< HEAD
 				CF6997F01A87B41E00F3CD1C /* KnoledgeCollectionViewCell.h */,
 				CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */,
-=======
 				3EA59D2B1A84537900DA9472 /* CoachCell.h */,
 				3EA59D2C1A84537900DA9472 /* CoachCell.m */,
->>>>>>> FETCH_HEAD
 			);
 			path = BaseCell;
 			sourceTree = "<group>";
