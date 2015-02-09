@@ -41,6 +41,8 @@
     
     [self setTheTableView];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMemberData) name:refreshMemberCenterVCNotification object:nil];
 }
 
 //设置tableview属性
@@ -53,6 +55,14 @@
     myTableView.showsVerticalScrollIndicator = NO;//隐藏垂直滚动条
     [self.view addSubview:myTableView];
 }
+
+#pragma mark -
+#pragma mark - 数据相关
+-(void)refreshMemberData
+{
+    //刷新数据
+}
+
 
 #pragma mark -
 #pragma mark - UITableViewDataSource

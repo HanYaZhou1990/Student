@@ -39,6 +39,7 @@
 
 
 #define userAccount     @"userAccount" //用户账号唯一标识符id 若为空 未登录
+#define userPassword    @"userPassword" //用户密码
 
 #define refreshMemberCenterVCNotification @"refreshMemberCenterVCNotification" //刷新个人中心界面
 

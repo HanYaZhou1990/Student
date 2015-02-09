@@ -10,4 +10,6 @@
 
 @interface ChangePwdViewController : BaseViewController
 
+@property (nonatomic,strong) NSString *phoneStr;
+
 @end

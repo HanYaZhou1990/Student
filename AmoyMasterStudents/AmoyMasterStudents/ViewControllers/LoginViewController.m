@@ -10,6 +10,7 @@
 #import "WWTextField.h"
 #import "RegisterViewController.h"
 #import "ValidateTool.h"
+#import "FindPwdViewController.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 {
@@ -112,10 +113,11 @@
 
 #pragma mark -
 #pragma mark 按钮点击事件
-
+//找回密码
 -(void)findPwdButtonClicked:(id)sender
 {
-    
+    FindPwdViewController *vc = [[FindPwdViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //立即注册点击

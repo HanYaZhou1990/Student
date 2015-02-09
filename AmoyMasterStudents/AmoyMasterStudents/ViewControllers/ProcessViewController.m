@@ -24,10 +24,22 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = @"学车进程";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshProcessData) name:refreshProcessVCNotification object:nil];
 }
+
+
+#pragma mark -
+#pragma mark - 数据相关
+-(void)refreshProcessData
+{
+    //刷新数据
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -8,7 +8,6 @@
 
 #import "RegisterViewController.h"
 #import "WWTextField.h"
-#import "RegisterViewController.h"
 #import "ValidateTool.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate>
@@ -50,7 +49,7 @@
 }
 -(void)backAction
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark -
@@ -105,7 +104,7 @@
     [captchaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     captchaBtn.layer.masksToBounds=YES;
     captchaBtn.layer.cornerRadius=4;
-    captchaBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    captchaBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     [captchaBtn addTarget:self action: @selector(captchaBtnClick) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:captchaBtn];
     
@@ -272,7 +271,7 @@
 
 -(void)loginButtonClicked:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark -
