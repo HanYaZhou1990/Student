@@ -12,6 +12,8 @@
 	<dict>
 		<key>5B3A4572C1B5AD49525592FAAED898CC04B16FA9</key>
 		<string>https://github.com/HanYaZhou1990/Student.git</string>
+		<key>85aa817d-5c75-4d84-90fa-e6aa40419b5f++1301</key>
+		<string>svn://120.24.236.14/taosf/trainee_ios/trunk/%25E9%2599%25B6%25E5%25B8%2588%25E5%2582%2585/AmoyMasterStudents/AmoyMasterStudents/Libs/SVPHUD/SVProgressHUD.bundle</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>AmoyMasterStudents/AmoyMasterStudents.xcodeproj</string>
@@ -19,6 +21,13 @@
 	<dict>
 		<key>5B3A4572C1B5AD49525592FAAED898CC04B16FA9</key>
 		<string>../../..</string>
+		<key>85aa817d-5c75-4d84-90fa-e6aa40419b5f++1301</key>
+		<string>../../../AmoyMasterStudents/AmoyMasterStudents/Libs/SVPHUD/SVProgressHUD.bundle/</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>85aa817d-5c75-4d84-90fa-e6aa40419b5f++1301</key>
+		<string>svn://120.24.236.14/taosf</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/HanYaZhou1990/Student.git</string>
@@ -35,6 +44,14 @@
 			<string>5B3A4572C1B5AD49525592FAAED898CC04B16FA9</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Student</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>85aa817d-5c75-4d84-90fa-e6aa40419b5f++1301</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SVProgressHUD.bundle</string>
 		</dict>
 	</array>
 </dict>
