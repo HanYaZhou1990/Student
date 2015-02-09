@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E7F12F31A88460800A2D34C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F12F21A88460800A2D34C /* LoginViewController.m */; };
+		3E7F12F61A88461900A2D34C /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F12F51A88461900A2D34C /* RegisterViewController.m */; };
+		3E7F12F91A884B6B00A2D34C /* WWTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F12F81A884B6B00A2D34C /* WWTextField.m */; };
 		3E8F162D1A81BB1800F9BE6C /* memberBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E8F162C1A81BB1800F9BE6C /* memberBg.png */; };
 		3EA59D2D1A84537900DA9472 /* CoachCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA59D2C1A84537900DA9472 /* CoachCell.m */; };
 		3EA59D301A845F8F00DA9472 /* CoachDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA59D2F1A845F8F00DA9472 /* CoachDetailViewController.m */; };
@@ -164,6 +167,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E7F12F11A88460800A2D34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		3E7F12F21A88460800A2D34C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		3E7F12F41A88461900A2D34C /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		3E7F12F51A88461900A2D34C /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		3E7F12F71A884B6B00A2D34C /* WWTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWTextField.h; sourceTree = "<group>"; };
+		3E7F12F81A884B6B00A2D34C /* WWTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWTextField.m; sourceTree = "<group>"; };
 		3E8F162C1A81BB1800F9BE6C /* memberBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = memberBg.png; sourceTree = "<group>"; };
 		3EA59D2B1A84537900DA9472 /* CoachCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachCell.h; sourceTree = "<group>"; };
 		3EA59D2C1A84537900DA9472 /* CoachCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachCell.m; sourceTree = "<group>"; };
@@ -423,6 +432,10 @@
 		3E8F162A1A81A80300F9BE6C /* 个人中心_MemberCenter */ = {
 			isa = PBXGroup;
 			children = (
+				3E7F12F11A88460800A2D34C /* LoginViewController.h */,
+				3E7F12F21A88460800A2D34C /* LoginViewController.m */,
+				3E7F12F41A88461900A2D34C /* RegisterViewController.h */,
+				3E7F12F51A88461900A2D34C /* RegisterViewController.m */,
 			);
 			name = "个人中心_MemberCenter";
 			sourceTree = "<group>";
@@ -596,6 +609,8 @@
 				CF797BD31A8276BF003581BC /* UIImage+Color.m */,
 				3EBB44D11A80BE31001E534B /* ValidateTool.h */,
 				3EBB44D21A80BE31001E534B /* ValidateTool.m */,
+				3E7F12F71A884B6B00A2D34C /* WWTextField.h */,
+				3E7F12F81A884B6B00A2D34C /* WWTextField.m */,
 			);
 			path = ToolKit;
 			sourceTree = "<group>";
@@ -1063,6 +1078,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E7F12F31A88460800A2D34C /* LoginViewController.m in Sources */,
 				3EBB45431A80BF5A001E534B /* AFURLRequestSerialization.m in Sources */,
 				3EBB44BD1A80BC14001E534B /* RootTabViewController.m in Sources */,
 				3EBB454C1A80BF5A001E534B /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -1113,7 +1129,9 @@
 				3EBB450B1A80BF2A001E534B /* UIImage+MultiFormat.m in Sources */,
 				3EBB450D1A80BF2A001E534B /* UIImageView+HighlightedWebCache.m in Sources */,
 				3EBB453D1A80BF5A001E534B /* AFHTTPRequestOperation.m in Sources */,
+				3E7F12F91A884B6B00A2D34C /* WWTextField.m in Sources */,
 				3EBB45171A80BF4A001E534B /* CWStarRateView.m in Sources */,
+				3E7F12F61A88461900A2D34C /* RegisterViewController.m in Sources */,
 				CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */,
 				3EBB45581A80BFB4001E534B /* SizeToLeftLabelCell.m in Sources */,
 				3EBB45441A80BF5A001E534B /* AFURLResponseSerialization.m in Sources */,

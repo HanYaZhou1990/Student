@@ -177,6 +177,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section==4)
+    {
+        //发送登录协议
+        [[NSNotificationCenter defaultCenter]postNotificationName:logoutDidSuccessNotification object:nil];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

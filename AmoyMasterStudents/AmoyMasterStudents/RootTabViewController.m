@@ -11,6 +11,7 @@
 #import "CoachViewController.h"
 #import "ProcessViewController.h"
 #import "MemberCenterViewController.h"
+#import "LoginViewController.h"
 
 @interface RootTabViewController ()
 
@@ -23,6 +24,14 @@
     [super viewDidLoad];
    
     [self initTabbarUI];
+    
+    
+    //登录成功
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessfull) name:loginDidSuccessNotification object:nil];
+    
+    //退出登录
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logoutSuccessfull) name:logoutDidSuccessNotification object:nil];
+
 }
 
 -(void)initTabbarUI
@@ -59,6 +68,47 @@
       RGBA(0, 165, 109, 1), NSForegroundColorAttributeName,
       nil]forState:UIControlStateSelected];
 
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self getLoginState]; //判断登录状态
+}
+
+#pragma mark
+#pragma mark 登录相关
+-(void)getLoginState
+{
+    NSString *loginAccount = [PublicConfig valueForKey:userAccount];
+    if (loginAccount.length==0)
+    {
+        [self loginView];
+    }
+}
+
+//弹出登陆界面
+-(void)loginView
+{
+    //登录失败 或未登录
+    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginViewController];
+    [self.navigationController presentViewController:nav animated:NO completion:nil];
+}
+
+//让登陆界面下去
+-(void)loginSuccessfull
+{
+     [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+}
+
+//退出登录
+-(void)logoutSuccessfull
+{
+    [PublicConfig setValue:@"" forKey:userAccount];
+    
+    [self getLoginState];
 }
 
 - (void)didReceiveMemoryWarning {

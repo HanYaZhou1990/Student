@@ -38,6 +38,14 @@
 #endif
 
 
+#define userAccount     @"userAccount" //用户账号唯一标识符id 若为空 未登录
 
+#define refreshMemberCenterVCNotification @"refreshMemberCenterVCNotification" //刷新个人中心界面
+
+#define refreshProcessVCNotification @"refreshMeVCNotification" //刷新学车进程界面
+
+#define loginDidSuccessNotification @"loginDidSuccessNotification" //登陆成功
+
+#define logoutDidSuccessNotification @"logoutDidSuccessNotification" //退出成功
 
 
