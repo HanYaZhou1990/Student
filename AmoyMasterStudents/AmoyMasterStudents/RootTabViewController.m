@@ -25,7 +25,6 @@
    
     [self initTabbarUI];
     
-    
     //登录成功
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessfull) name:loginDidSuccessNotification object:nil];
     

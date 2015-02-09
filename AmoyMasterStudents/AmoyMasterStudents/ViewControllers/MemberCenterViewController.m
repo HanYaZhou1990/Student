@@ -7,6 +7,9 @@
 //
 
 #import "MemberCenterViewController.h"
+#import "ChangePhoneViewController.h"
+#import "ChangePwdViewController.h"
+#import "TimeLineViewController.h"
 
 @interface MemberCenterViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -33,7 +36,7 @@
     [super viewDidLoad];
     self.title = @"个人中心";
     
-    sectionOneLArray = @[@"昵称",@"当前账号",@"联系方式"];
+    sectionOneLArray = @[@"昵称",@"当前账号",@"联系方式",@"修改密码"];
     sectionTwoLArray = @[@"当前教练",@"我的时间线",@"当前学习进度",@"当前考试进度",@"身份证名称",@"身份证照片"];
     
     [self setTheTableView];
@@ -126,21 +129,30 @@
             {
                 cell.detailTextLabel.text = @"韩亚周";
             }
-            else if (indexPath.row==2)
+            else if (indexPath.row==1)
             {
                 cell.detailTextLabel.text = @"hanyz";
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            else if (indexPath.row==3)
+            else if (indexPath.row==2)
             {
                 cell.detailTextLabel.text = @"15093387753";
             }
         }
         if (indexPath.section==2)
         {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.text = [sectionTwoLArray objectAtIndex:indexPath.row];
             if (indexPath.row==0)
             {
                 cell.detailTextLabel.text = @"友谊驾校/孙璋";
+            }
+            else if (indexPath.row==1)
+            {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
             }
             else if (indexPath.row==2)
             {
@@ -157,6 +169,9 @@
         }
         if (indexPath.section==3)
         {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
             cell.textLabel.text = @"红包金额";
             cell.detailTextLabel.text = @"50元";
         }
@@ -177,6 +192,39 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    if (indexPath.section==1)
+    {
+        if (indexPath.row==0)
+        {
+            //姓名
+        }
+        else if (indexPath.row==2)
+        {
+            //联系方式
+            ChangePhoneViewController *vc = [[ChangePhoneViewController alloc]init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if (indexPath.row==3)
+        {
+            //修改密码
+            ChangePwdViewController *vc = [[ChangePwdViewController alloc]init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    if (indexPath.section==2)
+    {
+        if (indexPath.row==1)
+        {
+            //时间线
+            TimeLineViewController *vc = [[TimeLineViewController alloc]init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
     
     if (indexPath.section==4)
     {

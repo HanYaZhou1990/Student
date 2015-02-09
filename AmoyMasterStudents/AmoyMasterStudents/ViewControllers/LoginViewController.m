@@ -43,6 +43,7 @@
     userNameField.borderStyle = UITextBorderStyleNone;
     userNameField.delegate =self;
     userNameField.returnKeyType = UIReturnKeyNext;
+    userNameField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:userNameField];
     
     
@@ -68,6 +69,22 @@
     loginButton.layer.cornerRadius=4;
     [loginButton addTarget:self action:@selector(loginButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginButton];
+    
+    //找回密码
+    UILabel *findPwdLabel = [[UILabel alloc]init];
+    findPwdLabel.frame = CGRectMake(loginButton.frame.origin.x, loginButton.frame.size.height+loginButton.frame.origin.y+15, 140, 20);
+    findPwdLabel.backgroundColor = [UIColor clearColor];
+    findPwdLabel.text = @"找回密码";
+    findPwdLabel.textColor = RGBA(0, 165, 109, 1);
+    findPwdLabel.font = [UIFont systemFontOfSize:14];
+    [self.view addSubview:findPwdLabel];
+    
+    
+    UIButton *findPwdButton =[UIButton buttonWithType:UIButtonTypeCustom];
+    findPwdButton.backgroundColor = [UIColor clearColor];
+    findPwdButton.frame = CGRectMake(findPwdLabel.frame.origin.x,findPwdLabel.frame.origin.y, findPwdLabel.frame.size.width, findPwdLabel.frame.size.height);
+    [findPwdButton addTarget:self action:@selector(findPwdButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:findPwdButton];
     
     
     UILabel *registerLabel = [[UILabel alloc]init];
@@ -95,6 +112,11 @@
 
 #pragma mark -
 #pragma mark 按钮点击事件
+
+-(void)findPwdButtonClicked:(id)sender
+{
+    
+}
 
 //立即注册点击
 -(void)registerButtonClicked:(id)sender
