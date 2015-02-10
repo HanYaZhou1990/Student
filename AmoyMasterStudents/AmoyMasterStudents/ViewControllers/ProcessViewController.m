@@ -103,15 +103,6 @@
     [myTableView reloadData];
 }
 
-
-#pragma mark -
-#pragma mark - 数据相关
--(void)refreshMemberData
-{
-    //刷新数据
-}
-
-
 #pragma mark -
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

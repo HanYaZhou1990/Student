@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E44596A1A89D4E7001C1B7B /* CoachDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4459691A89D4E7001C1B7B /* CoachDetailModel.m */; };
 		3E7F12F31A88460800A2D34C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F12F21A88460800A2D34C /* LoginViewController.m */; };
 		3E7F12F61A88461900A2D34C /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F12F51A88461900A2D34C /* RegisterViewController.m */; };
 		3E7F12F91A884B6B00A2D34C /* WWTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F12F81A884B6B00A2D34C /* WWTextField.m */; };
@@ -174,6 +175,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E4459681A89D4E7001C1B7B /* CoachDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachDetailModel.h; sourceTree = "<group>"; };
+		3E4459691A89D4E7001C1B7B /* CoachDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachDetailModel.m; sourceTree = "<group>"; };
 		3E7F12F11A88460800A2D34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3E7F12F21A88460800A2D34C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		3E7F12F41A88461900A2D34C /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -655,6 +658,8 @@
 				3EBB454F1A80BF98001E534B /* MessageSave.m */,
 				3E7F130C1A88BA9000A2D34C /* TimeLineModel.h */,
 				3E7F130D1A88BA9000A2D34C /* TimeLineModel.m */,
+				3E4459681A89D4E7001C1B7B /* CoachDetailModel.h */,
+				3E4459691A89D4E7001C1B7B /* CoachDetailModel.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -1148,6 +1153,7 @@
 				3EBB45501A80BF98001E534B /* MessageSave.m in Sources */,
 				3EBB44D31A80BE31001E534B /* ValidateTool.m in Sources */,
 				3EBB45491A80BF5A001E534B /* UIButton+AFNetworking.m in Sources */,
+				3E44596A1A89D4E7001C1B7B /* CoachDetailModel.m in Sources */,
 				3EEF36E31A8338690004852F /* WWMenuView.m in Sources */,
 				3EBB45001A80BF2A001E534B /* MKAnnotationView+WebCache.m in Sources */,
 				3EBB45571A80BFB4001E534B /* SizeToLabelCell.m in Sources */,
