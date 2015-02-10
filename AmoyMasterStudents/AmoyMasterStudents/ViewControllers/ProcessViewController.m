@@ -96,6 +96,10 @@
     [dataSource addObject:timeLine2];
     [dataSource addObject:timeLine3];
     
+    [dataSource addObject:timeLine1];
+    [dataSource addObject:timeLine2];
+    [dataSource addObject:timeLine3];
+    
     [myTableView reloadData];
 }
 

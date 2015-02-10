@@ -87,6 +87,7 @@
     titleLabel.text = titleStr;
     if (detailStr.length>0)
     {
+        detailLabel.hidden = NO;
         CGFloat widthUse = SCREEN_WIDTH-65;
         CGFloat heightUse = [PublicConfig height:detailStr widthOfFatherView:widthUse  textFont:[UIFont systemFontOfSize:13]];
         if (heightUse<=15)
@@ -101,6 +102,7 @@
     else
     {
         detailLabel.frame = CGRectMake(65, 0, SCREEN_WIDTH-75, 0);
+        detailLabel.hidden = YES;
         dateLabel.frame = CGRectMake(65, 50, SCREEN_WIDTH-75, 15);
     }
     
