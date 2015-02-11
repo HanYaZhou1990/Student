@@ -156,6 +156,7 @@
 		3EBB460A1A80C1AA001E534B /* icon_trip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB45DC1A80C1AA001E534B /* icon_trip.png */; };
 		3EBB46E41A80DD35001E534B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E01A80DD35001E534B /* LaunchScreen.xib */; };
 		3EBB46E51A80DD35001E534B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E21A80DD35001E534B /* Main.storyboard */; };
+		3EDC272B1A8B308400A9EAC0 /* OrderCoachViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */; };
 		3EEF36E31A8338690004852F /* WWMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF36E21A8338690004852F /* WWMenuView.m */; };
 		CF6997F21A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */; };
 		CF6997F41A87BB7100F3CD1C /* modelTest_btn_test.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6997F31A87BB7100F3CD1C /* modelTest_btn_test.png */; };
@@ -395,6 +396,8 @@
 		3EBB45DC1A80C1AA001E534B /* icon_trip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_trip.png; sourceTree = "<group>"; };
 		3EBB46E11A80DD35001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ../AmoyMasterCoach/AmoyMasterCoach/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3EBB46E31A80DD35001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../AmoyMasterCoach/AmoyMasterCoach/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3EDC27291A8B308400A9EAC0 /* OrderCoachViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCoachViewController.h; sourceTree = "<group>"; };
+		3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCoachViewController.m; sourceTree = "<group>"; };
 		3EEF36E11A8338690004852F /* WWMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMenuView.h; sourceTree = "<group>"; };
 		3EEF36E21A8338690004852F /* WWMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMenuView.m; sourceTree = "<group>"; };
 		CF6997F01A87B41E00F3CD1C /* KnoledgeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnoledgeCollectionViewCell.h; sourceTree = "<group>"; };
@@ -442,6 +445,8 @@
 			children = (
 				3EA59D2E1A845F8F00DA9472 /* CoachDetailViewController.h */,
 				3EA59D2F1A845F8F00DA9472 /* CoachDetailViewController.m */,
+				3EDC27291A8B308400A9EAC0 /* OrderCoachViewController.h */,
+				3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */,
 			);
 			name = "教练广场_Coach";
 			sourceTree = "<group>";
@@ -1185,6 +1190,7 @@
 				3EBB450A1A80BF2A001E534B /* UIImage+GIF.m in Sources */,
 				3EA59D301A845F8F00DA9472 /* CoachDetailViewController.m in Sources */,
 				3EBB45641A80C02E001E534B /* BaseViewController.m in Sources */,
+				3EDC272B1A8B308400A9EAC0 /* OrderCoachViewController.m in Sources */,
 				3E7F12FC1A88832100A2D34C /* FindPwdViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
