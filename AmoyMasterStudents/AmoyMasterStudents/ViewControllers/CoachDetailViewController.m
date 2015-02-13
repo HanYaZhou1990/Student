@@ -13,16 +13,19 @@
 
 @interface CoachDetailViewController ()<UIScrollViewDelegate>
 {
-    UIScrollView *scrollView;
+    UIScrollView *scrollUseView;
     CoachDetailModel *coachDetailModel;
     
     UIButton *dailyBtn;
     UIButton *nightBtn;
     UIButton *weekendBtn;
     
-    UILabel *btnLabel;
+    UIButton *dailyTopBtn;
+    UIButton *nightTopBtn;
+    UIButton *weekendTopBtn;
+    UIView   *topBtnBgView;
     
-    UIButton *orderBtn;
+    UILabel *btnLabel;
     
     int btnType;
     
@@ -62,9 +65,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 #pragma mark -
 #pragma mark - 数据相关
+
 -(void)getData
 {
     coachDetailModel = [[CoachDetailModel alloc]init];
@@ -90,12 +93,12 @@
 //设置tableview属性
 - (void)setTheScrollView
 {
-    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT)];
-    [scrollView setDelegate:self];
-    scrollView.backgroundColor = [UIColor clearColor];
-    scrollView.showsVerticalScrollIndicator = NO;//隐藏垂直滚动条
-    scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 1000);
-    [self.view addSubview:scrollView];
+    scrollUseView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT)];
+    [scrollUseView setDelegate:self];
+    scrollUseView.backgroundColor = [UIColor clearColor];
+    scrollUseView.showsVerticalScrollIndicator = NO;//隐藏垂直滚动条
+    scrollUseView.contentSize = CGSizeMake(SCREEN_WIDTH, 1000);
+    [self.view addSubview:scrollUseView];
     
     [self setUseView];
 }
@@ -107,7 +110,7 @@
     oneBgView.layer.masksToBounds = YES;
     oneBgView.layer.cornerRadius = 4;
     oneBgView.backgroundColor = [UIColor whiteColor];
-    [scrollView addSubview:oneBgView];
+    [scrollUseView addSubview:oneBgView];
     
     UIImageView *bgImageView =  [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-20, 85)];
     bgImageView.image = [UIImage imageNamed:@"square_item_bg.png"];
@@ -244,7 +247,7 @@
     [oneBgView addSubview:btnLabel];
     
     
-    orderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *orderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     orderBtn.frame = CGRectMake(75, 165, SCREEN_WIDTH-170, 30);
     [orderBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
     [orderBtn setTitle:@"立即预约" forState:UIControlStateNormal];
@@ -253,13 +256,91 @@
     [orderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     orderBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     orderBtn.layer.masksToBounds=YES;
-    orderBtn.layer.cornerRadius=10;
+    orderBtn.layer.cornerRadius=15;
     [orderBtn addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [oneBgView addSubview:orderBtn];
     
     [self setCurriculumView];
+    [self setBtnView];
     
 }
+
+//顶部btnView
+-(void)setBtnView
+{
+    topBtnBgView = [[UIView alloc]init];
+    topBtnBgView.frame = CGRectMake(0, -60, SCREEN_WIDTH, 60);
+    topBtnBgView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:topBtnBgView];
+    
+    UIView *topBgView = [[UIView alloc]init];
+    topBgView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 60);
+    topBgView.alpha = 0.9;
+    topBgView.backgroundColor = [UIColor whiteColor];
+    [topBtnBgView addSubview:topBgView];
+    
+    
+    NSArray *btnTitleArray = @[@"日常班",@"夜间班",@"双休班",@"立即预约"];
+    for (int i=0; i<btnTitleArray.count; i++)
+    {
+        UIButton *useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        useBtn.frame = CGRectMake(10+((SCREEN_WIDTH-50)/btnTitleArray.count+10)*i, 15, (SCREEN_WIDTH-50)/btnTitleArray.count, 30);
+        [useBtn setBackgroundColor:[UIColor whiteColor]];
+        [useBtn setTitle:[btnTitleArray objectAtIndex:i] forState:UIControlStateNormal];
+        [useBtn setTitle:[btnTitleArray objectAtIndex:i] forState:UIControlStateHighlighted];
+        [useBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateNormal];
+        [useBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateHighlighted];
+        useBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        useBtn.layer.masksToBounds=YES;
+        useBtn.layer.cornerRadius=15;
+        useBtn.layer.borderWidth = 1;
+        useBtn.layer.borderColor = RGBA(0, 165, 109, 1).CGColor;
+        useBtn.tag = 1000+i;
+        if (i==0)
+        {
+            dailyTopBtn = useBtn;
+        }
+        else if (i==1)
+        {
+            nightTopBtn = useBtn;
+        }
+        else if (i==2)
+        {
+            weekendTopBtn = useBtn;
+        }
+        else if (i==3)
+        {
+            [useBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
+            [useBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [useBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+        }
+        [useBtn addTarget:self action:@selector(useBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [topBtnBgView addSubview:useBtn];
+    }
+    
+    UILabel *lineLabel = [[UILabel alloc] init];
+    lineLabel.frame = CGRectMake(0, 59, SCREEN_WIDTH, 1);
+    lineLabel.backgroundColor = RGBA(235, 235, 235, 1);
+    [topBtnBgView addSubview:lineLabel];
+}
+
+-(void)showBtnView
+{
+    [UIView animateWithDuration:0.3 animations:^
+    {
+        topBtnBgView.frame = CGRectMake(0, 0, SCREEN_WIDTH,60);
+    }];
+}
+
+-(void)dismissBtnView
+{
+    [UIView animateWithDuration:0.3 animations:^
+     {
+         topBtnBgView.frame = CGRectMake(0, -60, SCREEN_WIDTH,60);
+     }];
+}
+
+
 
 //课程表
 -(void)setCurriculumView
@@ -268,7 +349,7 @@
     UIView *bgView = [[UIView alloc]init];
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.frame = CGRectMake(0, 225, SCREEN_WIDTH, 55+useCount*25);
-    [scrollView addSubview:bgView];
+    [scrollUseView addSubview:bgView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.frame = CGRectMake(15, 20, SCREEN_WIDTH-30, 15);
@@ -314,7 +395,7 @@
     UIView *bgView = [[UIView alloc]init];
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.frame = CGRectMake(0, height, SCREEN_WIDTH, 55+heightUse);
-    [scrollView addSubview:bgView];
+    [scrollUseView addSubview:bgView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.frame = CGRectMake(15, 20, SCREEN_WIDTH-30, 15);
@@ -359,7 +440,7 @@
     UIView *bgView = [[UIView alloc]init];
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.frame = CGRectMake(0, height, SCREEN_WIDTH, 55+heightUse);
-    [scrollView addSubview:bgView];
+    [scrollUseView addSubview:bgView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.frame = CGRectMake(15, 20, SCREEN_WIDTH-30, 15);
@@ -399,7 +480,7 @@
     UIView *bgView = [[UIView alloc]init];
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.frame = CGRectMake(0, height, SCREEN_WIDTH, 55+120);
-    [scrollView addSubview:bgView];
+    [scrollUseView addSubview:bgView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.frame = CGRectMake(15, 20, SCREEN_WIDTH-30, 15);
@@ -443,7 +524,7 @@
     UIView *bgView = [[UIView alloc]init];
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.frame = CGRectMake(0, height, SCREEN_WIDTH, 280);
-    [scrollView addSubview:bgView];
+    [scrollUseView addSubview:bgView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.frame = CGRectMake(15, 20, SCREEN_WIDTH-30, 15);
@@ -503,7 +584,7 @@
     lineLabel.backgroundColor = RGBA(235, 235, 235, 1);
     [bgView addSubview:lineLabel];
     
-    scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, heightTemp);
+    scrollUseView.contentSize = CGSizeMake(SCREEN_WIDTH, heightTemp);
 }
 
 #pragma mark -
@@ -517,6 +598,7 @@
     switch (btn.tag)
     {
         case 100:
+        case 1000:
         {
             //日常班
             btnType = 1;
@@ -524,9 +606,14 @@
             [dailyBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
             [dailyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [dailyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
+            [dailyTopBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
+            [dailyTopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [dailyTopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         }
             break;
         case 101:
+        case 1001:
         {
             //夜间班
             btnType = 2;
@@ -534,9 +621,14 @@
             [nightBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
             [nightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [nightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
+            [nightTopBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
+            [nightTopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [nightTopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         }
             break;
         case 102:
+        case 1002:
         {
             //双休班
             btnType = 3;
@@ -544,8 +636,19 @@
             [weekendBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
             [weekendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [weekendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
+            [weekendTopBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
+            [weekendTopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [weekendTopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            
         }
             break;
+        case 1003:
+        {
+            [self orderBtnClick:nil];
+        }
+            break;
+       
             
         default:
             break;
@@ -561,10 +664,6 @@
     else
     {
         //预约
-        [orderBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
-        [orderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [orderBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-        
         OrderCoachViewController *vc = [[OrderCoachViewController alloc]init];
         vc.orderType = @"1";
         [self.navigationController pushViewController:vc animated:YES];
@@ -578,21 +677,45 @@
     [dailyBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateNormal];
     [dailyBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateHighlighted];
     
+    [dailyTopBtn setBackgroundColor:[UIColor whiteColor]];
+    [dailyTopBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateNormal];
+    [dailyTopBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateHighlighted];
+    
     [nightBtn setBackgroundColor:[UIColor whiteColor]];
     [nightBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateNormal];
     [nightBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateHighlighted];
     
+    [nightTopBtn setBackgroundColor:[UIColor whiteColor]];
+    [nightTopBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateNormal];
+    [nightTopBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateHighlighted];
+    
     [weekendBtn setBackgroundColor:[UIColor whiteColor]];
     [weekendBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateNormal];
     [weekendBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateHighlighted];
+    
+    [weekendTopBtn setBackgroundColor:[UIColor whiteColor]];
+    [weekendTopBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateNormal];
+    [weekendTopBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateHighlighted];
+    
 }
-
-
 
 #pragma mark -
 #pragma mark - UIScrollViewDelegate
-
-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGPoint point = scrollView.contentOffset;
+    DLog(@"scrollViewDidScroll %f,%f",point.x,point.y);
+    
+    CGFloat yy = point.y;
+    if (yy>220)
+    {
+        [self showBtnView];
+    }
+    else
+    {
+        [self dismissBtnView];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
