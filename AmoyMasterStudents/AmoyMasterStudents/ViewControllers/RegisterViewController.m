@@ -311,7 +311,12 @@
                            }
                            else
                            {
-                               NSString *dataStr = [responseDic valueForKey:@"data"];
+                           /*本来是 
+                            NSString *dataStr = [responseDic valueForKey:@"data"];
+                            我将其修改为
+                            NSString *dataStr = [responseDic valueForKey:@"msg"];
+                            */
+                               NSString *dataStr = [responseDic valueForKey:@"msg"];
                                [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:dataStr andReplace:@"注册失败"]];
                            }
                        }
