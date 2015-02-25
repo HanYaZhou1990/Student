@@ -50,3 +50,59 @@
 #define logoutDidSuccessNotification @"logoutDidSuccessNotification" //退出成功
 
 
+/*****************服务器地址相关**************/
+
+#define BASE_PLAN_URL      @"http://api.51taosf.com" 
+
+/*****************接口相关**************/
+
+//学员注册接口
+#define trainee_traineeWrite_register  @"/trainee/traineeWrite/register"
+
+//学员重置密码
+#define trainee_traineeWrite_resetPassword  @"/trainee/traineeWrite/resetPassword"
+
+//学员修改密码
+#define trainee_traineeWrite_changePassword  @"/trainee/traineeWrite/changePassword"
+
+//学员更改联系方式
+#define trainee_traineeWrite_updateContact  @"/trainee/traineeWrite/updateContact"
+
+//学员登录接口
+#define trainee_traineeRead_login  @"/trainee/traineeRead/login"
+
+//获取学员个人信息
+#define trainee_traineeRead_info  @"/trainee/traineeRead/info"
+
+//学员发送密码重置验证码短信
+#define trainee_traineeRead_sendPwdResetSMS  @"/trainee/traineeRead/sendPwdResetSMS"
+
+//请求获取找回密码的凭据
+#define trainee_traineeRead_requestPwdRese  @"/trainee/traineeRead/requestPwdRese"
+
+//获取更改联系方式手机验证码
+#define trainee_traineeRead_sendUpdateContactSMS  @"/trainee/traineeRead/sendUpdateContactSMS"
+
+//获取获取修改密码的手机验证码
+#define trainee_traineeRead_sendPwdChangeSMS  @"/trainee/traineeRead/sendPwdChangeSMS"
+
+//教练广场
+#define trainee_master_list  @"/trainee/master/list"
+
+//搜索教练
+#define trainee_master_search  @"/trainee/master/search"
+
+//教练详情
+#define trainee_master_info  @"/trainee/master/info"
+
+
+
+
+
+
+
+
+
+
+
+

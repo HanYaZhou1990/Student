@@ -188,4 +188,14 @@ bool dataDebug = true;
     return textStr;
 }
 
+//任意对象转换为空
++(id)setIfNsnull:(id)useObject
+{
+    if ([[useObject class] isSubclassOfClass:[NSNull class]])
+    {
+        return nil;
+    }
+    return useObject;
+}
+
 @end

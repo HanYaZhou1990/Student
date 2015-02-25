@@ -50,5 +50,8 @@
 //去空格
 +(NSString *)getUseStr:(NSString *)test;
 
+//任意对象转换为空
++(id)setIfNsnull:(id)useObject;
+
 @end
 

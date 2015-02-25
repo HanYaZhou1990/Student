@@ -9,6 +9,7 @@
 #import "RegisterViewController.h"
 #import "WWTextField.h"
 #import "ValidateTool.h"
+#import "AFNetworking.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 {
@@ -18,6 +19,9 @@
     WWTextField *captchaTextField;
     
     UIButton *captchaBtn;
+    
+    AFHTTPRequestOperation *validOperation;
+    AFHTTPRequestOperation *registerOperation;
 }
 
 @property (nonatomic,strong) NSTimer *timer;
@@ -49,6 +53,12 @@
 }
 -(void)backAction
 {
+    [registerOperation cancel];
+    registerOperation=nil;
+    [validOperation cancel];
+    validOperation=nil;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -280,14 +290,72 @@
 //注册请求
 -(void)registerUserData:(NSString *)phoneNumber andPassword:(NSString *)password andPassCode:(NSString *)passCode
 {
-    //注册成功 返回去登陆
-     [self.navigationController popViewControllerAnimated:YES];
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"注册中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_register];
+    
+    NSDictionary *params = @{@"account":phoneNumber,@"password":password};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    registerOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                       {
+                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                           
+                           NSDictionary *responseDic = (NSDictionary *)responseObject;
+                           NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                           if ([resultCode boolValue]==NO)
+                           {
+                               [PublicConfig waringInfo:@"注册成功"];
+                               //注册成功 返回去登陆
+                               [self.navigationController popViewControllerAnimated:YES];
+                           }
+                           else
+                           {
+                               NSString *dataStr = [responseDic valueForKey:@"data"];
+                               [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:dataStr andReplace:@"注册失败"]];
+                           }
+                       }
+                            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                       {
+                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                            [SVProgressHUD showErrorWithStatus:@"注册请求失败"];
+                       }];
 }
 
 //给用户发送短信验证码
 -(void)getValidCodeData:(NSString *)hp
 {
     
+//    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"获取验证码中..." animated:YES];
+//    
+//    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,@""];
+//    
+//    NSDictionary *params = @{@"cellphone":@""};
+//    
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+//                  {
+//                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                      
+//                      NSDictionary *responseDic = (NSDictionary *)responseObject;
+//                      NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+//                      if ([resultCode boolValue]==NO)
+//                      {
+//                          NSString *dataStr = [responseDic valueForKey:@"data"];
+//                          [PublicConfig waringInfo:[PublicConfig isSpaceString:dataStr andReplace:@"注册成功"]];
+//                      }
+//                      else
+//                      {
+//                          NSString *dataStr = [responseDic valueForKey:@"data"];
+//                          [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:dataStr andReplace:@"验证码获取失败"]];
+//                      }
+//                  }
+//                       failure:^(AFHTTPRequestOperation *operation, NSError *error)
+//                  {
+//                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                      DLog(@"请求失败");
+//                  }];
+
 }
 
 #pragma mark -
