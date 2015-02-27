@@ -172,6 +172,8 @@
 		CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */; };
 		CF797BD41A8276BF003581BC /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD31A8276BF003581BC /* UIImage+Color.m */; };
 		CF797BD71A82811E003581BC /* YZCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD61A82811E003581BC /* YZCollectionReusableView.m */; };
+		CF86CFF01AA0B9E40093908B /* YZKnowledgeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86CFEF1AA0B9E40093908B /* YZKnowledgeHeaderView.m */; };
+		CF86CFF61AA0BF710093908B /* KnowledgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86CFF51AA0BF710093908B /* KnowledgeCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -436,6 +438,10 @@
 		CF797BD31A8276BF003581BC /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		CF797BD51A82811E003581BC /* YZCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZCollectionReusableView.h; sourceTree = "<group>"; };
 		CF797BD61A82811E003581BC /* YZCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZCollectionReusableView.m; sourceTree = "<group>"; };
+		CF86CFEE1AA0B9E40093908B /* YZKnowledgeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZKnowledgeHeaderView.h; sourceTree = "<group>"; };
+		CF86CFEF1AA0B9E40093908B /* YZKnowledgeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZKnowledgeHeaderView.m; sourceTree = "<group>"; };
+		CF86CFF41AA0BF710093908B /* KnowledgeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeCell.h; sourceTree = "<group>"; };
+		CF86CFF51AA0BF710093908B /* KnowledgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -680,6 +686,8 @@
 				3EBB45561A80BFB4001E534B /* SizeToRightLabelCell.m */,
 				CF6997F01A87B41E00F3CD1C /* KnoledgeCollectionViewCell.h */,
 				CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */,
+				CF86CFF41AA0BF710093908B /* KnowledgeCell.h */,
+				CF86CFF51AA0BF710093908B /* KnowledgeCell.m */,
 				3EA59D2B1A84537900DA9472 /* CoachCell.h */,
 				3EA59D2C1A84537900DA9472 /* CoachCell.m */,
 				3E7F13091A88B38300A2D34C /* TimeLineCell.h */,
@@ -693,6 +701,8 @@
 			children = (
 				CF797BD51A82811E003581BC /* YZCollectionReusableView.h */,
 				CF797BD61A82811E003581BC /* YZCollectionReusableView.m */,
+				CF86CFEE1AA0B9E40093908B /* YZKnowledgeHeaderView.h */,
+				CF86CFEF1AA0B9E40093908B /* YZKnowledgeHeaderView.m */,
 				CF797BCE1A826A3A003581BC /* EMBAMineMenuView.h */,
 				CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */,
 				3EEF36E11A8338690004852F /* WWMenuView.h */,
@@ -1188,6 +1198,7 @@
 				3EA59D2D1A84537900DA9472 /* CoachCell.m in Sources */,
 				3EBB45421A80BF5A001E534B /* AFURLConnectionOperation.m in Sources */,
 				3EBB45471A80BF5A001E534B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				CF86CFF01AA0B9E40093908B /* YZKnowledgeHeaderView.m in Sources */,
 				3EBB45061A80BF2A001E534B /* SDWebImageDownloaderOperation.m in Sources */,
 				3E7F130B1A88B38300A2D34C /* TimeLineCell.m in Sources */,
 				3EBB45671A80C02E001E534B /* MemberCenterViewController.m in Sources */,
@@ -1214,6 +1225,7 @@
 				3EBB45501A80BF98001E534B /* MessageSave.m in Sources */,
 				3EBB44D31A80BE31001E534B /* ValidateTool.m in Sources */,
 				3EBB45491A80BF5A001E534B /* UIButton+AFNetworking.m in Sources */,
+				CF86CFF61AA0BF710093908B /* KnowledgeCell.m in Sources */,
 				3E44596A1A89D4E7001C1B7B /* CoachDetailModel.m in Sources */,
 				3EEF36E31A8338690004852F /* WWMenuView.m in Sources */,
 				3EAD3FB31AA057C300AA053F /* UIScrollView+MJRefresh.m in Sources */,

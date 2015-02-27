@@ -25,7 +25,51 @@
         }
     return self;
 }
+- (void)viewDidLoad {
+    self.title = @"学车知识";
+    [super viewDidLoad];
+    
+    _knowledgeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT) style:UITableViewStylePlain];
+    _knowledgeTableView.dataSource = self;
+    _knowledgeTableView.delegate = self;
+    [_knowledgeTableView registerClass:[YZKnowledgeHeaderView class] forHeaderFooterViewReuseIdentifier:@"headerView"];
+    [_knowledgeTableView registerClass:[KnowledgeCell class] forCellReuseIdentifier:@"cell"];
+    _knowledgeTableView.tableFooterView = [UIView new];
+    _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _knowledgeTableView.backgroundColor = UIColorFromRGB(0xEEEEEE);
+    self.view = _knowledgeTableView;
+}
 
+#pragma mark -
+#pragma mark UITableViewDataSource -
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    YZKnowledgeHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"headerView"];
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 84;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return SCREEN_WIDTH*1.2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    KnowledgeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    return cell;
+}
+#pragma mark -
+#pragma mark UITableViewDelegate -
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+/*
 - (void)viewDidLoad {
     self.title = @"学车知识";
     [super viewDidLoad];
@@ -85,4 +129,5 @@
 - (void)collectionView:(YZCollectionReusableView *)collectionView view:(UIView *)view buttonSeleectIndex:(NSInteger)indexOfButton {
     DLog(@"%ld",(long)indexOfButton);
 }
+ */
 @end
