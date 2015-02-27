@@ -10,10 +10,20 @@
 #import "WWMenuView.h"
 #import "CoachCell.h"
 #import "CoachDetailViewController.h"
+#import "AFNetworking.h"
+#import "MJRefresh.h"
+#import "CoachListModel.h"
 
 @interface CoachViewController ()<WWMenuViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *myTableView;
+    
+    NSInteger _pageNumber;
+    
+    NSString *totalNumber;
+    
+    NSMutableArray *dataSource;
+    
 }
 @end
 
@@ -36,6 +46,10 @@
     
     [self setTopBtnView];
     [self setTheTableView];
+    
+    dataSource = [[NSMutableArray alloc]init];
+    
+    [self coachListHeaderRefreshing];
 }
 
 -(void)setTopBtnView
@@ -63,6 +77,17 @@
     myTableView.showsVerticalScrollIndicator = NO;//隐藏垂直滚动条
     myTableView.separatorColor = [UIColor clearColor];
     [self.view addSubview:myTableView];
+    
+    [myTableView addHeaderWithTarget:self action:@selector(coachListHeaderRefreshing) dateKey:@"allDiscoverTable"];
+    [myTableView addFooterWithTarget:self action:@selector(coachListFooterRefreshing)];
+    myTableView.headerPullToRefreshText = @"下拉可以刷新";
+    myTableView.headerReleaseToRefreshText = @"松开马上刷新";
+    myTableView.headerRefreshingText = @"正在帮您刷新中";
+    
+    myTableView.footerPullToRefreshText = @"上拉可以加载更多数据";
+    myTableView.footerReleaseToRefreshText = @"松开马上加载更多数据";
+    myTableView.footerRefreshingText = @"正在帮您加载中";
+    
 }
 
 #pragma mark WWMenuViewDelegate
@@ -104,10 +129,98 @@
 }
 
 #pragma mark 获取表格数据
--(void)getTableDataByType:(NSString *)typeStr
+
+- (void)coachListHeaderRefreshing
 {
+    [self getTableDataByType:@"" andPageIndex:1 andIsSearch:NO];
+}
+
+- (void)coachListFooterRefreshing
+{
+    if (dataSource.count < [totalNumber integerValue])
+    {
+        _pageNumber ++;
+    }
+    else
+    {
+        _pageNumber = 1;
+    }
+    [self getTableDataByType:@"" andPageIndex:_pageNumber andIsSearch:NO];
+}
+
+//获取教练列表接口
+-(void)getTableDataByType:(NSString *)typeStr andPageIndex:(NSInteger)pageIndex andIsSearch:(BOOL)isSearch
+{
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_list];
+    
+    NSString *pageIndexStr = [NSString stringWithFormat:@"%ld",(long)pageIndex];
+    
+    NSDictionary *params = @{@"cur_page":pageIndexStr,@"page_size":@"10",@"license":@"3",@"comment":@"1"};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                  {
+                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                      
+                      NSDictionary *responseDic = (NSDictionary *)responseObject;
+                      NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                      if ([resultCode boolValue]==NO)
+                      {
+                          NSDictionary *dataDic = [responseDic valueForKey:@"data"];
+                           NSString *totalItme = [dataDic valueForKey:@"totalItme"];
+                          totalNumber=totalItme;
+                          
+                          NSArray *dataArr = [dataDic valueForKey:@"list"];
+                          if (pageIndex == 1)
+                          {
+                              [dataSource removeAllObjects];
+                          }
+                          for (NSInteger i = 0; i < dataArr.count; i ++)
+                          {
+                              NSDictionary *useDic = [dataArr objectAtIndex:i];
+                              CoachListModel *coachListModel = [[CoachListModel alloc] initWithDictionary:useDic];
+                              [dataSource addObject:coachListModel];
+                          }
+                      }
+                      else
+                      {
+                          NSString *msgStr = [responseDic valueForKey:@"msg"];
+                          [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取教练列表失败"]];
+                      }
+                      if (isSearch)
+                      {
+                          //[_searchTableView reloadData];
+                      }
+                      else
+                      {
+                          [myTableView reloadData];
+                          [myTableView footerEndRefreshing];
+                          [myTableView headerEndRefreshing];
+                      }
+                  }
+                       failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                  {
+                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                      [SVProgressHUD showErrorWithStatus:@"获取教练列表请求失败"];
+                      
+                      if (isSearch)
+                      {
+                          //[_searchTableView reloadData];
+                      }
+                      else
+                      {
+                          [myTableView reloadData];
+                          [myTableView footerEndRefreshing];
+                          [myTableView headerEndRefreshing];
+                      }
+                      
+                  }];
+
     
 }
+
 
 #pragma mark -
 #pragma mark - UITableViewDataSource
@@ -118,7 +231,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -129,15 +242,20 @@
     {
         cell = [[CoachCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
-    
-    NSString *heasImageStr = @"http://img4.duitang.com/uploads/item/201404/15/20140415233353_WwtCY.thumb.700_0.jpeg";
-    NSString *userNameStr = @"韩亚周";
-    NSString *drivingSchoolStr = @"友谊驾校 C照";
-    NSString *scoreStr = @"4.8分";
-    NSString *feesStr = @"3000元 / 12节";
-    NSString *goNumberStr = @"128人上过";
-    NSString *studyNumberStr = @"1280人正在学习";
-    [cell setHeadImageStr:heasImageStr andNameStr:userNameStr andDrivingSchoolStr:drivingSchoolStr andScoreStr:scoreStr andFeesStr:feesStr andGoNumberStr:goNumberStr andStudyNumberStr:studyNumberStr];
+    if (dataSource.count>0)
+    {
+        CoachListModel *coachListModel = [dataSource objectAtIndex:indexPath.row];
+        
+        NSString *heasImageStr = @"http://img4.duitang.com/uploads/item/201404/15/20140415233353_WwtCY.thumb.700_0.jpeg";
+        NSString *userNameStr = [PublicConfig isSpaceString:coachListModel.master_name andReplace:@"匿名教练"];
+        NSString *drivingSchoolStr = [NSString stringWithFormat:@"%@ %@照",coachListModel.school_name,coachListModel.license];
+        NSString *scoreStr = [NSString stringWithFormat:@"%@分",coachListModel.avg_score];
+        NSString *feesStr =[NSString stringWithFormat:@"%@元 / %@节",coachListModel.price,coachListModel.course_count]; ;
+        NSString *goNumberStr = [NSString stringWithFormat:@"%@人上过",coachListModel.trainee_count];
+        NSString *studyNumberStr = [NSString stringWithFormat:@"%@人正在学习",coachListModel.current_count];
+        [cell setHeadImageStr:heasImageStr andNameStr:userNameStr andDrivingSchoolStr:drivingSchoolStr andScoreStr:scoreStr andFeesStr:feesStr andGoNumberStr:goNumberStr andStudyNumberStr:studyNumberStr];
+    }
+  
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     cell.backgroundView = nil;
