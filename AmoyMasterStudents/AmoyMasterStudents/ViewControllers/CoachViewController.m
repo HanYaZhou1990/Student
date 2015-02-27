@@ -352,7 +352,13 @@
         NSString *userNameStr = [PublicConfig isSpaceString:coachListModel.master_name andReplace:@"匿名教练"];
         NSString *drivingSchoolStr = [NSString stringWithFormat:@"%@ %@照",coachListModel.school_name,coachListModel.license];
         NSString *scoreStr = [NSString stringWithFormat:@"%@分",coachListModel.avg_score];
-        NSString *feesStr =[NSString stringWithFormat:@"%@元 / %@节",coachListModel.price,coachListModel.course_count]; ;
+        
+         NSString *feesStr =[NSString stringWithFormat:@"%@元 / %@节",coachListModel.price,coachListModel.course_count];
+        if ([coachListModel.course_count isEqualToString:@"0"])
+        {
+            feesStr =[NSString stringWithFormat:@"%@元",coachListModel.price];
+        }
+       
         NSString *goNumberStr = [NSString stringWithFormat:@"%@人上过",coachListModel.trainee_count];
         NSString *studyNumberStr = [NSString stringWithFormat:@"%@人正在学习",coachListModel.current_count];
         [cell setHeadImageStr:heasImageStr andNameStr:userNameStr andDrivingSchoolStr:drivingSchoolStr andScoreStr:scoreStr andFeesStr:feesStr andGoNumberStr:goNumberStr andStudyNumberStr:studyNumberStr];
