@@ -188,6 +188,8 @@
                               {
                                   [PublicConfig setValue:userNameField.text forKey:userAccount];
                                   
+                                  [PublicConfig setValue:userPswField.text forKey:userPassword];
+                                  
                                   //发送登录协议
                                   [[NSNotificationCenter defaultCenter]postNotificationName:loginDidSuccessNotification object:nil];
                               }

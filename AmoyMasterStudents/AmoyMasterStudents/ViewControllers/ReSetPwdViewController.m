@@ -45,6 +45,10 @@
 }
 -(void)backAction
 {
+    [operation cancel];
+    operation=nil;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

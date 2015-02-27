@@ -9,6 +9,7 @@
 #import "ChangePhoneViewController.h"
 #import "WWTextField.h"
 #import "ValidateTool.h"
+#import "AFNetworking.h"
 
 @interface ChangePhoneViewController ()<UITextFieldDelegate>
 {
@@ -18,6 +19,9 @@
     WWTextField *captchaTextField;
     
     UIButton *captchaBtn;
+    
+    AFHTTPRequestOperation *validOperation;
+    AFHTTPRequestOperation *operation;
 }
 
 @property (nonatomic,strong) NSTimer *timer;
@@ -49,6 +53,12 @@
 }
 -(void)backAction
 {
+    [operation cancel];
+    operation=nil;
+    [validOperation cancel];
+    validOperation=nil;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -256,7 +266,7 @@
     }
     
     //验证后成功后发送请求
-    [self setUserData:phoneStr andPassword:conPwdStr andPassCode:captchaStr];
+    [self setUserData:phoneStr andNewPhone:newPhoneStr andPassword:conPwdStr andPassCode:captchaStr];
     
 }
 
@@ -268,16 +278,70 @@
 #pragma mark -
 #pragma mark 请求相关
 
--(void)setUserData:(NSString *)phoneNumber andPassword:(NSString *)password andPassCode:(NSString *)passCode
+-(void)setUserData:(NSString *)phoneNumber andNewPhone:(NSString *)newPhoneNumer andPassword:(NSString *)password andPassCode:(NSString *)passCode
 {
-    [[NSNotificationCenter defaultCenter]postNotificationName:refreshMemberCenterVCNotification object:nil];
-    [self.navigationController popViewControllerAnimated:YES];
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"修改联系方式中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_updateContact];
+    
+    NSDictionary *params = @{@"cellphone":phoneNumber,@"cellphoneNew":newPhoneNumer,@"password":password,@"vCode":passCode};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    operation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                         {
+                             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                             
+                             NSDictionary *responseDic = (NSDictionary *)responseObject;
+                             NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                             if ([resultCode boolValue]==NO)
+                             {
+                                 [[NSNotificationCenter defaultCenter]postNotificationName:refreshMemberCenterVCNotification object:nil];
+                                 [self.navigationController popViewControllerAnimated:YES];
+                             }
+                             else
+                             {
+                                 NSString *msgStr = [responseDic valueForKey:@"msg"];
+                                 [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"修改联系方式失败"]];
+                             }
+                         }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                         {
+                             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                             [SVProgressHUD showErrorWithStatus:@"修改联系方式请求失败"];
+                         }];
 }
 
 //给用户发送短信验证码
 -(void)getValidCodeData:(NSString *)hp
 {
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"获取验证码中..." animated:YES];
     
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendUpdateContactSMS];
+    
+    NSDictionary *params = @{@"cellphone":hp};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                       {
+                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                           
+                           NSDictionary *responseDic = (NSDictionary *)responseObject;
+                           NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                           if ([resultCode boolValue]==NO)
+                           {
+                               DLog(@"验证码获取成功");
+                           }
+                           else
+                           {
+                               NSString *msgStr = [responseDic valueForKey:@"msg"];
+                               [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"验证码获取失败"]];
+                           }
+                       }
+                            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                       {
+                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                           [SVProgressHUD showErrorWithStatus:@"验证码获取请求失败"];
+                       }];
 }
 
 #pragma mark -
