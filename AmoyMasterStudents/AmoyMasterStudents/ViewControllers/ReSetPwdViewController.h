@@ -10,4 +10,6 @@
 
 @interface ReSetPwdViewController : BaseViewController
 
+@property (nonatomic,strong)NSString *dataStr; //重置密码凭证
+
 @end

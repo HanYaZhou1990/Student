@@ -11,11 +11,13 @@
 #import "RegisterViewController.h"
 #import "ValidateTool.h"
 #import "FindPwdViewController.h"
+#import "AFNetworking.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 {
     WWTextField          *userNameField;
     WWTextField          *userPswField;
+    
 }
 @end
 
@@ -169,11 +171,39 @@
 //登录协议
 -(void)sendLoginData
 {
-    [PublicConfig setValue:@"wwr" forKey:userAccount];
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"登录中..." animated:YES];
     
-    //发送登录协议
-    [[NSNotificationCenter defaultCenter]postNotificationName:loginDidSuccessNotification object:nil];
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_login];
     
+    NSDictionary *params = @{@"account":userNameField.text,@"password":userPswField.text};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                          {
+                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                              
+                              NSDictionary *responseDic = (NSDictionary *)responseObject;
+                              NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                              if ([resultCode boolValue]==NO)
+                              {
+                                  [PublicConfig setValue:userNameField.text forKey:userAccount];
+                                  
+                                  //发送登录协议
+                                  [[NSNotificationCenter defaultCenter]postNotificationName:loginDidSuccessNotification object:nil];
+                              }
+                              else
+                              {
+                                  NSString *msgStr = [responseDic valueForKey:@"msg"];
+                                  //[SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"登录失败"]];
+                                  [PublicConfig waringInfo:[PublicConfig isSpaceString:msgStr andReplace:@"登录失败"]];
+                              }
+                          }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                          {
+                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                              //[SVProgressHUD showErrorWithStatus:@"登录请求失败"];
+                              [PublicConfig waringInfo:@"登录请求失败"];
+                          }]; 
 }
 
 #pragma mark -

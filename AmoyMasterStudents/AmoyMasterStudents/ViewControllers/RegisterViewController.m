@@ -311,13 +311,8 @@
                            }
                            else
                            {
-                           /*本来是 
-                            NSString *dataStr = [responseDic valueForKey:@"data"];
-                            我将其修改为
-                            NSString *dataStr = [responseDic valueForKey:@"msg"];
-                            */
-                               NSString *dataStr = [responseDic valueForKey:@"msg"];
-                               [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:dataStr andReplace:@"注册失败"]];
+                               NSString *msgStr = [responseDic valueForKey:@"msg"];
+                               [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"注册失败"]];
                            }
                        }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -330,37 +325,34 @@
 //给用户发送短信验证码
 -(void)getValidCodeData:(NSString *)hp
 {
-    
-//    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"获取验证码中..." animated:YES];
-//    
-//    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,@""];
-//    
-//    NSDictionary *params = @{@"cellphone":@""};
-//    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-//                  {
-//                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//                      
-//                      NSDictionary *responseDic = (NSDictionary *)responseObject;
-//                      NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
-//                      if ([resultCode boolValue]==NO)
-//                      {
-//                          NSString *dataStr = [responseDic valueForKey:@"data"];
-//                          [PublicConfig waringInfo:[PublicConfig isSpaceString:dataStr andReplace:@"注册成功"]];
-//                      }
-//                      else
-//                      {
-//                          NSString *dataStr = [responseDic valueForKey:@"data"];
-//                          [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:dataStr andReplace:@"验证码获取失败"]];
-//                      }
-//                  }
-//                       failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//                  {
-//                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//                      DLog(@"请求失败");
-//                  }];
-
+    //        [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"获取验证码中..." animated:YES];
+    //
+    //        NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,@""];
+    //
+    //        NSDictionary *params = @{@"cellphone":@""};
+    //
+    //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //        validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+    //                      {
+    //                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //
+    //                          NSDictionary *responseDic = (NSDictionary *)responseObject;
+    //                          NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+    //                          if ([resultCode boolValue]==NO)
+    //                          {
+    //                              DLog(@"验证码获取成功");
+    //                          }
+    //                          else
+    //                          {
+    //                              NSString *msgStr = [responseDic valueForKey:@"msg"];
+    //                              [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"验证码获取失败"]];
+    //                          }
+    //                      }
+    //                           failure:^(AFHTTPRequestOperation *operation, NSError *error)
+    //                      {
+    //                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //                          [SVProgressHUD showErrorWithStatus:@"验证码获取请求失败"];
+    //                      }];
 }
 
 #pragma mark -

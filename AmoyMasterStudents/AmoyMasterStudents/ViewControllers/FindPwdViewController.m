@@ -11,6 +11,7 @@
 #import "ValidateTool.h"
 #import "RegisterViewController.h"
 #import "ReSetPwdViewController.h"
+#import "AFNetworking.h"
 
 @interface FindPwdViewController ()<UITextFieldDelegate>
 {
@@ -18,6 +19,9 @@
     WWTextField *captchaTextField;
     
     UIButton *captchaBtn;
+    
+    AFHTTPRequestOperation *validOperation;
+    AFHTTPRequestOperation *findPwdOperation;
 }
 
 @property (nonatomic,strong) NSTimer *timer;
@@ -49,6 +53,12 @@
 }
 -(void)backAction
 {
+    [findPwdOperation cancel];
+    findPwdOperation=nil;
+    [validOperation cancel];
+    validOperation=nil;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -239,15 +249,72 @@
 //找回密码验证请求
 -(void)setUserData:(NSString *)phoneNumber andPassCode:(NSString *)passCode
 {
-   //验证成功进入重置密码页面
-    ReSetPwdViewController *vc = [[ReSetPwdViewController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_requestPwdRese];
+    
+            NSDictionary *params = @{@"cellphone":phoneNumber,@"vCode":passCode};
+    
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            findPwdOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                          {
+                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
+                              NSDictionary *responseDic = (NSDictionary *)responseObject;
+                              NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                              if ([resultCode boolValue]==NO)
+                              {
+                                  NSString *dataStr = [responseDic valueForKey:@"data"];
+                                  
+                                  //验证成功进入重置密码页面
+                                  ReSetPwdViewController *vc = [[ReSetPwdViewController alloc]init];
+                                  vc.dataStr = dataStr;
+                                  [self.navigationController pushViewController:vc animated:YES];
+                              }
+                              else
+                              {
+                                  NSString *msgStr = [responseDic valueForKey:@"msg"];
+                                  [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"找回密码验证失败"]];
+                              }
+                          }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                          {
+                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                              [SVProgressHUD showErrorWithStatus:@"找回密码验证请求失败"];
+                          }];
 }
 
 //给用户发送短信验证码
 -(void)getValidCodeData:(NSString *)hp
 {
+        [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"获取验证码中..." animated:YES];
     
+        NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendPwdResetSMS];
+    
+        NSDictionary *params = @{@"cellphone":hp};
+    
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                      {
+                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
+                          NSDictionary *responseDic = (NSDictionary *)responseObject;
+                          NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                          if ([resultCode boolValue]==NO)
+                          {
+                              DLog(@"验证码获取成功");
+                          }
+                          else
+                          {
+                              NSString *msgStr = [responseDic valueForKey:@"msg"];
+                              [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"验证码获取失败"]];
+                          }
+                      }
+                           failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                      {
+                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                          [SVProgressHUD showErrorWithStatus:@"验证码获取请求失败"];
+                      }];
 }
 
 #pragma mark -

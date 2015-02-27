@@ -9,11 +9,15 @@
 #import "ReSetPwdViewController.h"
 #import "WWTextField.h"
 #import "RegisterViewController.h"
+#import "AFNetworking.h"
 
 @interface ReSetPwdViewController ()<UITextFieldDelegate>
 {
     WWTextField *userPswField;
     WWTextField *userConPswField; //确认密码
+    
+    AFHTTPRequestOperation *operation;
+    
 }
 @end
 
@@ -150,8 +154,37 @@
 //完成请求
 -(void)changePwdDataByPassword:(NSString *)password
 {
-    //修改成功 返回去登陆
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"重置密码中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_resetPassword];
+    
+    NSString *tokenStr = [PublicConfig isSpaceString:self.dataStr andReplace:@""];
+    
+    NSDictionary *params = @{@"token":tokenStr,@"password":password,@"password_":password};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    operation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                         {
+                             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                             
+                             NSDictionary *responseDic = (NSDictionary *)responseObject;
+                             NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                             if ([resultCode boolValue]==NO)
+                             {
+                                 //修改成功 返回去登陆
+                                 [self.navigationController popToRootViewControllerAnimated:YES];
+                             }
+                             else
+                             {
+                                 NSString *msgStr = [responseDic valueForKey:@"msg"];
+                                 [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"重置密码失败"]];
+                             }
+                         }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                         {
+                             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                             [SVProgressHUD showErrorWithStatus:@"重置密码请求失败"];
+                         }]; 
 }
 #pragma mark -
 #pragma mark 屏幕点击事件
