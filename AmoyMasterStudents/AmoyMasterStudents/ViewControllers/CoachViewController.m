@@ -24,6 +24,8 @@
     
     NSMutableArray *dataSource;
     
+    NSString *requestType;//请求类型标示
+    
 }
 @end
 
@@ -48,6 +50,8 @@
     [self setTheTableView];
     
     dataSource = [[NSMutableArray alloc]init];
+    
+    requestType = @"1";//附近
     
     [self coachListHeaderRefreshing];
 }
@@ -99,26 +103,75 @@
         case 0:
         {
             //附近
+            requestType = @"1";
         }
             break;
         case 1:
         {
             //最便宜
+            if ([requestType isEqualToString:@"2"])
+            {
+                requestType = @"3";
+            }
+            else if ([requestType isEqualToString:@"3"])
+            {
+                requestType = @"2";
+            }
+            else
+            {
+                requestType = @"2";
+            }
         }
             break;
         case 2:
         {
             //评价最好
+            if ([requestType isEqualToString:@"4"])
+            {
+                requestType = @"5";
+            }
+            else if ([requestType isEqualToString:@"5"])
+            {
+                requestType = @"4";
+            }
+            else
+            {
+                requestType = @"4";
+            }
         }
             break;
         case 3:
         {
             //学员最多
+            if ([requestType isEqualToString:@"6"])
+            {
+                requestType = @"7";
+            }
+            else if ([requestType isEqualToString:@"7"])
+            {
+                requestType = @"6";
+            }
+            else
+            {
+                requestType = @"6";
+            }
         }
             break;
         case 4:
         {
             //驾照类型
+            if ([requestType isEqualToString:@"8"])
+            {
+                requestType = @"9";
+            }
+            else if ([requestType isEqualToString:@"9"])
+            {
+                requestType = @"8";
+            }
+            else
+            {
+                requestType = @"8";
+            }
         }
             break;
             
@@ -126,13 +179,15 @@
             break;
     }
     
+    //请求数据
+    [self coachListHeaderRefreshing];
 }
 
 #pragma mark 获取表格数据
 
 - (void)coachListHeaderRefreshing
 {
-    [self getTableDataByType:@"" andPageIndex:1 andIsSearch:NO];
+    [self getTableDataByType:requestType andPageIndex:1 andIsSearch:NO];
 }
 
 - (void)coachListFooterRefreshing
@@ -145,7 +200,7 @@
     {
         _pageNumber = 1;
     }
-    [self getTableDataByType:@"" andPageIndex:_pageNumber andIsSearch:NO];
+    [self getTableDataByType:requestType andPageIndex:_pageNumber andIsSearch:NO];
 }
 
 //获取教练列表接口
@@ -156,8 +211,55 @@
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_list];
     
     NSString *pageIndexStr = [NSString stringWithFormat:@"%ld",(long)pageIndex];
+    NSString *pageSizeStr = @"10";
     
-    NSDictionary *params = @{@"cur_page":pageIndexStr,@"page_size":@"10",@"license":@"3",@"comment":@"1"};
+    NSDictionary *params;
+    if ([requestType isEqualToString:@"1"])
+    {
+        //点击附近 离我最近 评分最高
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1",@"comment":@"-1"};
+    }
+    else if ([requestType isEqualToString:@"2"])
+    {
+        //点击最便宜 价格最便宜 评分最高
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"1",@"comment":@"-1"};
+    }
+    else if ([requestType isEqualToString:@"3"])
+    {
+        //点击最便宜 价格贵 评分最高
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"-1",@"comment":@"-1"};
+    }
+    else if ([requestType isEqualToString:@"4"])
+    {
+        //点击最评价最好  评分最高 离我最近
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1",@"comment":@"-1"};
+        
+    }
+    else if ([requestType isEqualToString:@"5"])
+    {
+        //点击最评价最好  评分最低 离我最近
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1",@"comment":@"1"};
+    }
+    else if ([requestType isEqualToString:@"6"])
+    {
+        //点击学员最多  正在学习人数最多 评分最高
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"-1",@"comment":@"-1"};
+    }
+    else if ([requestType isEqualToString:@"7"])
+    {
+        //点击学员最多  正在学习人数最少 评分最高
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"1",@"comment":@"-1"};
+    }
+    else if ([requestType isEqualToString:@"8"])
+    {
+        //点击驾校类型  C2照 评分最高
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"4",@"comment":@"-1"};
+    }
+    else if ([requestType isEqualToString:@"9"])
+    {
+        //点击学员最多  C1照 评分最高
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"3",@"comment":@"-1"};
+    }
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
