@@ -16,20 +16,23 @@
     if (self)
         {
         self.backgroundColor = UIColorFromRGB(0xEEEEEE);
-        self.layer.borderColor = [UIColor whiteColor].CGColor;
-        self.layer.borderWidth = 1.0;
+        
+        NSArray *itemCellArray = @[@{@"title":@"科目一",@"icon":@"icon_traffic.png",@"content":@"交规 知识及技巧",@"button":@YES},
+                          @{@"title":@"科目二",@"icon":@"icon_roadblock.png",@"content":@"桩考/小路 知识及技巧",@"button":@NO},
+                          @{@"title":@"科目三",@"icon":@"icon_road.png",@"content":@"大路 知识及技巧",@"button":@NO},
+                          @{@"title":@"科目四",@"icon":@"icon_police.png.png",@"content":@"安全文明知识及技巧",@"button":@YES}];
         
         for (int i=0; i<4; i++)
             {
             int x=i%2*((SCREEN_WIDTH - 45)/2) +i%2*15+15;
-            int y=i/2*180 +i/2*15+15;
+            int y=i/2*((SCREEN_WIDTH - 45)/2)*1.2 +i/2*15+15;
             
-            UIButton *btn=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-            btn.frame=CGRectMake(x, y, ((SCREEN_WIDTH - 45)/2), 180);
+            KnoledgeCollectionViewCell *btn=[KnoledgeCollectionViewCell buttonWithType:UIButtonTypeRoundedRect];
+            btn.frame=CGRectMake(x, y, ((SCREEN_WIDTH - 45)/2), ((SCREEN_WIDTH - 45)/2)*1.2);
             btn.backgroundColor = [UIColor whiteColor];
-            
-            [btn setTitle:[NSString stringWithFormat:@"%d",i+1] forState:UIControlStateNormal];
-            
+            btn.informationDic = itemCellArray[i];
+            btn.layer.cornerRadius = 5.0;
+            btn.clipsToBounds = YES;
             
             [self.contentView addSubview:btn];
             }

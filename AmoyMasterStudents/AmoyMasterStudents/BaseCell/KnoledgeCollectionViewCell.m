@@ -25,21 +25,16 @@
     self = [super initWithFrame:frame];
     if (self)
         {
-        self.backgroundColor = [UIColor whiteColor];
-        
-        self.layer.cornerRadius = 5.0f;
-        self.clipsToBounds = YES;
-        
         titleLab = [[UILabel alloc] init];
         titleLab.backgroundColor = UIColorFromRGB(0x01BC8F);
         titleLab.textColor = [UIColor whiteColor];
         titleLab.font = [UIFont systemFontOfSize:16.0];
         titleLab.textAlignment = NSTextAlignmentCenter;
-        [self.contentView addSubview:titleLab];
+        [self addSubview:titleLab];
         
         
         iconImageView = [[UIImageView alloc] init];
-        [self.contentView addSubview:iconImageView];
+        [self addSubview:iconImageView];
         
         
         contentLab = [[UILabel alloc] init];
@@ -47,11 +42,11 @@
         contentLab.textColor = [UIColor blackColor];
         contentLab.textAlignment = NSTextAlignmentCenter;
         contentLab.font = [UIFont systemFontOfSize:14.0];
-        [self.contentView addSubview:contentLab];
+        [self addSubview:contentLab];
         
         
         testImageView = [[UIImageView alloc] init];
-        [self.contentView addSubview:testImageView];
+        [self addSubview:testImageView];
         }
     return self;
 }

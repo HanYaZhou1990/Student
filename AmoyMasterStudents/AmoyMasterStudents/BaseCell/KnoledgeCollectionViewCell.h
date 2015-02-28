@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KnoledgeCollectionViewCell : UICollectionViewCell
+@interface KnoledgeCollectionViewCell : UIButton
 
 /*!每个cell上边的内容*/
 @property (nonatomic, strong) NSDictionary       *informationDic;

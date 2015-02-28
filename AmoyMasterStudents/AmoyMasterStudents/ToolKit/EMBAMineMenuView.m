@@ -30,8 +30,9 @@
         button.titleLabel.font = [UIFont systemFontOfSize:13];
         [button setTitle:btnInformationAry[i][0] forState:UIControlStateNormal];
         [button setTitleColor:UIColorFromRGB(0x333333) forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+        [button setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateSelected];
         [button setImage:btnInformationAry[i][1] forState:UIControlStateNormal];
+        [button setImage:btnInformationAry[i][2] forState:UIControlStateSelected];
         [button setBackgroundImage:[btnInformationAry lastObject][1] forState:UIControlStateNormal];
 //        [button setBackgroundImage:[UIImage initWithColor:[UIColor orangeColor]] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(itemClick:) forControlEvents:UIControlEventTouchUpInside];
