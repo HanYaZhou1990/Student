@@ -13,7 +13,7 @@
 @property (nonatomic,copy) NSString *school_name; //驾校名称
 @property (nonatomic,copy) NSString *master_name; //教练名称
 @property (nonatomic,copy) NSString *master_id; //教练ID
-@property (nonatomic,copy) NSString *master_pic; //教练头像
+@property (nonatomic,copy) NSString *avatar; //教练头像
 @property (nonatomic,copy) NSString *price;  //价格
 @property (nonatomic,copy) NSString *avg_score; //得分
 @property (nonatomic,copy) NSString *school_id;  //所属驾校id

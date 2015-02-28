@@ -428,7 +428,7 @@
     {
         CoachListModel *coachListModel = [dataSource objectAtIndex:indexPath.row];
         
-        NSString *heasImageStr = @"http://img4.duitang.com/uploads/item/201404/15/20140415233353_WwtCY.thumb.700_0.jpeg";
+        NSString *heasImageStr = coachListModel.avatar;
         NSString *userNameStr = [PublicConfig isSpaceString:coachListModel.master_name andReplace:@"匿名教练"];
         NSString *drivingSchoolStr = [NSString stringWithFormat:@"%@ %@照",coachListModel.school_name,coachListModel.license];
         NSString *scoreStr = [NSString stringWithFormat:@"%@分",coachListModel.avg_score];
