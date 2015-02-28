@@ -10,12 +10,19 @@
 #import "ChangePhoneViewController.h"
 #import "ChangePwdViewController.h"
 #import "TimeLineViewController.h"
+#import "AFNetworking.h"
+#import <AVFoundation/AVFoundation.h>
+#import "PublicSaveViewController.h"
+#import "MessageSave.h"
 
-@interface MemberCenterViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface MemberCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,PublicSaveViewControllerDelegate>
 {
     UITableView *myTableView;
     NSArray *sectionOneLArray;
     NSArray *sectionTwoLArray;
+    
+    UIImageView *headImageView;
+    NSString *userNameString;
 }
 @end
 
@@ -63,6 +70,260 @@
     //刷新数据
 }
 
+#pragma mark -
+#pragma mark - 修改头像
+
+-(void)upLoadHeadImageView:(UIImage *)image
+{
+    headImageView.image = image;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
+//    //压缩图片
+//    NSData *imageToSendData = UIImageJPEGRepresentation(image, 0.5);
+//    NSString *imgName = @"currentImage@2x.png";
+//    
+//    //上传图片请求
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    NSDictionary *params = @{@"q":@"addfile"};
+//    [manager POST:kUserHeadIMGUrl parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+//     {
+//         [formData appendPartWithFileData:imageToSendData name:@"file" fileName:imgName mimeType:@"image/png"];
+//     }
+//          success:^(AFHTTPRequestOperation *operation, id responseObject)
+//     {
+//         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//         
+//         NSDictionary *resultDic = (NSDictionary *)responseObject;
+//         NSString *ret = [resultDic objectForKey:@"ret"];
+//         if ([ret boolValue])
+//         {
+//             _userInfo.headImageUrl = [resultDic objectForKey:@"url"];
+//             
+//             [self upLoadMyUserInfoData]; //修改用户信息
+//             [myTableView reloadData];
+//         }
+//         else
+//         {
+//             [SVProgressHUD showErrorWithStatus:@"图片上传失败"];
+//         }
+//     }
+//          failure:^(AFHTTPRequestOperation *operation, NSError *error)
+//     {
+//         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//         [SVProgressHUD showErrorWithStatus:@"请求失败"];
+//     }];
+}
+
+-(void)tapMyDetailImg:(id)sender
+{
+    UIActionSheet *sheet;
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        sheet  = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册选择", nil];
+    }
+    else
+    {
+        sheet  = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册选择", nil];
+    }
+    sheet.tag = 255;
+    [sheet showInView:self.view];
+}
+#pragma -
+#pragma mark UIActionSheetDelegate
+
+-(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == 255)
+    {
+        NSUInteger sourceType = 0;
+        
+        // 判断是否支持相机
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            
+            switch (buttonIndex)
+            {
+                case 2:
+                    // 取消
+                    return;
+                case 0:
+                {
+                    if (IOS8)
+                    {
+                        //判断ios8的相机访问权限
+                        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+                        if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied)
+                        {
+                            //无权限
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"无法拍照" message:@"请在设备的'设置-隐私-相机'中允许淘师傅访问相机。"
+                                                                           delegate:nil cancelButtonTitle:@"确定"          otherButtonTitles:nil];
+                            [alert show];
+                            return;
+                        }
+                        else if (authStatus ==AVAuthorizationStatusNotDetermined) //第一次使用，则会弹出是否打开权限
+                        {
+                            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted)
+                             {
+                                 if(granted)
+                                 {//点击允许访问时调用
+                                     //用户明确许可与否，媒体需要捕获，但用户尚未授予或拒绝许可。
+                                     // 相机
+                                     
+                                 }
+                                 else
+                                 {
+                                     //点击不允许时调用
+                                     return ;
+                                 }
+                             }];
+                        }
+                    }
+                    // 相机
+                    sourceType = UIImagePickerControllerSourceTypeCamera;
+                }
+                    break;
+                    
+                case 1:
+                    // 相册
+                    sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    break;
+            }
+        }
+        else
+        {
+            if (buttonIndex == 1)
+            {
+                
+                return;
+            }
+            else
+            {
+                sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            }
+        }
+        
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        
+        imagePickerController.delegate = self;
+        
+        imagePickerController.allowsEditing = YES;
+        
+        imagePickerController.sourceType = sourceType;
+        
+        imagePickerController.navigationBar.tintColor=[UIColor blackColor];
+//        [imagePickerController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bar.png"] forBarMetrics:UIBarMetricsDefault];
+        
+        [self.navigationController presentViewController:imagePickerController animated:YES completion:^{}];
+        
+    }
+}
+
+#pragma -
+#pragma mark UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"更新图片中..." animated:YES];
+    [picker dismissViewControllerAnimated:YES completion:
+     ^{
+         UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+         image = [self fixOrientation:image];
+         
+         [self upLoadHeadImageView:image];
+     }];
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+}
+
+//控制拍照图片的方向
+- (UIImage *)fixOrientation:(UIImage *)aImage
+{
+    if (aImage.imageOrientation == UIImageOrientationUp)
+        return aImage;
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
+
+
+#pragma -
+#pragma mark PublicSaveViewControllerDelegate
+-(void)publicSaveMessage:(id)sender
+{
+    MessageSave *messageSave = (MessageSave *)sender;
+    if ([messageSave.titleString isEqualToString:@"修改昵称"])
+    {
+        //昵称
+        userNameString = messageSave.saveMessage;
+    }
+    [myTableView reloadData];
+}
 
 #pragma mark -
 #pragma mark - UITableViewDataSource
@@ -114,13 +375,16 @@
         [cell.contentView addSubview:bgView];
         
             //头像 头像可点击编辑  名字
-            UIImageView *headImageView =  [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-60)/2, 230, 60, 60)];
+            headImageView =  [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-60)/2, 230, 60, 60)];
             headImageView.image = [UIImage imageNamed:@"account_default_avatar.png"];
             headImageView.layer.masksToBounds=YES;
             headImageView.layer.cornerRadius=30;
             headImageView.layer.borderWidth=2.0;
             headImageView.layer.borderColor=[UIColor whiteColor].CGColor;
             headImageView.contentMode = UIViewContentModeScaleAspectFill;
+            headImageView.userInteractionEnabled = YES;
+            UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyDetailImg:)];
+            [headImageView addGestureRecognizer:singleTap];
             [cell.contentView addSubview:headImageView];
     }
     else
@@ -137,7 +401,7 @@
             cell.textLabel.text = [sectionOneLArray objectAtIndex:indexPath.row];
             if (indexPath.row==0)
             {
-                cell.detailTextLabel.text = @"韩亚周";
+                cell.detailTextLabel.text = [PublicConfig isSpaceString:userNameString andReplace:@"韩亚周"];
             }
             else if (indexPath.row==1)
             {
@@ -209,6 +473,15 @@
         if (indexPath.row==0)
         {
             //姓名
+            PublicSaveViewController *psVC = [[PublicSaveViewController alloc]init];
+            //传个人信息
+            psVC.isSaveVerification = @"1";
+            psVC.titleStr =@"修改昵称";
+            psVC.textFieldStr = userNameString;
+            psVC.isUsedStr = @"短文本";
+            psVC.publicSaveVCdelegate = self;
+            psVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:psVC animated:YES];
         }
         else if (indexPath.row==2)
         {
