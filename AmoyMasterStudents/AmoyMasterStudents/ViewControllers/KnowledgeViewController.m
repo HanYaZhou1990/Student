@@ -7,7 +7,7 @@
 //
 
 #import "KnowledgeViewController.h"
-
+#import "NoticeViewController.h"
 @interface KnowledgeViewController (){
     NSArray      *itemCellArray;
 }
@@ -29,6 +29,8 @@
     self.title = @"学车知识";
     [super viewDidLoad];
     
+    [self setRightNavigationBar];
+    
     _knowledgeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT) style:UITableViewStylePlain];
     _knowledgeTableView.dataSource = self;
     _knowledgeTableView.delegate = self;
@@ -38,6 +40,28 @@
     _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _knowledgeTableView.backgroundColor = UIColorFromRGB(0xEEEEEE);
     self.view = _knowledgeTableView;
+}
+
+//设置右边的添加按键
+- (void)setRightNavigationBar
+{
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame = CGRectMake(10, 7, 80, 30);
+    [rightBtn setTitle:@"通知" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:RGBA(0, 165, 109, 1) forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [rightBtn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightButton;
+}
+
+- (void)btnClick
+{
+    NoticeViewController *vc = [[NoticeViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.noticeType = @"1";
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark -
