@@ -25,10 +25,10 @@
         for (int i=0; i<4; i++)
             {
             int x=i%2*((SCREEN_WIDTH - 45)/2) +i%2*15+15;
-            int y=i/2*((SCREEN_WIDTH - 45)/2)*1.2 +i/2*15+15;
+            int y=i/2*((SCREEN_WIDTH - 45)/2)*1.3 +i/2*15+15;
             
             KnoledgeCollectionViewCell *btn=[KnoledgeCollectionViewCell buttonWithType:UIButtonTypeRoundedRect];
-            btn.frame=CGRectMake(x, y, ((SCREEN_WIDTH - 45)/2), ((SCREEN_WIDTH - 45)/2)*1.2);
+            btn.frame=CGRectMake(x, y, ((SCREEN_WIDTH - 45)/2), ((SCREEN_WIDTH - 45)/2)*1.3);
             btn.backgroundColor = [UIColor whiteColor];
             btn.informationDic = itemCellArray[i];
             btn.delegate = self;
@@ -41,10 +41,6 @@
             }
         }
     return self;
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
 }
 
 - (void)awakeFromNib {}
