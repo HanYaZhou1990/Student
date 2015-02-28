@@ -53,7 +53,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return ((SCREEN_WIDTH - 45)/2)*1.2*2+45;
+    return ((SCREEN_WIDTH - 45)/2)*1.3*2+45;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -85,6 +85,7 @@
         default:
             break;
     }
+    viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
