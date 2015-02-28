@@ -14,7 +14,7 @@
 #import "MJRefresh.h"
 #import "CoachListModel.h"
 
-@interface CoachViewController ()<WWMenuViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface CoachViewController ()<WWMenuViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
     UITableView *myTableView;
     
@@ -25,6 +25,11 @@
     NSMutableArray *dataSource;
     
     NSString *requestType;//请求类型标示
+    NSString *currentRequestType;//当前请求字符串
+    
+    UITextField *searchTextField;
+    NSString *searchStr;//上次参数字符串
+    NSString *currentSearchStr;//搜索字符串
     
 }
 @end
@@ -44,7 +49,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"教练广场";
+    
+    [self leftBarItem];
+    
+    searchStr=@"-1";
     
     [self setTopBtnView];
     [self setTheTableView];
@@ -52,6 +60,57 @@
     dataSource = [[NSMutableArray alloc]init];
     
     requestType = @"1";//附近
+    
+    [self coachListHeaderRefreshing];
+}
+
+- (void)leftBarItem
+{
+    UIView *searchView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 44)];
+    searchView.backgroundColor = [UIColor clearColor];
+    
+    searchTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, 7, searchView.frame.size.width-30, 30)];
+    searchTextField.font = [UIFont systemFontOfSize:14];
+    searchTextField.textColor = [UIColor blackColor];
+    searchTextField.delegate =self;
+    searchTextField.returnKeyType = UIReturnKeySearch;
+    searchTextField.keyboardType = UIKeyboardTypeDefault;
+    searchTextField.placeholder = @"寻找师傅";
+    
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, searchTextField.frame.size.height)];
+    leftView.backgroundColor = [UIColor clearColor];
+    searchTextField.leftView =  leftView;
+    searchTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 30)];
+    rightView.backgroundColor = [UIColor clearColor];
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setImage:[UIImage imageNamed:@"icon_search.png"] forState:UIControlStateNormal];
+    rightButton.frame = CGRectMake(0, 6, 18, 17.5);    [rightButton addTarget:self action:@selector(rightButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [rightView addSubview:rightButton];
+    searchTextField.rightView =  rightView;
+    searchTextField.rightViewMode = UITextFieldViewModeAlways;
+    
+    searchTextField.backgroundColor = [UIColor whiteColor];
+    searchTextField.tintColor = [UIColor blueColor];
+    searchTextField.layer.masksToBounds=YES;
+    searchTextField.layer.cornerRadius=2;
+    searchTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    searchTextField.layer.borderWidth=0.5;
+    searchTextField.clearButtonMode = UITextFieldViewModeNever;
+    [searchView addSubview:searchTextField];
+    
+    
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:searchView];
+    self.navigationItem.leftBarButtonItem = leftBarButton;
+}
+
+-(void)rightButtonAction
+{
+    [searchTextField resignFirstResponder];
+    
+    NSString *seacrhUseStr = [searchTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    currentSearchStr = seacrhUseStr;
     
     [self coachListHeaderRefreshing];
 }
@@ -206,6 +265,11 @@
 //获取教练列表接口
 -(void)getTableDataByType:(NSString *)typeStr andPageIndex:(NSInteger)pageIndex andIsSearch:(BOOL)isSearch
 {
+    if ([currentSearchStr isEqualToString:searchStr]&&[currentRequestType isEqualToString:requestType])
+    {
+        return;
+    }
+    
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_list];
@@ -213,53 +277,70 @@
     NSString *pageIndexStr = [NSString stringWithFormat:@"%ld",(long)pageIndex];
     NSString *pageSizeStr = @"10";
     
-    NSDictionary *params;
+    NSDictionary *params; //去掉组合排列
     if ([requestType isEqualToString:@"1"])
     {
         //点击附近 离我最近 评分最高
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1",@"comment":@"-1"};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1"};
     }
     else if ([requestType isEqualToString:@"2"])
     {
         //点击最便宜 价格最便宜 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"1",@"comment":@"-1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"1"};
     }
     else if ([requestType isEqualToString:@"3"])
     {
         //点击最便宜 价格贵 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"-1",@"comment":@"-1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"-1"};
     }
     else if ([requestType isEqualToString:@"4"])
     {
         //点击最评价最好  评分最高 离我最近
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1",@"comment":@"-1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"-1"};
         
     }
     else if ([requestType isEqualToString:@"5"])
     {
         //点击最评价最好  评分最低 离我最近
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1",@"comment":@"1"};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"1"};
     }
     else if ([requestType isEqualToString:@"6"])
     {
         //点击学员最多  正在学习人数最多 评分最高
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"-1",@"comment":@"-1"};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"-1"};
     }
     else if ([requestType isEqualToString:@"7"])
     {
         //点击学员最多  正在学习人数最少 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"1",@"comment":@"-1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"1"};
     }
     else if ([requestType isEqualToString:@"8"])
     {
         //点击驾校类型  C2照 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"4",@"comment":@"-1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"4"};
     }
     else if ([requestType isEqualToString:@"9"])
     {
         //点击学员最多  C1照 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"3",@"comment":@"-1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"3"};
     }
+    
+    if (currentSearchStr.length>0)
+    {
+        NSMutableDictionary *seacrhDic = [[NSMutableDictionary alloc]init];
+        [seacrhDic addEntriesFromDictionary:params];
+        [seacrhDic setValue:currentSearchStr forKey:@"query"];
+        params = seacrhDic;
+        searchStr = currentSearchStr;
+    }
+    else
+    {
+        searchStr = @"";
+    }
+    
+    currentRequestType = requestType;
+    
+    DLog(@"搜索字符串的值为 %@ 类型为%@",searchStr,currentRequestType);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -387,6 +468,34 @@
 {
     return 93;
 }
+#pragma mark -
+#pragma mark 屏幕点击事件
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [searchTextField resignFirstResponder];
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    return YES;
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField.returnKeyType == UIReturnKeySearch)
+    {
+        [self rightButtonAction];
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    textField.text = @"";
+    return YES;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
