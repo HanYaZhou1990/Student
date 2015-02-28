@@ -20,6 +20,7 @@
 		3E7F130E1A88BA9000A2D34C /* TimeLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F130D1A88BA9000A2D34C /* TimeLineModel.m */; };
 		3E8714031AA1FE6800106A5C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E8714021AA1FE6800106A5C /* AVFoundation.framework */; };
 		3E8714061AA1FFD200106A5C /* PublicSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8714051AA1FFD200106A5C /* PublicSaveViewController.m */; };
+		3E8714091AA217B600106A5C /* NoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E8714081AA217B500106A5C /* NoticeViewController.m */; };
 		3E8F162D1A81BB1800F9BE6C /* memberBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E8F162C1A81BB1800F9BE6C /* memberBg.png */; };
 		3EA59D2D1A84537900DA9472 /* CoachCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA59D2C1A84537900DA9472 /* CoachCell.m */; };
 		3EA59D301A845F8F00DA9472 /* CoachDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA59D2F1A845F8F00DA9472 /* CoachDetailViewController.m */; };
@@ -215,6 +216,8 @@
 		3E8714021AA1FE6800106A5C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		3E8714041AA1FFD200106A5C /* PublicSaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicSaveViewController.h; sourceTree = "<group>"; };
 		3E8714051AA1FFD200106A5C /* PublicSaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicSaveViewController.m; sourceTree = "<group>"; };
+		3E8714071AA217B500106A5C /* NoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeViewController.h; sourceTree = "<group>"; };
+		3E8714081AA217B500106A5C /* NoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeViewController.m; sourceTree = "<group>"; };
 		3E8F162C1A81BB1800F9BE6C /* memberBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = memberBg.png; sourceTree = "<group>"; };
 		3EA59D2B1A84537900DA9472 /* CoachCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachCell.h; sourceTree = "<group>"; };
 		3EA59D2C1A84537900DA9472 /* CoachCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachCell.m; sourceTree = "<group>"; };
@@ -480,6 +483,8 @@
 			children = (
 				CF62A1541AA2088F0031C816 /* ExamViewController.h */,
 				CF62A1551AA2088F0031C816 /* ExamViewController.m */,
+				3E8714071AA217B500106A5C /* NoticeViewController.h */,
+				3E8714081AA217B500106A5C /* NoticeViewController.m */,
 			);
 			name = "学车知识_Knowledge";
 			sourceTree = "<group>";
@@ -1253,6 +1258,7 @@
 				3EBB454B1A80BF5A001E534B /* UIProgressView+AFNetworking.m in Sources */,
 				3EBB45681A80C02E001E534B /* ProcessViewController.m in Sources */,
 				3EBB45031A80BF2A001E534B /* SDWebImageCompat.m in Sources */,
+				3E8714091AA217B600106A5C /* NoticeViewController.m in Sources */,
 				3EBB44971A80BB5F001E534B /* main.m in Sources */,
 				3EBB44DE1A80BF1D001E534B /* SVProgressHUD.m in Sources */,
 				3E7F13021A88834600A2D34C /* ChangePwdViewController.m in Sources */,
