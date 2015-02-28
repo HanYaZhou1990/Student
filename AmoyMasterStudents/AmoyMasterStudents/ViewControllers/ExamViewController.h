@@ -7,10 +7,11 @@
 //
 
 #import "BaseViewController.h"
+#import "AnswerViewController.h"
 
 typedef enum {
     ExamViewControllerTypeOne,
-    ExamViewControllerTypeThree
+    ExamViewControllerTypeThree,
 }ExamViewControllerType;
 
 @interface ExamViewController : BaseViewController
