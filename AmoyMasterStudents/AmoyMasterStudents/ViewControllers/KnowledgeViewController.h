@@ -11,10 +11,10 @@
 #import "KnoledgeCollectionViewCell.h"
 #import "YZKnowledgeHeaderView.h"
 #import "KnowledgeCell.h"
+#import "ExamViewController.h"
 
-@interface KnowledgeViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
-//<UICollectionViewDataSource,UICollectionViewDelegate,YZCollectionReusableViewDelegate>
+@interface KnowledgeViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,KnowledgeCellDelegate>
 
-//@property (nonatomic, strong) UICollectionView    *collectionView;
 @property (nonatomic, strong) UITableView       *knowledgeTableView;
+
 @end

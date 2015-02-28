@@ -31,6 +31,9 @@
             btn.frame=CGRectMake(x, y, ((SCREEN_WIDTH - 45)/2), ((SCREEN_WIDTH - 45)/2)*1.2);
             btn.backgroundColor = [UIColor whiteColor];
             btn.informationDic = itemCellArray[i];
+            btn.delegate = self;
+            btn.tag = i;
+            [btn addTarget:self action:@selector(itemClick:) forControlEvents:UIControlEventTouchUpInside];
             btn.layer.cornerRadius = 5.0;
             btn.clipsToBounds = YES;
             
@@ -50,4 +53,17 @@
     [super setSelected:selected animated:animated];
 }
 
+- (void)itemClick:(KnoledgeCollectionViewCell *)sender{
+    if ([_cellDelegate respondsToSelector:@selector(clickFromCell:clickItem:)]) {
+        [_cellDelegate clickFromCell:self clickItem:sender];
+    }
+}
+
+#pragma mark -
+#pragma mark KnowledgeItemDelegate -
+- (void)button:(UIButton *)button buttonClicked:(UIButton *)testButton{
+    if ([_cellDelegate respondsToSelector:@selector(clickFromCell:button:buttonClicked:)]) {
+        [_cellDelegate clickFromCell:self button:button buttonClicked:testButton];
+    }
+}
 @end

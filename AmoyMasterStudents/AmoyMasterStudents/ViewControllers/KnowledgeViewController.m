@@ -62,72 +62,38 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KnowledgeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.cellDelegate = self;
     return cell;
 }
+
 #pragma mark -
-#pragma mark UITableViewDelegate -
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-/*
-- (void)viewDidLoad {
-    self.title = @"学车知识";
-    [super viewDidLoad];
-    
-    itemCellArray = @[@{@"title":@"科目一",@"icon":@"icon_traffic.png",@"content":@"交规 知识及技巧",@"button":@YES},
-                      @{@"title":@"科目二",@"icon":@"icon_roadblock.png",@"content":@"桩考/小路 知识及技巧",@"button":@NO},
-                      @{@"title":@"科目三",@"icon":@"icon_road.png",@"content":@"大路 知识及技巧",@"button":@NO},
-                      @{@"title":@"科目四",@"icon":@"icon_police.png.png",@"content":@"安全文明知识及技巧",@"button":@YES}];
-    
-    UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
-    flowLayout.itemSize=CGSizeMake((SCREEN_WIDTH-45)/2,180);
-    flowLayout.headerReferenceSize = CGSizeMake(SCREEN_WIDTH, 84);
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT) collectionViewLayout:flowLayout];
-    _collectionView.dataSource = self;
-    _collectionView.delegate = self;
-    _collectionView.backgroundColor = UIColorFromRGB(0xEEEEEE);
-    [_collectionView registerClass:[KnoledgeCollectionViewCell class] forCellWithReuseIdentifier:@"identifier"];
-    [_collectionView registerClass:[YZCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header"];
-    self.view = _collectionView;
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    YZCollectionReusableView *view;
-    if([kind isEqual:UICollectionElementKindSectionHeader])
+#pragma mark KnowledgeCellDelegate -
+- (void)clickFromCell:(KnowledgeCell *)cell button:(UIButton *)button buttonClicked:(UIButton *)testButton{
+    ExamViewController *viewController = [[ExamViewController alloc] init];
+    switch (button.tag) {
+        case 0:
         {
-        view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
-        view.delegate = self;
+        viewController.examType = ExamViewControllerTypeOne;
         }
-    return view;
+            break;
+        case 3:
+        {
+        viewController.examType = ExamViewControllerTypeThree;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return itemCellArray.count;
+- (void)clickFromCell:(KnowledgeCell *)cell clickItem:(KnoledgeCollectionViewCell *)button{
+
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    KnoledgeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"identifier" forIndexPath:indexPath];
-    cell.informationDic = itemCellArray[indexPath.row];
-    return cell;
-}
-
-#pragma mark - UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - YZCollectionReusableViewDelagete
-- (void)collectionView:(YZCollectionReusableView *)collectionView view:(UIView *)view buttonSeleectIndex:(NSInteger)indexOfButton {
-    DLog(@"%ld",(long)indexOfButton);
-}
- */
 @end

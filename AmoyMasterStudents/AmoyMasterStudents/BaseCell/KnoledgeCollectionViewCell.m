@@ -13,7 +13,7 @@
     UIImageView        *iconImageView;
     UILabel            *contentLab;
     /*modelTest_btn_test*/
-    UIImageView        *testImageView;
+    UIButton           *testImageView;
 }
 
 @end
@@ -45,7 +45,8 @@
         [self addSubview:contentLab];
         
         
-        testImageView = [[UIImageView alloc] init];
+        testImageView = [UIButton buttonWithType:UIButtonTypeCustom];
+        [testImageView addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:testImageView];
         }
     return self;
@@ -68,9 +69,15 @@
     
     if ([_informationDic[@"button"] intValue] == YES) {
         UIImage *modelImage = [UIImage imageNamed:@"modelTest_btn_test.png"];
-        testImageView.image = modelImage;
+        [testImageView setImage:modelImage forState:UIControlStateNormal];
         testImageView.bounds = CGRectMake(0, 0, modelImage.size.width/2,modelImage.size.height/2);
         testImageView.center = CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)- modelImage.size.height/2);
+    }
+}
+
+- (void)buttonClick:(UIButton *)sender{
+    if ([_delegate respondsToSelector:@selector(button:buttonClicked:)]) {
+        [_delegate button:self buttonClicked:sender];
     }
 }
 

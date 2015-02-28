@@ -9,6 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "KnoledgeCollectionViewCell.h"
 
-@interface KnowledgeCell : UITableViewCell
+@class KnowledgeCell;
+
+@protocol KnowledgeCellDelegate <NSObject>
+
+- (void)clickFromCell:(KnowledgeCell *)cell button:(UIButton *)button buttonClicked:(UIButton *)testButton;
+- (void)clickFromCell:(KnowledgeCell *)cell clickItem:(KnoledgeCollectionViewCell *)button;
+
+@end
+
+@interface KnowledgeCell : UITableViewCell<KnowledgeItemDelegate>
+
+@property (nonatomic, assign) id <KnowledgeCellDelegate> cellDelegate;
 
 @end

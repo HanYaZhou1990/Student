@@ -169,6 +169,7 @@
 		3EBB46E51A80DD35001E534B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E21A80DD35001E534B /* Main.storyboard */; };
 		3EDC272B1A8B308400A9EAC0 /* OrderCoachViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */; };
 		3EEF36E31A8338690004852F /* WWMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF36E21A8338690004852F /* WWMenuView.m */; };
+		CF62A1561AA2088F0031C816 /* ExamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF62A1551AA2088F0031C816 /* ExamViewController.m */; };
 		CF6997F21A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */; };
 		CF6997F41A87BB7100F3CD1C /* modelTest_btn_test.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6997F31A87BB7100F3CD1C /* modelTest_btn_test.png */; };
 		CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */; };
@@ -434,6 +435,8 @@
 		3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCoachViewController.m; sourceTree = "<group>"; };
 		3EEF36E11A8338690004852F /* WWMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMenuView.h; sourceTree = "<group>"; };
 		3EEF36E21A8338690004852F /* WWMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMenuView.m; sourceTree = "<group>"; };
+		CF62A1541AA2088F0031C816 /* ExamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamViewController.h; sourceTree = "<group>"; };
+		CF62A1551AA2088F0031C816 /* ExamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamViewController.m; sourceTree = "<group>"; };
 		CF6997F01A87B41E00F3CD1C /* KnoledgeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnoledgeCollectionViewCell.h; sourceTree = "<group>"; };
 		CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnoledgeCollectionViewCell.m; sourceTree = "<group>"; };
 		CF6997F31A87BB7100F3CD1C /* modelTest_btn_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modelTest_btn_test.png; sourceTree = "<group>"; };
@@ -475,6 +478,8 @@
 		3E8F16271A81A7A400F9BE6C /* 学车知识_Knowledge */ = {
 			isa = PBXGroup;
 			children = (
+				CF62A1541AA2088F0031C816 /* ExamViewController.h */,
+				CF62A1551AA2088F0031C816 /* ExamViewController.m */,
 			);
 			name = "学车知识_Knowledge";
 			sourceTree = "<group>";
@@ -1222,6 +1227,7 @@
 				3EBB45481A80BF5A001E534B /* UIAlertView+AFNetworking.m in Sources */,
 				3EBB45081A80BF2A001E534B /* SDWebImagePrefetcher.m in Sources */,
 				3EBB45401A80BF5A001E534B /* AFNetworkReachabilityManager.m in Sources */,
+				CF62A1561AA2088F0031C816 /* ExamViewController.m in Sources */,
 				3EBB45651A80C02E001E534B /* CoachViewController.m in Sources */,
 				3EBB45051A80BF2A001E534B /* SDWebImageDownloader.m in Sources */,
 				3EBB454D1A80BF5A001E534B /* UIWebView+AFNetworking.m in Sources */,
