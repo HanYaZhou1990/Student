@@ -31,6 +31,31 @@
     backButton.frame = CGRectMake(0, 0, 21.5, 13.5);    [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = leftBarButton;
+    
+    _questionTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT) style:UITableViewStylePlain];
+    _questionTableView.dataSource = self;
+    _questionTableView.delegate = self;
+    [_questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    _questionTableView.tableFooterView = [UIView new];
+    [self.view addSubview:_questionTableView];
+}
+
+#pragma mark -
+#pragma mark UITableViewDataSource -
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    return cell;
+}
+
+#pragma mark -
+#pragma mark UITableViewDelegate-
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 -(void)backAction

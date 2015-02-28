@@ -19,11 +19,13 @@ typedef enum{
     AnswerViewControllerModelsTypeBus,
 }AnswerViewControllerModelsType;
 
-@interface AnswerViewController : BaseViewController
+@interface AnswerViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 /*!科目类型*/
 @property (nonatomic, assign) AnswerViewControllerSubjectType   subjectType;
 
 /*!车型*/
 @property (nonatomic, assign) AnswerViewControllerModelsType    modelsType;
+
+@property (nonatomic, strong) UITableView                       *questionTableView;
 @end
