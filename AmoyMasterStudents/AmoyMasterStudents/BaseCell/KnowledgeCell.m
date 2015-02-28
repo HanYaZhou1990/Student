@@ -21,8 +21,8 @@
         
         for (int i=0; i<4; i++)
             {
-            int x=(i%2+10)*2 +i%2*((SCREEN_WIDTH - 45)/2);
-            int y=(i/2+10)*2 +i/2*180;
+            int x=i%2*((SCREEN_WIDTH - 45)/2) +i%2*15+15;
+            int y=i/2*180 +i/2*15+15;
             
             UIButton *btn=[UIButton buttonWithType:UIButtonTypeRoundedRect];
             btn.frame=CGRectMake(x, y, ((SCREEN_WIDTH - 45)/2), 180);
