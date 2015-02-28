@@ -10,19 +10,48 @@
 
 @interface CoachDetailModel : NSObject
 
-@property (nonatomic,strong) NSString *headImage;
-@property (nonatomic,strong) NSString *userName;
-@property (nonatomic,strong) NSString *drivingSchool;
-@property (nonatomic,strong) NSString *score;
-@property (nonatomic,strong) NSString *fees;
-@property (nonatomic,strong) NSString *goNumber;
-@property (nonatomic,strong) NSString *studyNumber;
-@property (nonatomic,strong) NSString *phone;
-@property (nonatomic,strong) NSArray  *curriculumArray;//课程表
-@property (nonatomic,strong) NSString *userInfo; //我的自述
-@property (nonatomic,strong) NSString *schoolInfo;//驾校信息
-@property (nonatomic,strong) NSString *paperImage;//证件照
-@property (nonatomic,strong) NSArray  *timeArray;//时间表
-@property (nonatomic,strong) NSString *userAddress;//教练地址
+@property (nonatomic,copy) NSString *school_id;  //所属驾校id
+@property (nonatomic,copy) NSString *school_name; //驾校名称
+
+@property (nonatomic,copy) NSString *master_name; //教练名称
+@property (nonatomic,copy) NSString *master_id; //教练ID
+@property (nonatomic,copy) NSString *master_pic; //教练头像
+
+@property (nonatomic,copy) NSString *price;  //价格
+@property (nonatomic,copy) NSString *avg_score; //得分
+
+@property (nonatomic,copy) NSString *license;  //驾照类型
+@property (nonatomic,copy) NSString *license_type;  //驾照类型
+@property (nonatomic,copy) NSString *trainee_count;  //总的学员数
+@property (nonatomic,copy) NSString *current_count;  //当前正在学习的学员数
+@property (nonatomic,copy) NSString *course_count; //课程数
+
+@property (nonatomic,copy) NSString *cellphone; //教练联系方式
+
+
+@property (nonatomic,copy) NSString *userInfo;
+@property (nonatomic,copy) NSString *schoolInfo;
+@property (nonatomic,copy) NSString *paperImage;
+@property (nonatomic,copy) NSString *userAddress;
+@property (nonatomic,strong) NSArray *curriculumArray;
+@property (nonatomic,strong) NSArray *timeArray;
+
+- (id)initWithDictionary:(NSDictionary *)userDictionary;
+
+@end
+
+
+@interface CoachDetailCourseModel : NSObject
+
+@property (nonatomic,strong) NSString *course_id;
+@property (nonatomic,strong) NSString *school_id;
+@property (nonatomic,strong) NSString *course_name;
+@property (nonatomic,strong) NSString *course_desc;
+@property (nonatomic,strong) NSString *duration_time;
+@property (nonatomic,strong) NSString *enable_flag;
+@property (nonatomic,strong) NSString *create_time;
+@property (nonatomic,strong) NSString *update_time;
+
+- (id)initWithDictionary:(NSDictionary *)userDictionary;
 
 @end

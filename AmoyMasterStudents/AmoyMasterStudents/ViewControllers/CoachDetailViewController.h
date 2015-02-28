@@ -10,4 +10,5 @@
 
 @interface CoachDetailViewController : BaseViewController
 
+@property (nonatomic,strong) NSString *masterId;
 @end

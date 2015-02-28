@@ -12,6 +12,7 @@
 
 @synthesize school_name, //驾校名称
 master_name,  //教练名称
+master_pic, //教练头像
 master_id,  //教练ID
 price,  //价格
 avg_score,  //得分
@@ -28,6 +29,7 @@ course_count; //课程数
     {
         school_name = [userDictionary objectForKey:@"school_name"];
         master_name = [userDictionary objectForKey:@"master_name"];
+        master_pic = [userDictionary objectForKey:@"master_pic"];
         master_id = [userDictionary objectForKey:@"master_id"];
         price = [userDictionary objectForKey:@"price"];
         avg_score = [userDictionary objectForKey:@"avg_score"];

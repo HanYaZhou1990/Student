@@ -19,6 +19,7 @@
     UITableView *myTableView;
     
     NSInteger _pageNumber;
+    NSInteger _currentPageNumber;
     
     NSString *totalNumber;
     
@@ -265,14 +266,26 @@
 //获取教练列表接口
 -(void)getTableDataByType:(NSString *)typeStr andPageIndex:(NSInteger)pageIndex andIsSearch:(BOOL)isSearch
 {
-    if ([currentSearchStr isEqualToString:searchStr]&&[currentRequestType isEqualToString:requestType])
+    if ([currentSearchStr isEqualToString:searchStr]&&[currentRequestType isEqualToString:requestType]&&(_currentPageNumber==_pageNumber))
     {
+        [myTableView footerEndRefreshing];
+        [myTableView headerEndRefreshing];
         return;
     }
     
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
     
-    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_list];
+    NSString *useUrl;
+    if (currentSearchStr.length>0)
+    {
+        //搜索字符串不为空 搜索
+         useUrl= [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_search];
+    }
+    else
+    {
+        //为空 普通列表
+         useUrl= [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_list];
+    }
     
     NSString *pageIndexStr = [NSString stringWithFormat:@"%ld",(long)pageIndex];
     NSString *pageSizeStr = @"10";
@@ -339,6 +352,7 @@
     }
     
     currentRequestType = requestType;
+    _currentPageNumber = _pageNumber;
     
     DLog(@"搜索字符串的值为 %@ 类型为%@",searchStr,currentRequestType);
     
@@ -366,42 +380,27 @@
                               CoachListModel *coachListModel = [[CoachListModel alloc] initWithDictionary:useDic];
                               [dataSource addObject:coachListModel];
                           }
+                          [myTableView reloadData];
                       }
                       else
                       {
                           NSString *msgStr = [responseDic valueForKey:@"msg"];
                           [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取教练列表失败"]];
                       }
-                      if (isSearch)
-                      {
-                          //[_searchTableView reloadData];
-                      }
-                      else
-                      {
-                          [myTableView reloadData];
-                          [myTableView footerEndRefreshing];
-                          [myTableView headerEndRefreshing];
-                      }
+                      
+                      [myTableView footerEndRefreshing];
+                      [myTableView headerEndRefreshing];
                   }
                        failure:^(AFHTTPRequestOperation *operation, NSError *error)
                   {
                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                       [SVProgressHUD showErrorWithStatus:@"获取教练列表请求失败"];
                       
-                      if (isSearch)
-                      {
-                          //[_searchTableView reloadData];
-                      }
-                      else
-                      {
                           [myTableView reloadData];
                           [myTableView footerEndRefreshing];
                           [myTableView headerEndRefreshing];
-                      }
                       
                   }];
-
-    
 }
 
 
@@ -458,7 +457,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    CoachListModel *coachListModel = [dataSource objectAtIndex:indexPath.row];
+    
     CoachDetailViewController *vc = [[CoachDetailViewController alloc]init];
+    vc.masterId = coachListModel.master_id;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
     

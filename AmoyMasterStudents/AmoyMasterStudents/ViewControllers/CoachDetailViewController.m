@@ -10,6 +10,7 @@
 #import "CoachDetailModel.h"
 #import "UIImageView+WebCache.h"
 #import "OrderCoachViewController.h"
+#import "AFNetworking.h"
 
 @interface CoachDetailViewController ()<UIScrollViewDelegate>
 {
@@ -29,6 +30,8 @@
     
     int btnType;
     
+    AFHTTPRequestOperation *coachOperation;
+    
     
 }
 @end
@@ -46,9 +49,6 @@
     btnType = -1;
     
     [self getData];
-    
-    [self setTheScrollView];
-    
 }
 
 - (void)leftBarItem
@@ -62,6 +62,10 @@
 }
 -(void)backAction
 {
+    [coachOperation cancel];
+    coachOperation=nil;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -70,15 +74,45 @@
 
 -(void)getData
 {
-    coachDetailModel = [[CoachDetailModel alloc]init];
-    coachDetailModel.headImage = @"http://img4.duitang.com/uploads/item/201404/15/20140415233353_WwtCY.thumb.700_0.jpeg";
-    coachDetailModel.userName = @"韩亚周";
-    coachDetailModel.drivingSchool =  @"友谊驾校 C照";
-    coachDetailModel.score =  @"4.8";
-    coachDetailModel.fees =  @"3000元 / 12节";
-    coachDetailModel.goNumber =  @"128人上过";
-    coachDetailModel.studyNumber =  @"1280人正在学习";
-    coachDetailModel.phone =  @"15093372739";
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_info];
+    
+    NSDictionary *params = @{@"master_id":self.masterId};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    coachOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                          {
+                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                              
+                              NSDictionary *responseDic = (NSDictionary *)responseObject;
+                              NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                              if ([resultCode boolValue]==NO)
+                              {
+                                 NSDictionary *dataDic = [responseDic valueForKey:@"data"];
+                                  if (dataDic)
+                                  {
+                                      coachDetailModel = [[CoachDetailModel alloc] initWithDictionary:dataDic];
+                                      [self setTempData];
+                                       [self setTheScrollView];
+                                  }
+                              }
+                              else
+                              {
+                                  NSString *msgStr = [responseDic valueForKey:@"msg"];
+                                  [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取教练详情失败"]];
+                              }
+                          }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                          {
+                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                              [SVProgressHUD showErrorWithStatus:@"获取教练详情请求失败"];
+                          }];
+
+}
+
+-(void)setTempData
+{
     coachDetailModel.userInfo = @"操作教练：高中以上文凭，驾龄5年以上，无重大违法肇事行为，最近一个扣分周期无满分记录，照片，驾校手续，以驾校的名义向运管部门申请培训后参加考试，合格以后颁发操作教练员证";
     coachDetailModel.schoolInfo =  @"1、交通主管部门批准的正规驾校；2、一流的训练场地，具有位于市中心的地理优势，幽雅的训练环境；3、一流的教练员队伍，严把培训质量关是学校的第一宗旨，对每位学员负责，使每位学员都能学到真正的驾驶、车辆故障排除技术；4、充足的练车时间，无论白天、晚上、双休日只要您有时间，就可到校练车";
     coachDetailModel.paperImage =  @"http://image.baidu.com/i?ct=503316480&z=0&tn=baiduimagedetail&ipn=d&word=%E6%95%99%E7%BB%83%E8%AF%81&step_word=&pn=1&spn=0&di=190406708250&pi=&rn=1&is=&istype=2&ie=utf-8&oe=utf-8&in=22579&cl=2&lm=-1&st=-1&cs=2506799597%2C3754191755&os=166540971%2C3510408157&adpicid=0&ln=1000&fr=&fmq=1423634132825_R&ic=0&s=&se=1&sme=0&tab=&width=&height=&face=0&ist=&jit=&cg=&objurl=http%3A%2F%2Fimg.jxedt.com%2Fjl_pl%2F201212%2F23104542609.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Frs_z%26e3B3xj1p_z%26e3Bv54AzdH3F8a8mbAzdH3F";
@@ -120,7 +154,7 @@
     UIImageView *headImageView =  [[UIImageView alloc] initWithFrame:CGRectMake(5, 15, 60, 60)];
     headImageView.layer.masksToBounds=YES;
     headImageView.layer.cornerRadius=30;
-    NSString *imageStr = coachDetailModel.headImage;
+    NSString *imageStr = coachDetailModel.master_pic;;
     if (imageStr==nil||[imageStr isEqualToString:@""])
     {
         headImageView.image = [UIImage imageNamed:@"memberBg.png"];
@@ -142,7 +176,8 @@
     userNameLabel.textColor = [UIColor blackColor];
     userNameLabel.font = [UIFont systemFontOfSize:13];
     userNameLabel.backgroundColor = [UIColor clearColor];
-    userNameLabel.text = coachDetailModel.userName;
+    NSString *userNameStr = [PublicConfig isSpaceString:coachDetailModel.master_name andReplace:@"匿名教练"];
+    userNameLabel.text = userNameStr;
     [oneBgView addSubview:userNameLabel];
     
     UILabel *drivingSchoolLabel = [[UILabel alloc]init];
@@ -151,7 +186,8 @@
     drivingSchoolLabel.textColor = [UIColor grayColor];
     drivingSchoolLabel.font = [UIFont systemFontOfSize:12];
     drivingSchoolLabel.backgroundColor = [UIColor clearColor];
-    drivingSchoolLabel.text = coachDetailModel.drivingSchool;
+    NSString *drivingSchoolStr = [NSString stringWithFormat:@"%@ %@照",coachDetailModel.school_name,coachDetailModel.license];
+    drivingSchoolLabel.text = drivingSchoolStr;
     [oneBgView addSubview:drivingSchoolLabel];
     
     UILabel *scoreLabel = [[UILabel alloc]init];
@@ -160,7 +196,8 @@
     scoreLabel.textColor = [UIColor whiteColor];
     scoreLabel.font = [UIFont systemFontOfSize:13];
     scoreLabel.backgroundColor = [UIColor clearColor];
-    scoreLabel.text = [NSString stringWithFormat:@"%@分",coachDetailModel.score];
+    NSString *scoreStr = [NSString stringWithFormat:@"%@分",coachDetailModel.avg_score];
+    scoreLabel.text = scoreStr;
     [oneBgView addSubview:scoreLabel];
     
     UILabel *phoneLabel = [[UILabel alloc]init];
@@ -169,7 +206,7 @@
     phoneLabel.textColor = [UIColor blackColor];
     phoneLabel.font = [UIFont systemFontOfSize:11];
     phoneLabel.backgroundColor = [UIColor clearColor];
-    phoneLabel.text = [NSString stringWithFormat:@"电话:%@",coachDetailModel.phone];
+    phoneLabel.text = [NSString stringWithFormat:@"电话:%@",coachDetailModel.cellphone];
     [oneBgView addSubview:phoneLabel];
     
     UILabel *feesLabel = [[UILabel alloc]init];
@@ -178,7 +215,12 @@
     feesLabel.textColor = RGBA(0, 165, 109, 1);
     feesLabel.font = [UIFont systemFontOfSize:16];
     feesLabel.backgroundColor = [UIColor clearColor];
-    feesLabel.text = coachDetailModel.fees;
+    NSString *feesStr =[NSString stringWithFormat:@"%@元 / %@节",coachDetailModel.price,coachDetailModel.course_count];
+    if ([coachDetailModel.course_count isEqualToString:@"0"])
+    {
+        feesStr =[NSString stringWithFormat:@"%@元",coachDetailModel.price];
+    }
+    feesLabel.text = feesStr;
     [oneBgView addSubview:feesLabel];
     
     UILabel *goNumberLabel = [[UILabel alloc]init];
@@ -187,7 +229,8 @@
     goNumberLabel.textColor = [UIColor grayColor];
     goNumberLabel.font = [UIFont systemFontOfSize:10];
     goNumberLabel.backgroundColor = [UIColor clearColor];
-    goNumberLabel.text = [NSString stringWithFormat:@"%@人上过",coachDetailModel.goNumber];
+    NSString *goNumberStr = [NSString stringWithFormat:@"%@人上过",coachDetailModel.trainee_count];
+    goNumberLabel.text = goNumberStr;
     [oneBgView addSubview:goNumberLabel];
     
     UILabel *studyNumberLabel = [[UILabel alloc]init];
@@ -196,7 +239,8 @@
     studyNumberLabel.textColor = [UIColor grayColor];
     studyNumberLabel.font = [UIFont systemFontOfSize:10];
     studyNumberLabel.backgroundColor = [UIColor clearColor];
-    studyNumberLabel.text = [NSString stringWithFormat:@"%@人正在学习",coachDetailModel.studyNumber];
+    NSString *studyNumberStr = [NSString stringWithFormat:@"%@人正在学习",coachDetailModel.current_count];
+    studyNumberLabel.text = studyNumberStr;
     [oneBgView addSubview:studyNumberLabel];
     
     UILabel *lineLabel = [[UILabel alloc] init];
