@@ -141,15 +141,45 @@
     [bgView addSubview:promptTwoLabel];
     
     UILabel *promptThreeLabel= [[UILabel alloc]init];
-    promptThreeLabel.frame = CGRectMake(10, promptTwoLabel.frame.origin.y+promptTwoLabel.frame.size.height+5, bgView.frame.size.width-20, 40);
+    promptThreeLabel.frame = CGRectMake(10, promptTwoLabel.frame.origin.y+promptTwoLabel.frame.size.height+5, bgView.frame.size.width-20, 32);
     promptThreeLabel.font = [UIFont systemFontOfSize:16];
     promptThreeLabel.textColor = [UIColor grayColor];
     promptThreeLabel.backgroundColor=[UIColor clearColor];
     promptThreeLabel.textAlignment=NSTextAlignmentCenter;
     promptThreeLabel.numberOfLines = 2;
-    promptThreeLabel.text = @"缴费地址:郑州市金水区。";
+    promptThreeLabel.text = @"缴费地址:郑州市金水区.";
     [bgView addSubview:promptThreeLabel];
  
+    UIButton *footBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    footBtn.frame = CGRectMake(75, promptThreeLabel.frame.origin.y+promptThreeLabel.frame.size.height+20, SCREEN_WIDTH-170, 30);
+    [footBtn setBackgroundColor:RGBA(0, 165, 109, 1)];
+    [footBtn setTitle:@"我知道了" forState:UIControlStateNormal];
+    [footBtn setTitle:@"我知道了" forState:UIControlStateHighlighted];
+    [footBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [footBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    footBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    footBtn.layer.masksToBounds=YES;
+    footBtn.layer.cornerRadius=15;
+    footBtn.tag = 100;
+    [footBtn addTarget:self action:@selector(footBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [bgView addSubview:footBtn];
+    
+}
+
+-(void)footBtnClick:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    switch (btn.tag)
+    {
+        case 100:
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark 录入成绩
