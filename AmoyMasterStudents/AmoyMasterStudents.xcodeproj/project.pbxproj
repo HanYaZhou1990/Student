@@ -168,6 +168,7 @@
 		3EBB460A1A80C1AA001E534B /* icon_trip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB45DC1A80C1AA001E534B /* icon_trip.png */; };
 		3EBB46E41A80DD35001E534B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E01A80DD35001E534B /* LaunchScreen.xib */; };
 		3EBB46E51A80DD35001E534B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB46E21A80DD35001E534B /* Main.storyboard */; };
+		3EBF7E5A1AA45C9600572B98 /* NoticeTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBF7E591AA45C9600572B98 /* NoticeTwoViewController.m */; };
 		3EDC272B1A8B308400A9EAC0 /* OrderCoachViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */; };
 		3EEF36E31A8338690004852F /* WWMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF36E21A8338690004852F /* WWMenuView.m */; };
 		CF62A1561AA2088F0031C816 /* ExamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF62A1551AA2088F0031C816 /* ExamViewController.m */; };
@@ -435,6 +436,8 @@
 		3EBB45DC1A80C1AA001E534B /* icon_trip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_trip.png; sourceTree = "<group>"; };
 		3EBB46E11A80DD35001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = ../AmoyMasterCoach/AmoyMasterCoach/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3EBB46E31A80DD35001E534B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../AmoyMasterCoach/AmoyMasterCoach/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3EBF7E581AA45C9600572B98 /* NoticeTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeTwoViewController.h; sourceTree = "<group>"; };
+		3EBF7E591AA45C9600572B98 /* NoticeTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeTwoViewController.m; sourceTree = "<group>"; };
 		3EDC27291A8B308400A9EAC0 /* OrderCoachViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCoachViewController.h; sourceTree = "<group>"; };
 		3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCoachViewController.m; sourceTree = "<group>"; };
 		3EEF36E11A8338690004852F /* WWMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMenuView.h; sourceTree = "<group>"; };
@@ -490,6 +493,8 @@
 				CF62A15D1AA226A90031C816 /* AnswerViewController.m */,
 				3E8714071AA217B500106A5C /* NoticeViewController.h */,
 				3E8714081AA217B500106A5C /* NoticeViewController.m */,
+				3EBF7E581AA45C9600572B98 /* NoticeTwoViewController.h */,
+				3EBF7E591AA45C9600572B98 /* NoticeTwoViewController.m */,
 			);
 			name = "学车知识_Knowledge";
 			sourceTree = "<group>";
@@ -1222,6 +1227,7 @@
 				3EA59D2D1A84537900DA9472 /* CoachCell.m in Sources */,
 				3EBB45421A80BF5A001E534B /* AFURLConnectionOperation.m in Sources */,
 				3EBB45471A80BF5A001E534B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				3EBF7E5A1AA45C9600572B98 /* NoticeTwoViewController.m in Sources */,
 				CF86CFF01AA0B9E40093908B /* YZKnowledgeHeaderView.m in Sources */,
 				3EBB45061A80BF2A001E534B /* SDWebImageDownloaderOperation.m in Sources */,
 				3E7F130B1A88B38300A2D34C /* TimeLineCell.m in Sources */,

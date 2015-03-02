@@ -60,7 +60,7 @@
 {
     NoticeViewController *vc = [[NoticeViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.noticeType = @"1";
+    vc.noticeType = @"4";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
