@@ -172,6 +172,11 @@
                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                              
                              NSDictionary *responseDic = (NSDictionary *)responseObject;
+                             
+                             //打印结果 方便查看
+                             NSString *responseString = [PublicConfig dictionaryToJson:responseDic];
+                             DLog(@"返回结果字符串 : %@",responseString);
+                             
                              NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
                              if ([resultCode boolValue]==NO)
                              {

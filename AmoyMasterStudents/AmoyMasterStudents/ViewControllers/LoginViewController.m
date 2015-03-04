@@ -184,7 +184,7 @@
                               
                               NSDictionary *responseDic = (NSDictionary *)responseObject;
                               
-                              //打印使用
+                              //打印结果 方便查看
                               NSString *responseString = [PublicConfig dictionaryToJson:responseDic];
                               DLog(@"返回结果字符串 : %@",responseString);
                               
