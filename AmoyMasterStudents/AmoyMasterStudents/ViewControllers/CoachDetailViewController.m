@@ -423,7 +423,7 @@
         {
              CoachDetailCourseModel *coachDetailCourseModel = [courceArray objectAtIndex:i];
             
-            NSString *leftStr = [NSString stringWithFormat:@"%@   %@分钟  %@人同车",coachDetailCourseModel.course_name,coachDetailCourseModel.duration_time,coachDetailCourseModel.trainee_count];
+            NSString *leftStr = [NSString stringWithFormat:@"%d . %@   %@分钟  %@人同车",i+1,coachDetailCourseModel.course_name,coachDetailCourseModel.duration_time,coachDetailCourseModel.trainee_count];
             
             UILabel *leftLabel = [[UILabel alloc] init];
             leftLabel.frame = CGRectMake(15, 40+i*30, SCREEN_WIDTH-30, 30);
