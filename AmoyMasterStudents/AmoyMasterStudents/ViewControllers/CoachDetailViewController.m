@@ -78,7 +78,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_info];
     
-    NSDictionary *params = @{@"master_id":self.masterId};
+    NSDictionary *params = @{@"master_id":self.masterId,@"token":userToken};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     coachOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

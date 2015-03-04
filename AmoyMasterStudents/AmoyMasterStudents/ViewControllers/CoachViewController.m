@@ -294,48 +294,48 @@
     if ([requestType isEqualToString:@"1"])
     {
         //点击附近 离我最近 评分最高
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1"};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1",@"token":userToken};
     }
     else if ([requestType isEqualToString:@"2"])
     {
         //点击最便宜 价格最便宜 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"1",@"token":userToken};
     }
     else if ([requestType isEqualToString:@"3"])
     {
         //点击最便宜 价格贵 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"-1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"-1",@"token":userToken};
     }
     else if ([requestType isEqualToString:@"4"])
     {
         //点击最评价最好  评分最高 离我最近
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"-1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"-1",@"token":userToken};
         
     }
     else if ([requestType isEqualToString:@"5"])
     {
         //点击最评价最好  评分最低 离我最近
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"1"};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"1",@"token":userToken};
     }
     else if ([requestType isEqualToString:@"6"])
     {
         //点击学员最多  正在学习人数最多 评分最高
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"-1"};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"-1",@"token":userToken};
     }
     else if ([requestType isEqualToString:@"7"])
     {
         //点击学员最多  正在学习人数最少 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"1"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"1",@"token":userToken};
     }
     else if ([requestType isEqualToString:@"8"])
     {
         //点击驾校类型  C2照 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"4"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"4",@"token":userToken};
     }
     else if ([requestType isEqualToString:@"9"])
     {
         //点击学员最多  C1照 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"3"};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"3",@"token":userToken};
     }
     
     if (currentSearchStr.length>0)

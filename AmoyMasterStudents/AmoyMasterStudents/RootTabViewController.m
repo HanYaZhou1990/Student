@@ -140,6 +140,8 @@
 -(void)logoutSuccessfull
 {
     [PublicConfig setValue:@"" forKey:userAccount];
+    [PublicConfig setValue:@"" forKey:userPassword];
+    [PublicConfig setValue:@"" forKey:userToken];
     
     [self getLoginState];
 }

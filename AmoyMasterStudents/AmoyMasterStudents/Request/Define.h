@@ -40,6 +40,7 @@
 
 #define userAccount     @"userAccount" //用户账号唯一标识符id 若为空 未登录
 #define userPassword    @"userPassword" //用户密码
+#define userToken       @"userToken" //登陆成功返回的token，登陆后所有接口都加此参数
 
 #define refreshMemberCenterVCNotification @"refreshMemberCenterVCNotification" //刷新个人中心界面
 
@@ -68,6 +69,10 @@
 //学员更改联系方式
 #define trainee_traineeWrite_updateContact  @"/trainee/traineeWrite/updateContact"
 
+//学员学员上传头像
+#define trainee_traineeWrite_updateAvatar  @"/trainee/traineeWrite/uploadAvatar"
+
+
 //学员登录接口
 #define trainee_traineeRead_login  @"/trainee/traineeRead/login"
 
@@ -85,6 +90,7 @@
 
 //获取获取修改密码的手机验证码
 #define trainee_traineeRead_sendPwdChangeSMS  @"/trainee/traineeRead/sendPwdChangeSMS"
+
 
 //教练广场
 #define trainee_master_list  @"/trainee/master/list"

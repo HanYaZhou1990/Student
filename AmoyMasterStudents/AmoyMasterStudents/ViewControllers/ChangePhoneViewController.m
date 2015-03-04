@@ -284,7 +284,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_updateContact];
     
-    NSDictionary *params = @{@"cellphone":phoneNumber,@"cellphoneNew":newPhoneNumer,@"password":password,@"vCode":passCode};
+    NSDictionary *params = @{@"cellphone":phoneNumber,@"cellphoneNew":newPhoneNumer,@"password":password,@"vCode":passCode,@"token":userToken};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     operation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -318,7 +318,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendUpdateContactSMS];
     
-    NSDictionary *params = @{@"cellphone":hp};
+    NSDictionary *params = @{@"cellphone":hp,@"token":userToken};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

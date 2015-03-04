@@ -164,7 +164,7 @@
     
     NSString *tokenStr = [PublicConfig isSpaceString:self.dataStr andReplace:@""];
     
-    NSDictionary *params = @{@"token":tokenStr,@"password":password,@"password_":password};
+    NSDictionary *params = @{@"token":tokenStr,@"password":password,@"password_":password,@"token":userToken};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     operation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

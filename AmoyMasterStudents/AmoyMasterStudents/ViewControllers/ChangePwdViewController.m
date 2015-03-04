@@ -313,7 +313,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_changePassword];
     
-    NSDictionary *params = @{@"password_old":oldPassword,@"password_new":newPassword,@"password_new_":newPassword,@"vCode":passCode};
+    NSDictionary *params = @{@"password_old":oldPassword,@"password_new":newPassword,@"password_new_":newPassword,@"vCode":passCode,@"token":userToken};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     operation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -347,7 +347,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendPwdChangeSMS];
     
-    NSDictionary *params = @{@"cellphone":hp};
+    NSDictionary *params = @{@"cellphone":hp,@"token":userToken};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

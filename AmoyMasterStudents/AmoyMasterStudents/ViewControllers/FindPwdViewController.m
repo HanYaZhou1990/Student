@@ -253,7 +253,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_requestPwdRese];
     
-            NSDictionary *params = @{@"cellphone":phoneNumber,@"vCode":passCode};
+            NSDictionary *params = @{@"cellphone":phoneNumber,@"vCode":passCode,@"token":userToken};
     
             AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
             findPwdOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -291,7 +291,7 @@
     
         NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendPwdResetSMS];
     
-        NSDictionary *params = @{@"cellphone":hp};
+        NSDictionary *params = @{@"cellphone":hp,@"token":userToken};
     
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

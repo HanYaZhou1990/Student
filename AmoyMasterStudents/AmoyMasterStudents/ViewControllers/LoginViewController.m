@@ -175,7 +175,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_login];
     
-    NSDictionary *params = @{@"account":userNameField.text,@"password":userPswField.text};
+    NSDictionary *params = @{@"account":userNameField.text,@"password":userPswField.text,@"type":@"2"}; //type 设备类型(1android 2iphone)
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -183,12 +183,21 @@
                               [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                               
                               NSDictionary *responseDic = (NSDictionary *)responseObject;
+                              
+                              //打印使用
+                              NSString *responseString = [PublicConfig dictionaryToJson:responseDic];
+                              DLog(@"返回结果字符串 : %@",responseString);
+                              
                               NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
                               if ([resultCode boolValue]==NO)
                               {
                                   [PublicConfig setValue:userNameField.text forKey:userAccount];
                                   
                                   [PublicConfig setValue:userPswField.text forKey:userPassword];
+                                  
+                                  NSString *dataStr = [responseDic valueForKey:@"data"];
+                                  dataStr = [PublicConfig isSpaceString:@"" andReplace:dataStr];
+                                  [PublicConfig setValue:dataStr forKey:userToken];
                                   
                                   //发送登录协议
                                   [[NSNotificationCenter defaultCenter]postNotificationName:loginDidSuccessNotification object:nil];

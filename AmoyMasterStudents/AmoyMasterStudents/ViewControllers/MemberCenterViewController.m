@@ -14,6 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "PublicSaveViewController.h"
 #import "MessageSave.h"
+#import "UIImageView+WebCache.h"
 
 @interface MemberCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,PublicSaveViewControllerDelegate>
 {
@@ -23,6 +24,7 @@
     
     UIImageView *headImageView;
     NSString *userNameString;
+    NSString *headImageUrl;
 }
 @end
 
@@ -32,9 +34,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
-        {
+    {
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"个人中心" image:[UIImage imageNamed:@"icon_main_person.png"] selectedImage:[UIImage imageNamed:@"icon_main_person.png"]];
-        }
+    }
     return self;
 }
 
@@ -78,40 +80,45 @@
     headImageView.image = image;
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     
-//    //压缩图片
-//    NSData *imageToSendData = UIImageJPEGRepresentation(image, 0.5);
-//    NSString *imgName = @"currentImage@2x.png";
-//    
-//    //上传图片请求
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    NSDictionary *params = @{@"q":@"addfile"};
-//    [manager POST:kUserHeadIMGUrl parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
-//     {
-//         [formData appendPartWithFileData:imageToSendData name:@"file" fileName:imgName mimeType:@"image/png"];
-//     }
-//          success:^(AFHTTPRequestOperation *operation, id responseObject)
-//     {
-//         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//         
-//         NSDictionary *resultDic = (NSDictionary *)responseObject;
-//         NSString *ret = [resultDic objectForKey:@"ret"];
-//         if ([ret boolValue])
-//         {
-//             _userInfo.headImageUrl = [resultDic objectForKey:@"url"];
-//             
-//             [self upLoadMyUserInfoData]; //修改用户信息
-//             [myTableView reloadData];
-//         }
-//         else
-//         {
-//             [SVProgressHUD showErrorWithStatus:@"图片上传失败"];
-//         }
-//     }
-//          failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//     {
-//         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//         [SVProgressHUD showErrorWithStatus:@"请求失败"];
-//     }];
+    //压缩图片
+    NSData *imageToSendData = UIImageJPEGRepresentation(image, 0.5);
+    NSString *imgName = @"currentImage@2x.png";
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_updateAvatar];
+    
+    NSDictionary *param = @{@"token":userToken};
+    
+    //上传图片请求
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+     {
+         [formData appendPartWithFileData:imageToSendData name:@"file" fileName:imgName mimeType:@"image/png"];
+     }
+          success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+         
+         NSDictionary *responseDic = (NSDictionary *)responseObject;
+         NSString *responseString = [PublicConfig dictionaryToJson:responseDic];
+         DLog(@"返回结果字符串 : %@",responseString);
+         
+         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+         if ([resultCode boolValue]==NO)
+         {
+             NSString *dataStr = [responseDic valueForKey:@"data"];
+             headImageUrl =dataStr;
+             [myTableView reloadData];
+         }
+         else
+         {
+             [SVProgressHUD showErrorWithStatus:@"图片上传失败"];
+         }
+     }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+         [SVProgressHUD showErrorWithStatus:@"图片上传请求失败"];
+     }];
 }
 
 -(void)tapMyDetailImg:(id)sender
@@ -211,7 +218,7 @@
         imagePickerController.sourceType = sourceType;
         
         imagePickerController.navigationBar.tintColor=[UIColor blackColor];
-//        [imagePickerController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bar.png"] forBarMetrics:UIBarMetricsDefault];
+        //        [imagePickerController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bar.png"] forBarMetrics:UIBarMetricsDefault];
         
         [self.navigationController presentViewController:imagePickerController animated:YES completion:^{}];
         
@@ -374,18 +381,29 @@
         bgView.image = [UIImage imageNamed:@"memberBg.png"];
         [cell.contentView addSubview:bgView];
         
-            //头像 头像可点击编辑  名字
-            headImageView =  [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-60)/2, 230, 60, 60)];
-            headImageView.image = [UIImage imageNamed:@"account_default_avatar.png"];
-            headImageView.layer.masksToBounds=YES;
-            headImageView.layer.cornerRadius=30;
-            headImageView.layer.borderWidth=2.0;
-            headImageView.layer.borderColor=[UIColor whiteColor].CGColor;
-            headImageView.contentMode = UIViewContentModeScaleAspectFill;
-            headImageView.userInteractionEnabled = YES;
-            UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyDetailImg:)];
-            [headImageView addGestureRecognizer:singleTap];
-            [cell.contentView addSubview:headImageView];
+        //头像 头像可点击编辑  名字
+        headImageView =  [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-60)/2, 230, 60, 60)];
+        if (headImageUrl.length>0)
+        {
+            NSString *__imageUrl = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)headImageUrl, nil, nil, kCFStringEncodingUTF8));
+            
+            [headImageView sd_setImageWithURL:[NSURL URLWithString:__imageUrl] placeholderImage:[UIImage imageNamed:@"account_default_avatar.png"] completed:^(UIImage *image,NSError *error,SDImageCacheType cacheType, NSURL *imageURL)
+             {
+             }];
+        }
+        else
+        {
+            headImageView.image =  [UIImage imageNamed:@"account_default_avatar.png"];
+        }
+        headImageView.layer.masksToBounds=YES;
+        headImageView.layer.cornerRadius=30;
+        headImageView.layer.borderWidth=2.0;
+        headImageView.layer.borderColor=[UIColor whiteColor].CGColor;
+        headImageView.contentMode = UIViewContentModeScaleAspectFill;
+        headImageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyDetailImg:)];
+        [headImageView addGestureRecognizer:singleTap];
+        [cell.contentView addSubview:headImageView];
     }
     else
     {
@@ -454,7 +472,7 @@
             cell.textLabel.text = @"退出登录";
         }
     }
-   
+    
     cell.backgroundView = nil;
     
     return cell;
