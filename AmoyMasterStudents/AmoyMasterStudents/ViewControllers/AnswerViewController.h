@@ -7,6 +7,8 @@
 //
 
 #import "BaseViewController.h"
+#import "ExaminationCell.h"
+#import "AnswerCell.h"
 
 typedef enum {
     AnswerViewControllerSubjectTypeOne,
