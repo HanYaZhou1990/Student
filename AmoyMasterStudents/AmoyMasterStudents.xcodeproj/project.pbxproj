@@ -179,6 +179,9 @@
 		CF797BD71A82811E003581BC /* YZCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD61A82811E003581BC /* YZCollectionReusableView.m */; };
 		CF86CFF01AA0B9E40093908B /* YZKnowledgeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86CFEF1AA0B9E40093908B /* YZKnowledgeHeaderView.m */; };
 		CF86CFF61AA0BF710093908B /* KnowledgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86CFF51AA0BF710093908B /* KnowledgeCell.m */; };
+		CF87A0B71AB8657F002D3CF8 /* SubjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87A0B61AB8657F002D3CF8 /* SubjectViewController.m */; };
+		CF87A0BA1AB872FB002D3CF8 /* SubjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87A0B91AB872FB002D3CF8 /* SubjectCell.m */; };
+		CF87A0BD1AB88484002D3CF8 /* KnowledgeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87A0BC1AB88484002D3CF8 /* KnowledgeDetailViewController.m */; };
 		CFC169A01AB08D87007D821A /* ExaminationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFC1699D1AB08D87007D821A /* ExaminationCell.m */; };
 		CFC169A11AB08D87007D821A /* AnswerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFC1699F1AB08D87007D821A /* AnswerCell.m */; };
 		CFC169A31AB08D91007D821A /* png.png in Resources */ = {isa = PBXBuildFile; fileRef = CFC169A21AB08D91007D821A /* png.png */; };
@@ -460,6 +463,12 @@
 		CF86CFEF1AA0B9E40093908B /* YZKnowledgeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZKnowledgeHeaderView.m; sourceTree = "<group>"; };
 		CF86CFF41AA0BF710093908B /* KnowledgeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeCell.h; sourceTree = "<group>"; };
 		CF86CFF51AA0BF710093908B /* KnowledgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeCell.m; sourceTree = "<group>"; };
+		CF87A0B51AB8657F002D3CF8 /* SubjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectViewController.h; sourceTree = "<group>"; };
+		CF87A0B61AB8657F002D3CF8 /* SubjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectViewController.m; sourceTree = "<group>"; };
+		CF87A0B81AB872FB002D3CF8 /* SubjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectCell.h; sourceTree = "<group>"; };
+		CF87A0B91AB872FB002D3CF8 /* SubjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectCell.m; sourceTree = "<group>"; };
+		CF87A0BB1AB88484002D3CF8 /* KnowledgeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeDetailViewController.h; sourceTree = "<group>"; };
+		CF87A0BC1AB88484002D3CF8 /* KnowledgeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeDetailViewController.m; sourceTree = "<group>"; };
 		CFC1699C1AB08D87007D821A /* ExaminationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExaminationCell.h; sourceTree = "<group>"; };
 		CFC1699D1AB08D87007D821A /* ExaminationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExaminationCell.m; sourceTree = "<group>"; };
 		CFC1699E1AB08D87007D821A /* AnswerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerCell.h; sourceTree = "<group>"; };
@@ -503,6 +512,10 @@
 				3E8714081AA217B500106A5C /* NoticeViewController.m */,
 				3EBF7E581AA45C9600572B98 /* NoticeTwoViewController.h */,
 				3EBF7E591AA45C9600572B98 /* NoticeTwoViewController.m */,
+				CF87A0B51AB8657F002D3CF8 /* SubjectViewController.h */,
+				CF87A0B61AB8657F002D3CF8 /* SubjectViewController.m */,
+				CF87A0BB1AB88484002D3CF8 /* KnowledgeDetailViewController.h */,
+				CF87A0BC1AB88484002D3CF8 /* KnowledgeDetailViewController.m */,
 			);
 			name = "学车知识_Knowledge";
 			sourceTree = "<group>";
@@ -733,6 +746,8 @@
 				CFC1699D1AB08D87007D821A /* ExaminationCell.m */,
 				CFC1699E1AB08D87007D821A /* AnswerCell.h */,
 				CFC1699F1AB08D87007D821A /* AnswerCell.m */,
+				CF87A0B81AB872FB002D3CF8 /* SubjectCell.h */,
+				CF87A0B91AB872FB002D3CF8 /* SubjectCell.m */,
 				CFC169A21AB08D91007D821A /* png.png */,
 			);
 			path = BaseCell;
@@ -1277,6 +1292,7 @@
 				3EEF36E31A8338690004852F /* WWMenuView.m in Sources */,
 				3EAD3FB31AA057C300AA053F /* UIScrollView+MJRefresh.m in Sources */,
 				CFC169A11AB08D87007D821A /* AnswerCell.m in Sources */,
+				CF87A0B71AB8657F002D3CF8 /* SubjectViewController.m in Sources */,
 				3EAD3FB21AA057C300AA053F /* UIScrollView+MJExtension.m in Sources */,
 				3EBB45001A80BF2A001E534B /* MKAnnotationView+WebCache.m in Sources */,
 				3EAD3FAE1AA057C300AA053F /* MJRefreshBaseView.m in Sources */,
@@ -1309,12 +1325,14 @@
 				3EAD3FB71AA05B3D00AA053F /* CoachListModel.m in Sources */,
 				CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */,
 				CFC169A61AB08DA6007D821A /* AnswerViewController.m in Sources */,
+				CF87A0BA1AB872FB002D3CF8 /* SubjectCell.m in Sources */,
 				3EBB45581A80BFB4001E534B /* SizeToLeftLabelCell.m in Sources */,
 				3EBB45441A80BF5A001E534B /* AFURLResponseSerialization.m in Sources */,
 				3EBB450A1A80BF2A001E534B /* UIImage+GIF.m in Sources */,
 				3EA59D301A845F8F00DA9472 /* CoachDetailViewController.m in Sources */,
 				3EBB45641A80C02E001E534B /* BaseViewController.m in Sources */,
 				3EDC272B1A8B308400A9EAC0 /* OrderCoachViewController.m in Sources */,
+				CF87A0BD1AB88484002D3CF8 /* KnowledgeDetailViewController.m in Sources */,
 				3E7F12FC1A88832100A2D34C /* FindPwdViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -101,6 +101,12 @@
 //教练详情
 #define trainee_master_info  @"/trainee/master/info"
 
+//分页获取的文章列表内容
+#define trainee_knowledge_paginationListItems @"/trainee/knowledge/paginationListItems"
+
+//获取文章详情
+#define trainee_knowledge_detail  @"/trainee/knowledge/detail"
+
 
 
 
