@@ -109,6 +109,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (_selectedIndex == 0) {return;}
     KnowledgeDetailViewController *detailViewController = [[KnowledgeDetailViewController alloc] init];
     detailViewController.titleString = _dataSourceArray[indexPath.row][@"title"];
     detailViewController.codeString = _dataSourceArray[indexPath.row][@"code"];
@@ -174,10 +175,13 @@
 - (void)headerView:(YZKnowledgeHeaderView *)headerView view:(UIView *)view buttonSeleectIndex:(NSInteger)indexOfButton{
     _selectedIndex = indexOfButton;
     if (indexOfButton == 0) {
+        _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_knowledgeTableView reloadData];
     }else if (indexOfButton == 1) {
+        _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         [self refreshDate:@"C2S1"];
     }else {
+        _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         [self refreshDate:@"C3S1"];
     }
 }
