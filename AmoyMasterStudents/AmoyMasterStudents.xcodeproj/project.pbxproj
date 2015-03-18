@@ -87,7 +87,6 @@
 		3EBB45591A80BFB4001E534B /* SizeToRightLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB45561A80BFB4001E534B /* SizeToRightLabelCell.m */; };
 		3EBB45641A80C02E001E534B /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB455B1A80C02E001E534B /* BaseViewController.m */; };
 		3EBB45651A80C02E001E534B /* CoachViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB455D1A80C02E001E534B /* CoachViewController.m */; };
-		3EBB45661A80C02E001E534B /* KnowledgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB455F1A80C02E001E534B /* KnowledgeViewController.m */; };
 		3EBB45671A80C02E001E534B /* MemberCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB45611A80C02E001E534B /* MemberCenterViewController.m */; };
 		3EBB45681A80C02E001E534B /* ProcessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB45631A80C02E001E534B /* ProcessViewController.m */; };
 		3EBB45741A80C12B001E534B /* account_default_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB45731A80C12B001E534B /* account_default_avatar.png */; };
@@ -174,10 +173,11 @@
 		CF62A1561AA2088F0031C816 /* ExamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF62A1551AA2088F0031C816 /* ExamViewController.m */; };
 		CF6997F21A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */; };
 		CF6997F41A87BB7100F3CD1C /* modelTest_btn_test.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6997F31A87BB7100F3CD1C /* modelTest_btn_test.png */; };
+		CF73D7FB1AB9BB750084CC37 /* KnowledgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF73D7FA1AB9BB750084CC37 /* KnowledgeViewController.m */; };
+		CF73D7FE1AB9BBAF0084CC37 /* YZKnowledgeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF73D7FD1AB9BBAF0084CC37 /* YZKnowledgeHeaderView.m */; };
 		CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */; };
 		CF797BD41A8276BF003581BC /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD31A8276BF003581BC /* UIImage+Color.m */; };
 		CF797BD71A82811E003581BC /* YZCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD61A82811E003581BC /* YZCollectionReusableView.m */; };
-		CF86CFF01AA0B9E40093908B /* YZKnowledgeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86CFEF1AA0B9E40093908B /* YZKnowledgeHeaderView.m */; };
 		CF86CFF61AA0BF710093908B /* KnowledgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86CFF51AA0BF710093908B /* KnowledgeCell.m */; };
 		CF87A0B71AB8657F002D3CF8 /* SubjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87A0B61AB8657F002D3CF8 /* SubjectViewController.m */; };
 		CF87A0BA1AB872FB002D3CF8 /* SubjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87A0B91AB872FB002D3CF8 /* SubjectCell.m */; };
@@ -358,8 +358,6 @@
 		3EBB455B1A80C02E001E534B /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3EBB455C1A80C02E001E534B /* CoachViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachViewController.h; sourceTree = "<group>"; };
 		3EBB455D1A80C02E001E534B /* CoachViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachViewController.m; sourceTree = "<group>"; };
-		3EBB455E1A80C02E001E534B /* KnowledgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeViewController.h; sourceTree = "<group>"; };
-		3EBB455F1A80C02E001E534B /* KnowledgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeViewController.m; sourceTree = "<group>"; };
 		3EBB45601A80C02E001E534B /* MemberCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberCenterViewController.h; sourceTree = "<group>"; };
 		3EBB45611A80C02E001E534B /* MemberCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberCenterViewController.m; sourceTree = "<group>"; };
 		3EBB45621A80C02E001E534B /* ProcessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessViewController.h; sourceTree = "<group>"; };
@@ -453,14 +451,16 @@
 		CF6997F01A87B41E00F3CD1C /* KnoledgeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnoledgeCollectionViewCell.h; sourceTree = "<group>"; };
 		CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnoledgeCollectionViewCell.m; sourceTree = "<group>"; };
 		CF6997F31A87BB7100F3CD1C /* modelTest_btn_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modelTest_btn_test.png; sourceTree = "<group>"; };
+		CF73D7F91AB9BB750084CC37 /* KnowledgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeViewController.h; sourceTree = "<group>"; };
+		CF73D7FA1AB9BB750084CC37 /* KnowledgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeViewController.m; sourceTree = "<group>"; };
+		CF73D7FC1AB9BBAF0084CC37 /* YZKnowledgeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZKnowledgeHeaderView.h; sourceTree = "<group>"; };
+		CF73D7FD1AB9BBAF0084CC37 /* YZKnowledgeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZKnowledgeHeaderView.m; sourceTree = "<group>"; };
 		CF797BCE1A826A3A003581BC /* EMBAMineMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMBAMineMenuView.h; sourceTree = "<group>"; };
 		CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMBAMineMenuView.m; sourceTree = "<group>"; };
 		CF797BD21A8276BF003581BC /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
 		CF797BD31A8276BF003581BC /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		CF797BD51A82811E003581BC /* YZCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZCollectionReusableView.h; sourceTree = "<group>"; };
 		CF797BD61A82811E003581BC /* YZCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZCollectionReusableView.m; sourceTree = "<group>"; };
-		CF86CFEE1AA0B9E40093908B /* YZKnowledgeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZKnowledgeHeaderView.h; sourceTree = "<group>"; };
-		CF86CFEF1AA0B9E40093908B /* YZKnowledgeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZKnowledgeHeaderView.m; sourceTree = "<group>"; };
 		CF86CFF41AA0BF710093908B /* KnowledgeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeCell.h; sourceTree = "<group>"; };
 		CF86CFF51AA0BF710093908B /* KnowledgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeCell.m; sourceTree = "<group>"; };
 		CF87A0B51AB8657F002D3CF8 /* SubjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectViewController.h; sourceTree = "<group>"; };
@@ -674,8 +674,8 @@
 				3E8F162A1A81A80300F9BE6C /* 个人中心_MemberCenter */,
 				3EBB455A1A80C02E001E534B /* BaseViewController.h */,
 				3EBB455B1A80C02E001E534B /* BaseViewController.m */,
-				3EBB455E1A80C02E001E534B /* KnowledgeViewController.h */,
-				3EBB455F1A80C02E001E534B /* KnowledgeViewController.m */,
+				CF73D7F91AB9BB750084CC37 /* KnowledgeViewController.h */,
+				CF73D7FA1AB9BB750084CC37 /* KnowledgeViewController.m */,
 				3EBB455C1A80C02E001E534B /* CoachViewController.h */,
 				3EBB455D1A80C02E001E534B /* CoachViewController.m */,
 				3EBB45621A80C02E001E534B /* ProcessViewController.h */,
@@ -758,8 +758,8 @@
 			children = (
 				CF797BD51A82811E003581BC /* YZCollectionReusableView.h */,
 				CF797BD61A82811E003581BC /* YZCollectionReusableView.m */,
-				CF86CFEE1AA0B9E40093908B /* YZKnowledgeHeaderView.h */,
-				CF86CFEF1AA0B9E40093908B /* YZKnowledgeHeaderView.m */,
+				CF73D7FC1AB9BBAF0084CC37 /* YZKnowledgeHeaderView.h */,
+				CF73D7FD1AB9BBAF0084CC37 /* YZKnowledgeHeaderView.m */,
 				CF797BCE1A826A3A003581BC /* EMBAMineMenuView.h */,
 				CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */,
 				3EEF36E11A8338690004852F /* WWMenuView.h */,
@@ -1249,7 +1249,6 @@
 				3EBB45431A80BF5A001E534B /* AFURLRequestSerialization.m in Sources */,
 				3EBB44BD1A80BC14001E534B /* RootTabViewController.m in Sources */,
 				3EBB454C1A80BF5A001E534B /* UIRefreshControl+AFNetworking.m in Sources */,
-				3EBB45661A80C02E001E534B /* KnowledgeViewController.m in Sources */,
 				3EBB45071A80BF2A001E534B /* SDWebImageManager.m in Sources */,
 				3EBB45141A80BF38001E534B /* MBProgressHUD.m in Sources */,
 				3EBB45021A80BF2A001E534B /* SDImageCache.m in Sources */,
@@ -1258,7 +1257,6 @@
 				3EBB45421A80BF5A001E534B /* AFURLConnectionOperation.m in Sources */,
 				3EBB45471A80BF5A001E534B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				3EBF7E5A1AA45C9600572B98 /* NoticeTwoViewController.m in Sources */,
-				CF86CFF01AA0B9E40093908B /* YZKnowledgeHeaderView.m in Sources */,
 				3EBB45061A80BF2A001E534B /* SDWebImageDownloaderOperation.m in Sources */,
 				3E7F130B1A88B38300A2D34C /* TimeLineCell.m in Sources */,
 				3EBB45671A80C02E001E534B /* MemberCenterViewController.m in Sources */,
@@ -1277,6 +1275,7 @@
 				3EBB45651A80C02E001E534B /* CoachViewController.m in Sources */,
 				3EBB45051A80BF2A001E534B /* SDWebImageDownloader.m in Sources */,
 				3EBB454D1A80BF5A001E534B /* UIWebView+AFNetworking.m in Sources */,
+				CF73D7FE1AB9BBAF0084CC37 /* YZKnowledgeHeaderView.m in Sources */,
 				3EBB44D01A80BE07001E534B /* PublicConfig.m in Sources */,
 				3EBB45451A80BF5A001E534B /* AFURLSessionManager.m in Sources */,
 				3EBB450C1A80BF2A001E534B /* UIImage+WebP.m in Sources */,
@@ -1318,6 +1317,7 @@
 				3E7F12FF1A88833900A2D34C /* ReSetPwdViewController.m in Sources */,
 				3EBB453D1A80BF5A001E534B /* AFHTTPRequestOperation.m in Sources */,
 				3E7F13051A88837900A2D34C /* ChangePhoneViewController.m in Sources */,
+				CF73D7FB1AB9BB750084CC37 /* KnowledgeViewController.m in Sources */,
 				3E7F12F91A884B6B00A2D34C /* WWTextField.m in Sources */,
 				3EBB45171A80BF4A001E534B /* CWStarRateView.m in Sources */,
 				3E7F12F61A88461900A2D34C /* RegisterViewController.m in Sources */,

@@ -62,6 +62,7 @@
     {
         for (int i = 0; i < btnArray.count; i ++)
         {
+        NSLog(@"-********-");
             UIButton *btn = (UIButton *)btnArray[i];
             if (sender.tag == btn.tag)
             {

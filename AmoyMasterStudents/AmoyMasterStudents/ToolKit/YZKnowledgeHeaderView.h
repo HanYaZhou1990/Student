@@ -18,7 +18,7 @@
 
 @end
 
-@interface YZKnowledgeHeaderView : UITableViewHeaderFooterView<EMBAMineMenuViewDelegate>
+@interface YZKnowledgeHeaderView : UIView <EMBAMineMenuViewDelegate>
 
 @property (nonatomic, assign)id <YZKnowledgeHeaderViewDelegate> delegate;
 
