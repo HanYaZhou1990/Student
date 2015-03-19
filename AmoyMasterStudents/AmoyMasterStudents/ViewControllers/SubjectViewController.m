@@ -62,21 +62,32 @@
         
         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
         if ([resultCode boolValue]==NO){
-            NSDictionary *dataDic = [responseDic valueForKey:@"data"];
-            if (dataDic){
-                for (NSString *keyString in [dataDic allKeys]) {
-                    [_dataSourceArray addObject:dataDic[keyString]];
-                    [_subjectTableView reloadData];
+            id something = [responseDic valueForKey:@"data"];
+            if ([something isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dataDic = [responseDic valueForKey:@"data"];
+                if (dataDic){
+                    for (NSString *keyString in [dataDic allKeys]) {
+                        [_dataSourceArray addObject:dataDic[keyString]];
+                        [_subjectTableView reloadData];
+                    }
                 }
+            }else {
+                [SVProgressHUD showErrorWithStatus:@"没有新文章"];
+                [_dataSourceArray removeAllObjects];
+                [_subjectTableView reloadData];
             }
         }else{
             NSString *msgStr = [responseDic valueForKey:@"msg"];
             [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取文章列表失败"]];
+            [_dataSourceArray removeAllObjects];
+            [_subjectTableView reloadData];
         }
     }
           failure:^(AFHTTPRequestOperation *operation, NSError *error){
-     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-     [SVProgressHUD showErrorWithStatus:@"获取文章列表请求失败"];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [SVProgressHUD showErrorWithStatus:@"获取文章列表请求失败"];
+            [_dataSourceArray removeAllObjects];
+            [_subjectTableView reloadData];
     }];
 }
 

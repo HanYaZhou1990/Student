@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XGPush.h"
+#import "XGSetting.h"
+
+#define _IPHONE80_ 80000
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

@@ -170,6 +170,13 @@
 		3EBF7E5A1AA45C9600572B98 /* NoticeTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBF7E591AA45C9600572B98 /* NoticeTwoViewController.m */; };
 		3EDC272B1A8B308400A9EAC0 /* OrderCoachViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */; };
 		3EEF36E31A8338690004852F /* WWMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF36E21A8338690004852F /* WWMenuView.m */; };
+		CF1766BE1ABB230800D7C926 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766BB1ABB230800D7C926 /* libXG-SDK.a */; };
+		CF1766C01ABB232900D7C926 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766BF1ABB232900D7C926 /* libz.dylib */; };
+		CF1766C21ABB233200D7C926 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C11ABB233200D7C926 /* SystemConfiguration.framework */; };
+		CF1766C41ABB233D00D7C926 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C31ABB233D00D7C926 /* CoreTelephony.framework */; };
+		CF1766C61ABB235E00D7C926 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C51ABB235E00D7C926 /* Security.framework */; };
+		CF1766C81ABB238200D7C926 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C71ABB238200D7C926 /* libsqlite3.dylib */; };
+		CF1766CA1ABB2C6E00D7C926 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C91ABB2C6D00D7C926 /* libc++abi.dylib */; };
 		CF62A1561AA2088F0031C816 /* ExamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF62A1551AA2088F0031C816 /* ExamViewController.m */; };
 		CF6997F21A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */; };
 		CF6997F41A87BB7100F3CD1C /* modelTest_btn_test.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6997F31A87BB7100F3CD1C /* modelTest_btn_test.png */; };
@@ -446,6 +453,15 @@
 		3EDC272A1A8B308400A9EAC0 /* OrderCoachViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCoachViewController.m; sourceTree = "<group>"; };
 		3EEF36E11A8338690004852F /* WWMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMenuView.h; sourceTree = "<group>"; };
 		3EEF36E21A8338690004852F /* WWMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMenuView.m; sourceTree = "<group>"; };
+		CF1766BB1ABB230800D7C926 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libXG-SDK.a"; sourceTree = "<group>"; };
+		CF1766BC1ABB230800D7C926 /* XGPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPush.h; sourceTree = "<group>"; };
+		CF1766BD1ABB230800D7C926 /* XGSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGSetting.h; sourceTree = "<group>"; };
+		CF1766BF1ABB232900D7C926 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		CF1766C11ABB233200D7C926 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CF1766C31ABB233D00D7C926 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		CF1766C51ABB235E00D7C926 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CF1766C71ABB238200D7C926 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		CF1766C91ABB2C6D00D7C926 /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "usr/lib/libc++abi.dylib"; sourceTree = SDKROOT; };
 		CF62A1541AA2088F0031C816 /* ExamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamViewController.h; sourceTree = "<group>"; };
 		CF62A1551AA2088F0031C816 /* ExamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamViewController.m; sourceTree = "<group>"; };
 		CF6997F01A87B41E00F3CD1C /* KnoledgeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnoledgeCollectionViewCell.h; sourceTree = "<group>"; };
@@ -483,11 +499,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF1766CA1ABB2C6E00D7C926 /* libc++abi.dylib in Frameworks */,
+				CF1766C81ABB238200D7C926 /* libsqlite3.dylib in Frameworks */,
+				CF1766C61ABB235E00D7C926 /* Security.framework in Frameworks */,
+				CF1766C41ABB233D00D7C926 /* CoreTelephony.framework in Frameworks */,
+				CF1766C21ABB233200D7C926 /* SystemConfiguration.framework in Frameworks */,
+				CF1766C01ABB232900D7C926 /* libz.dylib in Frameworks */,
 				3E8714031AA1FE6800106A5C /* AVFoundation.framework in Frameworks */,
 				3EBB44CD1A80BDC2001E534B /* CFNetwork.framework in Frameworks */,
 				3EBB44CB1A80BDBA001E534B /* QuartzCore.framework in Frameworks */,
 				3EBB44C91A80BD89001E534B /* Foundation.framework in Frameworks */,
 				3EBB44C71A80BD81001E534B /* UIKit.framework in Frameworks */,
+				CF1766BE1ABB230800D7C926 /* libXG-SDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +617,12 @@
 		3EBB44881A80BB5F001E534B = {
 			isa = PBXGroup;
 			children = (
+				CF1766C91ABB2C6D00D7C926 /* libc++abi.dylib */,
+				CF1766C71ABB238200D7C926 /* libsqlite3.dylib */,
+				CF1766C51ABB235E00D7C926 /* Security.framework */,
+				CF1766C31ABB233D00D7C926 /* CoreTelephony.framework */,
+				CF1766C11ABB233200D7C926 /* SystemConfiguration.framework */,
+				CF1766BF1ABB232900D7C926 /* libz.dylib */,
 				3E8714021AA1FE6800106A5C /* AVFoundation.framework */,
 				3EBB46E01A80DD35001E534B /* LaunchScreen.xib */,
 				3EBB46E21A80DD35001E534B /* Main.storyboard */,
@@ -706,6 +735,7 @@
 		3EBB44C01A80BC51001E534B /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				CF1766BA1ABB22F300D7C926 /* PigonPush */,
 				3EAD3F9A1AA057AF00AA053F /* MJRefresh */,
 				3EBB44D91A80BF04001E534B /* SVPHUD */,
 				3EBB44D81A80BEF6001E534B /* SDWebImage */,
@@ -1062,6 +1092,16 @@
 				3EBB45731A80C12B001E534B /* account_default_avatar.png */,
 			);
 			name = "资源";
+			sourceTree = "<group>";
+		};
+		CF1766BA1ABB22F300D7C926 /* PigonPush */ = {
+			isa = PBXGroup;
+			children = (
+				CF1766BB1ABB230800D7C926 /* libXG-SDK.a */,
+				CF1766BC1ABB230800D7C926 /* XGPush.h */,
+				CF1766BD1ABB230800D7C926 /* XGSetting.h */,
+			);
+			name = PigonPush;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1456,13 +1496,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 炜 刘 (NMQ6MB533H)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
 				INFOPLIST_FILE = AmoyMasterStudents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AmoyMasterStudents/Libs",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b86a1294-0ad5-43b0-93af-af0151b03ff4";
 			};
 			name = Debug;
 		};
@@ -1471,13 +1516,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 炜 刘 (NMQ6MB533H)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
 				INFOPLIST_FILE = AmoyMasterStudents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AmoyMasterStudents/Libs",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b86a1294-0ad5-43b0-93af-af0151b03ff4";
 			};
 			name = Release;
 		};
