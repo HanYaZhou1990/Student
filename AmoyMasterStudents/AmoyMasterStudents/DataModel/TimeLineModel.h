@@ -15,4 +15,6 @@
 @property (nonatomic,strong) NSString *detailContent;
 @property (nonatomic,strong) NSString *dateContent;
 
+- (id)initWithDictionary:(NSDictionary *)userDictionary;
+
 @end

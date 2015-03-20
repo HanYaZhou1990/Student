@@ -19,33 +19,22 @@
     
         //Types
     UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-    
         //Actions
     UIMutableUserNotificationAction *acceptAction = [[UIMutableUserNotificationAction alloc] init];
-    
     acceptAction.identifier = @"ACCEPT_IDENTIFIER";
     acceptAction.title = @"Accept";
-    
     acceptAction.activationMode = UIUserNotificationActivationModeForeground;
     acceptAction.destructive = NO;
     acceptAction.authenticationRequired = NO;
-    
         //Categories
     UIMutableUserNotificationCategory *inviteCategory = [[UIMutableUserNotificationCategory alloc] init];
-    
     inviteCategory.identifier = @"INVITE_CATEGORY";
-    
     [inviteCategory setActions:@[acceptAction] forContext:UIUserNotificationActionContextDefault];
-    
     [inviteCategory setActions:@[acceptAction] forContext:UIUserNotificationActionContextMinimal];
-    
     NSSet *categories = [NSSet setWithObjects:inviteCategory, nil];
     
-    
     UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:categories];
-    
     [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
-    
     
     [[UIApplication sharedApplication] registerForRemoteNotifications];
 #endif
@@ -81,6 +70,7 @@
 #endif
             }
     };
+    /*如果注销过信鸽，需要再次注册push服务前的准备*/
     [XGPush initForReregister:successCallback];
     
     
@@ -140,6 +130,7 @@
     
     //删除推送列表中的这一条
     [XGPush delLocalNotification:notification];
+    DLog(@"%@",notification);
     //[XGPush delLocalNotification:@"clockID" userInfoValue:@"myid"];
 
     //清空推送列表
@@ -168,9 +159,6 @@
 #endif
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    
-        //NSString * deviceTokenStr = [XGPush registerDevice:deviceToken];
-    
     void (^successBlock)(void) = ^(void){
             //成功之后的处理
         NSLog(@"[XGPush]register successBlock");
@@ -187,9 +175,6 @@
     
     
     NSString * deviceTokenStr = [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
-    
-    //如果不需要回调
-    //[XGPush registerDevice:deviceToken];
 
     //打印获取的deviceToken的字符串
     NSLog(@"deviceTokenStr is %@",deviceTokenStr);
@@ -206,29 +191,19 @@
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
+    /*{
+     aps =     {
+     alert = "\U521a\U624d\U90a3\U4e00\U53d1\U6ca1\U8f93\U5165\Uff0c\U518d\U6765\U4e00\U53d1\U5427\Uff0c\U53cd\U6b63\U4e0d\U8981\U94b1....";
+     sound = default;
+     };
+     xg =     {
+     bid = 30744837;
+     ts = 1426840273;
+     };
+     }*/
+    DLog(@"%@",userInfo);
         //推送反馈(app运行时)
     [XGPush handleReceiveNotification:userInfo];
-    
-    
-        //回调版本示例
-    /*
-     void (^successBlock)(void) = ^(void){
-     //成功之后的处理
-     NSLog(@"[XGPush]handleReceiveNotification successBlock");
-     };
-     
-     void (^errorBlock)(void) = ^(void){
-     //失败之后的处理
-     NSLog(@"[XGPush]handleReceiveNotification errorBlock");
-     };
-     
-     void (^completion)(void) = ^(void){
-     //失败之后的处理
-     NSLog(@"[xg push completion]userInfo is %@",userInfo);
-     };
-     
-     [XGPush handleReceiveNotification:userInfo successCallback:successBlock errorCallback:errorBlock completion:completion];
-     */
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

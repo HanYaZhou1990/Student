@@ -34,7 +34,6 @@
 		3EAD3FB41AA057C300AA053F /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD3FAB1AA057C300AA053F /* UIView+MJExtension.m */; };
 		3EAD3FB71AA05B3D00AA053F /* CoachListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD3FB61AA05B3D00AA053F /* CoachListModel.m */; };
 		3EBB44971A80BB5F001E534B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB44961A80BB5F001E534B /* main.m */; };
-		3EBB449A1A80BB5F001E534B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB44991A80BB5F001E534B /* AppDelegate.m */; };
 		3EBB44A21A80BB5F001E534B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB44A11A80BB5F001E534B /* Images.xcassets */; };
 		3EBB44B11A80BB5F001E534B /* AmoyMasterStudentsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB44B01A80BB5F001E534B /* AmoyMasterStudentsTests.m */; };
 		3EBB44BD1A80BC14001E534B /* RootTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB44BC1A80BC14001E534B /* RootTabViewController.m */; };
@@ -176,7 +175,7 @@
 		CF1766C41ABB233D00D7C926 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C31ABB233D00D7C926 /* CoreTelephony.framework */; };
 		CF1766C61ABB235E00D7C926 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C51ABB235E00D7C926 /* Security.framework */; };
 		CF1766C81ABB238200D7C926 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C71ABB238200D7C926 /* libsqlite3.dylib */; };
-		CF1766CA1ABB2C6E00D7C926 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C91ABB2C6D00D7C926 /* libc++abi.dylib */; };
+		CF5B7E551ABC5A9C00E79D9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5B7E541ABC5A9C00E79D9A /* AppDelegate.m */; };
 		CF62A1561AA2088F0031C816 /* ExamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF62A1551AA2088F0031C816 /* ExamViewController.m */; };
 		CF6997F21A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6997F11A87B41E00F3CD1C /* KnoledgeCollectionViewCell.m */; };
 		CF6997F41A87BB7100F3CD1C /* modelTest_btn_test.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6997F31A87BB7100F3CD1C /* modelTest_btn_test.png */; };
@@ -259,8 +258,6 @@
 		3EBB44911A80BB5F001E534B /* AmoyMasterStudents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmoyMasterStudents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EBB44951A80BB5F001E534B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EBB44961A80BB5F001E534B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3EBB44981A80BB5F001E534B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		3EBB44991A80BB5F001E534B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3EBB44A11A80BB5F001E534B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3EBB44AA1A80BB5F001E534B /* AmoyMasterStudentsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmoyMasterStudentsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EBB44AF1A80BB5F001E534B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -461,7 +458,8 @@
 		CF1766C31ABB233D00D7C926 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		CF1766C51ABB235E00D7C926 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CF1766C71ABB238200D7C926 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		CF1766C91ABB2C6D00D7C926 /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "usr/lib/libc++abi.dylib"; sourceTree = SDKROOT; };
+		CF5B7E531ABC5A9C00E79D9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CF5B7E541ABC5A9C00E79D9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CF62A1541AA2088F0031C816 /* ExamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamViewController.h; sourceTree = "<group>"; };
 		CF62A1551AA2088F0031C816 /* ExamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamViewController.m; sourceTree = "<group>"; };
 		CF6997F01A87B41E00F3CD1C /* KnoledgeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnoledgeCollectionViewCell.h; sourceTree = "<group>"; };
@@ -499,7 +497,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF1766CA1ABB2C6E00D7C926 /* libc++abi.dylib in Frameworks */,
 				CF1766C81ABB238200D7C926 /* libsqlite3.dylib in Frameworks */,
 				CF1766C61ABB235E00D7C926 /* Security.framework in Frameworks */,
 				CF1766C41ABB233D00D7C926 /* CoreTelephony.framework in Frameworks */,
@@ -617,7 +614,6 @@
 		3EBB44881A80BB5F001E534B = {
 			isa = PBXGroup;
 			children = (
-				CF1766C91ABB2C6D00D7C926 /* libc++abi.dylib */,
 				CF1766C71ABB238200D7C926 /* libsqlite3.dylib */,
 				CF1766C51ABB235E00D7C926 /* Security.framework */,
 				CF1766C31ABB233D00D7C926 /* CoreTelephony.framework */,
@@ -648,8 +644,8 @@
 		3EBB44931A80BB5F001E534B /* AmoyMasterStudents */ = {
 			isa = PBXGroup;
 			children = (
-				3EBB44981A80BB5F001E534B /* AppDelegate.h */,
-				3EBB44991A80BB5F001E534B /* AppDelegate.m */,
+				CF5B7E531ABC5A9C00E79D9A /* AppDelegate.h */,
+				CF5B7E541ABC5A9C00E79D9A /* AppDelegate.m */,
 				3EBB44BB1A80BC14001E534B /* RootTabViewController.h */,
 				3EBB44BC1A80BC14001E534B /* RootTabViewController.m */,
 				3EBB44C11A80BC61001E534B /* PublicHelper */,
@@ -1304,7 +1300,6 @@
 				3EAD3FB41AA057C300AA053F /* UIView+MJExtension.m in Sources */,
 				3EBB454A1A80BF5A001E534B /* UIImageView+AFNetworking.m in Sources */,
 				3E8714061AA1FFD200106A5C /* PublicSaveViewController.m in Sources */,
-				3EBB449A1A80BB5F001E534B /* AppDelegate.m in Sources */,
 				3EBB45091A80BF2A001E534B /* UIButton+WebCache.m in Sources */,
 				3EBB45011A80BF2A001E534B /* NSData+ImageContentType.m in Sources */,
 				3EAD3FB11AA057C300AA053F /* MJRefreshHeaderView.m in Sources */,
@@ -1360,6 +1355,7 @@
 				CF73D7FB1AB9BB750084CC37 /* KnowledgeViewController.m in Sources */,
 				3E7F12F91A884B6B00A2D34C /* WWTextField.m in Sources */,
 				3EBB45171A80BF4A001E534B /* CWStarRateView.m in Sources */,
+				CF5B7E551ABC5A9C00E79D9A /* AppDelegate.m in Sources */,
 				3E7F12F61A88461900A2D34C /* RegisterViewController.m in Sources */,
 				3E7F130E1A88BA9000A2D34C /* TimeLineModel.m in Sources */,
 				3EAD3FB71AA05B3D00AA053F /* CoachListModel.m in Sources */,
@@ -1507,7 +1503,7 @@
 					"$(PROJECT_DIR)/AmoyMasterStudents/Libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b86a1294-0ad5-43b0-93af-af0151b03ff4";
+				PROVISIONING_PROFILE = "ab009fec-d40b-4207-b478-e27f7ceb7791";
 			};
 			name = Debug;
 		};
@@ -1527,7 +1523,7 @@
 					"$(PROJECT_DIR)/AmoyMasterStudents/Libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b86a1294-0ad5-43b0-93af-af0151b03ff4";
+				PROVISIONING_PROFILE = "ab009fec-d40b-4207-b478-e27f7ceb7791";
 			};
 			name = Release;
 		};

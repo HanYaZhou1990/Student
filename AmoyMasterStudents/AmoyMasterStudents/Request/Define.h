@@ -107,6 +107,10 @@
 //获取文章详情
 #define trainee_knowledge_detail  @"/trainee/knowledge/detail"
 
+//获取学员时间线
+#define trainee_timeLine_list @"/trainee/timeLine/list"
+
+
 
 
 

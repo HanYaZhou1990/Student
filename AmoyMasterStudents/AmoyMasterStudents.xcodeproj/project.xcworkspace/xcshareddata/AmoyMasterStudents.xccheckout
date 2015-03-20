@@ -10,31 +10,48 @@
 	<string>AmoyMasterStudents</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1C7C7CF3-9A69-4175-9562-3B3C766FBC60</key>
+		<key>5B3A4572C1B5AD49525592FAAED898CC04B16FA9</key>
 		<string>https://github.com/HanYaZhou1990/Student.git</string>
+		<key>85aa817d-5c75-4d84-90fa-e6aa40419b5f++1301</key>
+		<string>svn://120.24.236.14/taosf/trainee_ios/trunk/%25E9%2599%25B6%25E5%25B8%2588%25E5%2582%2585/AmoyMasterStudents/AmoyMasterStudents/Libs/SVPHUD/SVProgressHUD.bundle</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>AmoyMasterStudents/AmoyMasterStudents.xcodeproj/project.xcworkspace</string>
+	<string>AmoyMasterStudents/AmoyMasterStudents.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1C7C7CF3-9A69-4175-9562-3B3C766FBC60</key>
+		<key>5B3A4572C1B5AD49525592FAAED898CC04B16FA9</key>
 		<string>../../..</string>
+		<key>85aa817d-5c75-4d84-90fa-e6aa40419b5f++1301</key>
+		<string>../../..AmoyMasterStudents/AmoyMasterStudents/Libs/SVPHUD/SVProgressHUD.bundle/</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>85aa817d-5c75-4d84-90fa-e6aa40419b5f++1301</key>
+		<string>svn://120.24.236.14/taosf</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/HanYaZhou1990/Student.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1C7C7CF3-9A69-4175-9562-3B3C766FBC60</string>
+	<string>5B3A4572C1B5AD49525592FAAED898CC04B16FA9</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1C7C7CF3-9A69-4175-9562-3B3C766FBC60</string>
+			<string>5B3A4572C1B5AD49525592FAAED898CC04B16FA9</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Student</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>85aa817d-5c75-4d84-90fa-e6aa40419b5f++1301</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SVProgressHUD.bundle</string>
 		</dict>
 	</array>
 </dict>

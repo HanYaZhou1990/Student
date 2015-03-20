@@ -10,4 +10,18 @@
 
 @implementation TimeLineModel
 
+@synthesize type,titleContent,detailContent,dateContent;
+
+- (id)initWithDictionary:(NSDictionary *)userDictionary
+{
+    if (self = [super init])
+        {
+        type = @"1";
+        titleContent = userDictionary[@"content"];
+        detailContent = @"";
+        dateContent = userDictionary[@"create_time"];
+        }
+    return self;
+}
+
 @end

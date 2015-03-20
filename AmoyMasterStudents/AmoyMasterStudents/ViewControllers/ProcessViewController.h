@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "AFNetworking.h"
 
 @interface ProcessViewController : BaseViewController
 

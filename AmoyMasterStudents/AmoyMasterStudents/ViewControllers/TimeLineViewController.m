@@ -33,7 +33,7 @@
     
     dataSource = [[NSMutableArray alloc]init];
     
-    [self getData];
+    [self refreshMemberData];
 
 }
 
@@ -63,50 +63,43 @@
     [self.view addSubview:myTableView];
 }
 
--(void)getData
-{
-    TimeLineModel *timeLine1 = [[TimeLineModel alloc]init];
-    timeLine1.type = @"1";
-    timeLine1.titleContent = @"您获得驾照,学习结束您获得驾照,学习结束您获得驾照,学习结束";
-    timeLine1.detailContent = @"";
-    timeLine1.dateContent = @"2014/5/12 17:10";
-    [dataSource addObject:timeLine1];
-    
-    TimeLineModel *timeLine2 = [[TimeLineModel alloc]init];
-    timeLine2.type = @"2";
-    timeLine2.titleContent = @"您完成了第一节课您获得驾照,学习结束您获得驾照,学习结束";
-    timeLine2.detailContent = @"对教练为评价5分,打赏10元您获得驾照,学习结束您获得驾照,学习结束您获得驾照,学习结束您获得驾照,学习结束您获得驾照,学习结束您获得驾照,学习结束";
-    timeLine2.dateContent = @"2014/5/12 17:10";
-    [dataSource addObject:timeLine2];
-    
-    TimeLineModel *timeLine3 = [[TimeLineModel alloc]init];
-    timeLine3.type = @"3";
-    timeLine3.titleContent = @"您进入长训,协助教练韩教练";
-    timeLine3.detailContent = @"";
-    timeLine3.dateContent = @"2014/5/12 17:10";
-    [dataSource addObject:timeLine3];
-    
-    [dataSource addObject:timeLine1];
-    [dataSource addObject:timeLine2];
-    [dataSource addObject:timeLine3];
-    
-    [dataSource addObject:timeLine1];
-    [dataSource addObject:timeLine2];
-    [dataSource addObject:timeLine3];
-    
-    [dataSource addObject:timeLine1];
-    [dataSource addObject:timeLine2];
-    [dataSource addObject:timeLine3];
-    
-    [myTableView reloadData];
-}
-
-
 #pragma mark -
 #pragma mark - 数据相关
 -(void)refreshMemberData
 {
     //刷新数据
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_timeLine_list];
+    NSDictionary *params = @{@"token":userToken};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+        if ([resultCode boolValue] == NO) {
+            NSDictionary *dataDic = [responseDic valueForKey:@"data"];
+            if ([dataDic[@"list"] isKindOfClass:[NSArray class]]) {
+                [dataSource removeAllObjects];
+                NSArray *listArray = dataDic[@"list"];
+                for (int i = 0; i < listArray.count ; i ++) {
+                    TimeLineModel *timeLine1 = [[TimeLineModel alloc]initWithDictionary:listArray[i]];
+                    [dataSource addObject:timeLine1];
+                }
+                [myTableView reloadData];
+            }else {
+                [myTableView reloadData];
+            }
+        }else {
+            NSString *msgStr = [responseDic valueForKey:@"msg"];
+            [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"没有时间线"]];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [SVProgressHUD showErrorWithStatus:@"获取时间线请求失败"];
+        [dataSource removeAllObjects];
+        [myTableView reloadData];
+    }];
 }
 
 
