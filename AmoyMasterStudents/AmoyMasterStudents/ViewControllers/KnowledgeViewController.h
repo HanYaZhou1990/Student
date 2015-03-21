@@ -15,6 +15,7 @@
 #import "SubjectViewController.h"
 #import "SubjectCell.h"
 #import "KnowledgeDetailViewController.h"
+#import "MJRefresh.h"
 
 /*
  public static String ZHISHI_KEMU1 = "C1S1";// 科目1

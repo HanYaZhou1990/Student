@@ -11,6 +11,8 @@
 @interface KnowledgeViewController (){
     NSInteger          _selectedIndex;
     NSMutableArray     *_dataSourceArray;
+    NSInteger          _pageNumber;
+    NSString           *_sectionString;
 }
 
 @end
@@ -31,6 +33,8 @@
     [super viewDidLoad];
     
     _selectedIndex = 0;
+    _pageNumber = 1;
+    _sectionString = @"";
     
     _dataSourceArray = [NSMutableArray array];
     
@@ -49,6 +53,16 @@
     _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _knowledgeTableView.backgroundColor = UIColorFromRGB(0xEEEEEE);
     [self.view addSubview: _knowledgeTableView];
+    
+    [_knowledgeTableView addHeaderWithTarget:self action:@selector(knowledgeHeaderRefreshing) dateKey:@"allDiscoverTable"];
+    [_knowledgeTableView addFooterWithTarget:self action:@selector(knowledgeFooterRefreshing)];
+    _knowledgeTableView.headerPullToRefreshText = @"下拉可以刷新";
+    _knowledgeTableView.headerReleaseToRefreshText = @"松开马上刷新";
+    _knowledgeTableView.headerRefreshingText = @"正在帮您刷新中";
+    
+    _knowledgeTableView.footerPullToRefreshText = @"上拉可以加载更多数据";
+    _knowledgeTableView.footerReleaseToRefreshText = @"松开马上加载更多数据";
+    _knowledgeTableView.footerRefreshingText = @"正在帮您加载中";
 }
 
 //设置右边的添加按键
@@ -71,6 +85,72 @@
     vc.hidesBottomBarWhenPushed = YES;
     vc.noticeType = @"4";
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark 获取表格数据
+
+- (void)knowledgeHeaderRefreshing{
+    _pageNumber = 1;
+    [self refreshDate:_sectionString andFormartType:@"0"];
+}
+
+- (void)knowledgeFooterRefreshing{
+    _pageNumber ++;
+    [self refreshDate:_sectionString andFormartType:@"1"];
+}
+
+- (void)refreshDate:(NSString *)sectionString andFormartType:(NSString *)formartType{
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_knowledge_paginationListItems];
+    
+    NSDictionary *params = @{@"section":sectionString,@"page":[NSString stringWithFormat:@"%ld",(long)_pageNumber],@"amount":@"10",@"token":userToken};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [_knowledgeTableView footerEndRefreshing];
+        [_knowledgeTableView headerEndRefreshing];
+        
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+        if ([resultCode boolValue]==NO){
+            id something = [responseDic valueForKey:@"data"];
+            if ([something isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dataDic = [responseDic valueForKey:@"data"];
+                if (dataDic)
+                    {
+                    if (![formartType isEqualToString:@"1"])
+                        {
+                        [_dataSourceArray removeAllObjects];
+                    }
+                    for (NSString *keyString in [dataDic allKeys])
+                        {
+                        [_dataSourceArray addObject:dataDic[keyString]];
+                        [_knowledgeTableView reloadData];
+                        }
+                }
+            }else {
+                [SVProgressHUD showErrorWithStatus:@"没有新文章"];
+                [_dataSourceArray removeAllObjects];
+                [_knowledgeTableView reloadData];
+                _pageNumber = 1;
+            }
+        }else{
+            NSString *msgStr = [responseDic valueForKey:@"msg"];
+            [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取文章列表失败"]];
+            [_dataSourceArray removeAllObjects];
+            [_knowledgeTableView reloadData];
+            _pageNumber = 1;
+            
+        }
+    }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error){
+              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+              [SVProgressHUD showErrorWithStatus:@"获取文章列表请求失败"];
+              [_dataSourceArray removeAllObjects];
+              [_knowledgeTableView reloadData];
+          }];
 }
 
 #pragma mark -
@@ -179,56 +259,13 @@
         [_knowledgeTableView reloadData];
     }else if (indexOfButton == 1) {
         _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        [self refreshDate:@"C2S1"];
+        _sectionString = @"C2S1";
+        [self refreshDate:_sectionString andFormartType:@"0"];
     }else {
         _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        [self refreshDate:@"C3S1"];
+        _sectionString = @"C3S1";
+        [self refreshDate:_sectionString andFormartType:@"0"];
     }
-}
-
-- (void)refreshDate:(NSString *)sectionString {    
-    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
-    
-    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_knowledge_paginationListItems];
-    
-    NSDictionary *params = @{@"section":sectionString,@"page":@"1",@"amount":@"10",@"token":userToken};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        
-        NSDictionary *responseDic = (NSDictionary *)responseObject;
-        [_dataSourceArray removeAllObjects];
-        NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
-        if ([resultCode boolValue]==NO){
-            id something = [responseDic valueForKey:@"data"];
-            if ([something isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *dataDic = [responseDic valueForKey:@"data"];
-                if (dataDic){
-                    for (NSString *keyString in [dataDic allKeys]) {
-                        [_dataSourceArray addObject:dataDic[keyString]];
-                        [_knowledgeTableView reloadData];
-                    }
-                }
-            }else {
-                [SVProgressHUD showErrorWithStatus:@"没有新文章"];
-                [_dataSourceArray removeAllObjects];
-                [_knowledgeTableView reloadData];
-            }
-        }else{
-            NSString *msgStr = [responseDic valueForKey:@"msg"];
-            [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取文章列表失败"]];
-            [_dataSourceArray removeAllObjects];
-            [_knowledgeTableView reloadData];
-
-        }
-    }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error){
-              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-              [SVProgressHUD showErrorWithStatus:@"获取文章列表请求失败"];
-              [_dataSourceArray removeAllObjects];
-              [_knowledgeTableView reloadData];
-          }];
 }
 
 - (void)didReceiveMemoryWarning {

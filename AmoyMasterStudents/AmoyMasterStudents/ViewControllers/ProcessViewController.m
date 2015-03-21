@@ -36,9 +36,16 @@
     
     [self setTheTableView];
     
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     dataSource = [[NSMutableArray alloc]init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshProcessData) name:refreshProcessVCNotification object:nil];
+    [self refreshProcessData];
+}
+
+- (void)refresh:(UIBarButtonItem *)item {
     [self refreshProcessData];
 }
 
