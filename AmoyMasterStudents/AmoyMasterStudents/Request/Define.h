@@ -110,6 +110,9 @@
 //获取学员时间线
 #define trainee_timeLine_list @"/trainee/timeLine/list"
 
+//预约驾校
+#define trainee_course_orderCourse @"/trainee/course/orderCourse"
+
 
 
 

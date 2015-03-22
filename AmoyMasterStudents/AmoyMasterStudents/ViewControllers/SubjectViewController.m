@@ -11,6 +11,7 @@
 @interface SubjectViewController () <UITableViewDataSource,UITableViewDelegate> {
     NSMutableArray      *_dataSourceArray;
     UITableView         *_subjectTableView;
+    NSInteger          _pageNumber;
 }
 
 @end
@@ -22,6 +23,8 @@
     
     self.title = _titleString;
     
+    _pageNumber = 1;
+    
     [self leftBarItem];
     
     _dataSourceArray  = [NSMutableArray array];
@@ -32,31 +35,58 @@
     [_subjectTableView registerClass:[SubjectCell class] forCellReuseIdentifier:@"cell"];
     _subjectTableView.tableFooterView = [UIView new];
     [self.view addSubview:_subjectTableView];
-    [self subjectType:_titleString];
+    
+    [_subjectTableView addHeaderWithTarget:self action:@selector(subjectHeaderRefreshing) dateKey:@"allDiscoverTable"];
+    [_subjectTableView addFooterWithTarget:self action:@selector(subjectFooterRefreshing)];
+    _subjectTableView.headerPullToRefreshText = @"下拉可以刷新";
+    _subjectTableView.headerReleaseToRefreshText = @"松开马上刷新";
+    _subjectTableView.headerRefreshingText = @"正在帮您刷新中";
+    
+    _subjectTableView.footerPullToRefreshText = @"上拉可以加载更多数据";
+    _subjectTableView.footerReleaseToRefreshText = @"松开马上加载更多数据";
+    _subjectTableView.footerRefreshingText = @"正在帮您加载中";
+    
+    [self subjectType:_titleString andFormartType:@"0"];
 }
 
-- (void)subjectType:(NSString *)subject{
+- (void)subjectType:(NSString *)subject andFormartType:(NSString *)formartType{
     if ([subject isEqualToString:@"科目一"]) {
-        [self refreshDataWithSection:@"C1S1"];
+        [self refreshDataWithSection:@"C1S1" andFormartType:formartType];
     }else if ([subject isEqualToString:@"科目二"]) {
-        [self refreshDataWithSection:@"C1S2"];
+        [self refreshDataWithSection:@"C1S2" andFormartType:formartType];
     }else if ([subject isEqualToString:@"科目三"]) {
-        [self refreshDataWithSection:@"C1S3"];
+        [self refreshDataWithSection:@"C1S3" andFormartType:formartType];
     }else {
-        [self refreshDataWithSection:@"C1S4"];
+        [self refreshDataWithSection:@"C1S4" andFormartType:formartType];
     }
 }
 
-- (void)refreshDataWithSection:(NSString *)sectionString{
+#pragma mark 获取表格数据
+
+- (void)subjectHeaderRefreshing
+{
+    _pageNumber =1;
+    [self subjectType:_titleString andFormartType:@"0"];
+}
+
+- (void)subjectFooterRefreshing
+{
+    _pageNumber ++;
+    [self subjectType:_titleString andFormartType:@"1"];
+}
+
+- (void)refreshDataWithSection:(NSString *)sectionString andFormartType:(NSString *)formartType{
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_knowledge_paginationListItems];
     
-    NSDictionary *params = @{@"section":sectionString,@"page":@"1",@"amount":@"10",@"token":userToken};
+    NSDictionary *params = @{@"section":sectionString,@"page":[NSString stringWithFormat:@"%ld",(long)_pageNumber],@"amount":@"10",@"token":userToken};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [_subjectTableView footerEndRefreshing];
+        [_subjectTableView headerEndRefreshing];
         
         NSDictionary *responseDic = (NSDictionary *)responseObject;
         
@@ -66,6 +96,9 @@
             if ([something isKindOfClass:[NSDictionary class]]) {
                 NSDictionary *dataDic = [responseDic valueForKey:@"data"];
                 if (dataDic){
+                    if ([formartType isEqualToString:@"0"]) {
+                        [_dataSourceArray removeAllObjects];
+                    }
                     for (NSString *keyString in [dataDic allKeys]) {
                         [_dataSourceArray addObject:dataDic[keyString]];
                         [_subjectTableView reloadData];
@@ -85,6 +118,8 @@
     }
           failure:^(AFHTTPRequestOperation *operation, NSError *error){
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [_subjectTableView footerEndRefreshing];
+            [_subjectTableView headerEndRefreshing];
             [SVProgressHUD showErrorWithStatus:@"获取文章列表请求失败"];
             [_dataSourceArray removeAllObjects];
             [_subjectTableView reloadData];

@@ -78,7 +78,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_master_info];
     
-    NSDictionary *params = @{@"master_id":self.masterId,@"token":userToken};
+    NSDictionary *params = @{@"master_id":self.masterId,@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     coachOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -86,11 +86,7 @@
                               [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                               
                               NSDictionary *responseDic = (NSDictionary *)responseObject;
-                              
-                              //打印结果 方便查看
-                              NSString *responseString = [PublicConfig dictionaryToJson:responseDic];
-                              DLog(@"返回结果字符串 : %@",responseString);
-                              
+                          
                               NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
                               if ([resultCode boolValue]==NO)
                               {
@@ -725,9 +721,38 @@
     else
     {
         //预约
-        OrderCoachViewController *vc = [[OrderCoachViewController alloc]init];
-        vc.orderType = @"1";
-        [self.navigationController pushViewController:vc animated:YES];
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_course_orderCourse];
+    
+    NSDictionary *params = @{@"master_id":_masterId,@"class_type":@"1",@"token":[PublicConfig valueForKey:userToken]};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+        if ([resultCode boolValue]==NO){
+            NSDictionary *dataDic = [responseDic valueForKey:@"data"];
+            if (dataDic) {
+                /*预约成功*/
+                OrderCoachViewController *vc = [[OrderCoachViewController alloc]init];
+                vc.orderType = @"1";
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }else{
+            NSString *msgStr = [responseDic valueForKey:@"msg"];
+            OrderCoachViewController *vc = [[OrderCoachViewController alloc]init];
+            vc.orderType = @"0";
+            [self.navigationController pushViewController:vc animated:YES];
+            [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"预约失败"]];
+        }
+        DLog(@"responseDic = %@",[PublicConfig dictionaryToJson:responseDic]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [SVProgressHUD showErrorWithStatus:@"获取文章列表请求失败"];
+    }];
     }
 }
 

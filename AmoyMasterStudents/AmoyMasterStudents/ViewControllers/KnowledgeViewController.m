@@ -90,13 +90,25 @@
 #pragma mark 获取表格数据
 
 - (void)knowledgeHeaderRefreshing{
-    _pageNumber = 1;
-    [self refreshDate:_sectionString andFormartType:@"0"];
+    if (_selectedIndex == 0) {
+        [_knowledgeTableView footerEndRefreshing];
+        [_knowledgeTableView headerEndRefreshing];
+        return;
+    }else {
+        _pageNumber = 1;
+        [self refreshDate:_sectionString andFormartType:@"0"];
+    }
 }
 
 - (void)knowledgeFooterRefreshing{
-    _pageNumber ++;
-    [self refreshDate:_sectionString andFormartType:@"1"];
+    if (_selectedIndex == 0) {
+        [_knowledgeTableView footerEndRefreshing];
+        [_knowledgeTableView headerEndRefreshing];
+        return;
+    }else{
+        _pageNumber ++;
+        [self refreshDate:_sectionString andFormartType:@"1"];
+    }
 }
 
 - (void)refreshDate:(NSString *)sectionString andFormartType:(NSString *)formartType{
@@ -147,6 +159,8 @@
     }
           failure:^(AFHTTPRequestOperation *operation, NSError *error){
               [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+              [_knowledgeTableView footerEndRefreshing];
+              [_knowledgeTableView headerEndRefreshing];
               [SVProgressHUD showErrorWithStatus:@"获取文章列表请求失败"];
               [_dataSourceArray removeAllObjects];
               [_knowledgeTableView reloadData];
