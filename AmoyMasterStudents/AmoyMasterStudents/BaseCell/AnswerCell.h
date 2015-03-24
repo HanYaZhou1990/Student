@@ -10,4 +10,6 @@
 
 @interface AnswerCell : UITableViewCell
 
+@property (nonatomic,strong) NSString   *contentString;
+
 @end

@@ -185,14 +185,14 @@
 		CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BCF1A826A3A003581BC /* EMBAMineMenuView.m */; };
 		CF797BD41A8276BF003581BC /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD31A8276BF003581BC /* UIImage+Color.m */; };
 		CF797BD71A82811E003581BC /* YZCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF797BD61A82811E003581BC /* YZCollectionReusableView.m */; };
+		CF7987911AC1BB9E00E02360 /* AnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF7987901AC1BB9E00E02360 /* AnswerViewController.m */; };
+		CF7987951AC1BBDA00E02360 /* AnswerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF7987941AC1BBDA00E02360 /* AnswerCell.m */; };
+		CF7987981AC1BBF500E02360 /* ExaminationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF7987971AC1BBF500E02360 /* ExaminationCell.m */; };
 		CF86CFF61AA0BF710093908B /* KnowledgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86CFF51AA0BF710093908B /* KnowledgeCell.m */; };
 		CF87A0B71AB8657F002D3CF8 /* SubjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87A0B61AB8657F002D3CF8 /* SubjectViewController.m */; };
 		CF87A0BA1AB872FB002D3CF8 /* SubjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87A0B91AB872FB002D3CF8 /* SubjectCell.m */; };
 		CF87A0BD1AB88484002D3CF8 /* KnowledgeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87A0BC1AB88484002D3CF8 /* KnowledgeDetailViewController.m */; };
-		CFC169A01AB08D87007D821A /* ExaminationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFC1699D1AB08D87007D821A /* ExaminationCell.m */; };
-		CFC169A11AB08D87007D821A /* AnswerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFC1699F1AB08D87007D821A /* AnswerCell.m */; };
 		CFC169A31AB08D91007D821A /* png.png in Resources */ = {isa = PBXBuildFile; fileRef = CFC169A21AB08D91007D821A /* png.png */; };
-		CFC169A61AB08DA6007D821A /* AnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFC169A51AB08DA6007D821A /* AnswerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -276,7 +276,6 @@
 		3EBB44CF1A80BE07001E534B /* PublicConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicConfig.m; sourceTree = "<group>"; };
 		3EBB44D11A80BE31001E534B /* ValidateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidateTool.h; sourceTree = "<group>"; };
 		3EBB44D21A80BE31001E534B /* ValidateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidateTool.m; sourceTree = "<group>"; };
-		3EBB44D41A80BE50001E534B /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
 		3EBB44DA1A80BF1D001E534B /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		3EBB44DB1A80BF1D001E534B /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		3EBB44DC1A80BF1D001E534B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -478,6 +477,13 @@
 		CF797BD31A8276BF003581BC /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		CF797BD51A82811E003581BC /* YZCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZCollectionReusableView.h; sourceTree = "<group>"; };
 		CF797BD61A82811E003581BC /* YZCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZCollectionReusableView.m; sourceTree = "<group>"; };
+		CF79878F1AC1BB9E00E02360 /* AnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerViewController.h; sourceTree = "<group>"; };
+		CF7987901AC1BB9E00E02360 /* AnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerViewController.m; sourceTree = "<group>"; };
+		CF7987921AC1BBB600E02360 /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
+		CF7987931AC1BBDA00E02360 /* AnswerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerCell.h; sourceTree = "<group>"; };
+		CF7987941AC1BBDA00E02360 /* AnswerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerCell.m; sourceTree = "<group>"; };
+		CF7987961AC1BBF500E02360 /* ExaminationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExaminationCell.h; sourceTree = "<group>"; };
+		CF7987971AC1BBF500E02360 /* ExaminationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExaminationCell.m; sourceTree = "<group>"; };
 		CF86CFF41AA0BF710093908B /* KnowledgeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeCell.h; sourceTree = "<group>"; };
 		CF86CFF51AA0BF710093908B /* KnowledgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeCell.m; sourceTree = "<group>"; };
 		CF87A0B51AB8657F002D3CF8 /* SubjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectViewController.h; sourceTree = "<group>"; };
@@ -486,13 +492,7 @@
 		CF87A0B91AB872FB002D3CF8 /* SubjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectCell.m; sourceTree = "<group>"; };
 		CF87A0BB1AB88484002D3CF8 /* KnowledgeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeDetailViewController.h; sourceTree = "<group>"; };
 		CF87A0BC1AB88484002D3CF8 /* KnowledgeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeDetailViewController.m; sourceTree = "<group>"; };
-		CFC1699C1AB08D87007D821A /* ExaminationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExaminationCell.h; sourceTree = "<group>"; };
-		CFC1699D1AB08D87007D821A /* ExaminationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExaminationCell.m; sourceTree = "<group>"; };
-		CFC1699E1AB08D87007D821A /* AnswerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerCell.h; sourceTree = "<group>"; };
-		CFC1699F1AB08D87007D821A /* AnswerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerCell.m; sourceTree = "<group>"; };
 		CFC169A21AB08D91007D821A /* png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = png.png; sourceTree = "<group>"; };
-		CFC169A41AB08DA6007D821A /* AnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerViewController.h; sourceTree = "<group>"; };
-		CFC169A51AB08DA6007D821A /* AnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -529,8 +529,8 @@
 			children = (
 				CF62A1541AA2088F0031C816 /* ExamViewController.h */,
 				CF62A1551AA2088F0031C816 /* ExamViewController.m */,
-				CFC169A41AB08DA6007D821A /* AnswerViewController.h */,
-				CFC169A51AB08DA6007D821A /* AnswerViewController.m */,
+				CF79878F1AC1BB9E00E02360 /* AnswerViewController.h */,
+				CF7987901AC1BB9E00E02360 /* AnswerViewController.m */,
 				3E8714071AA217B500106A5C /* NoticeViewController.h */,
 				3E8714081AA217B500106A5C /* NoticeViewController.m */,
 				3EBF7E581AA45C9600572B98 /* NoticeTwoViewController.h */,
@@ -771,10 +771,10 @@
 				3EA59D2C1A84537900DA9472 /* CoachCell.m */,
 				3E7F13091A88B38300A2D34C /* TimeLineCell.h */,
 				3E7F130A1A88B38300A2D34C /* TimeLineCell.m */,
-				CFC1699C1AB08D87007D821A /* ExaminationCell.h */,
-				CFC1699D1AB08D87007D821A /* ExaminationCell.m */,
-				CFC1699E1AB08D87007D821A /* AnswerCell.h */,
-				CFC1699F1AB08D87007D821A /* AnswerCell.m */,
+				CF7987961AC1BBF500E02360 /* ExaminationCell.h */,
+				CF7987971AC1BBF500E02360 /* ExaminationCell.m */,
+				CF7987931AC1BBDA00E02360 /* AnswerCell.h */,
+				CF7987941AC1BBDA00E02360 /* AnswerCell.m */,
 				CF87A0B81AB872FB002D3CF8 /* SubjectCell.h */,
 				CF87A0B91AB872FB002D3CF8 /* SubjectCell.m */,
 				CFC169A21AB08D91007D821A /* png.png */,
@@ -823,7 +823,7 @@
 		3EBB44C51A80BD47001E534B /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				3EBB44D41A80BE50001E534B /* Define.h */,
+				CF7987921AC1BBB600E02360 /* Define.h */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1294,7 +1294,6 @@
 				3EBB45071A80BF2A001E534B /* SDWebImageManager.m in Sources */,
 				3EBB45141A80BF38001E534B /* MBProgressHUD.m in Sources */,
 				3EBB45021A80BF2A001E534B /* SDImageCache.m in Sources */,
-				CFC169A01AB08D87007D821A /* ExaminationCell.m in Sources */,
 				3EA59D2D1A84537900DA9472 /* CoachCell.m in Sources */,
 				3EBB45421A80BF5A001E534B /* AFURLConnectionOperation.m in Sources */,
 				3EBB45471A80BF5A001E534B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -1303,6 +1302,7 @@
 				3E7F130B1A88B38300A2D34C /* TimeLineCell.m in Sources */,
 				3EBB45671A80C02E001E534B /* MemberCenterViewController.m in Sources */,
 				3EBB450F1A80BF2A001E534B /* UIView+WebCacheOperation.m in Sources */,
+				CF7987911AC1BB9E00E02360 /* AnswerViewController.m in Sources */,
 				3EAD3FB41AA057C300AA053F /* UIView+MJExtension.m in Sources */,
 				3EBB454A1A80BF5A001E534B /* UIImageView+AFNetworking.m in Sources */,
 				3E8714061AA1FFD200106A5C /* PublicSaveViewController.m in Sources */,
@@ -1331,7 +1331,6 @@
 				3E44596A1A89D4E7001C1B7B /* CoachDetailModel.m in Sources */,
 				3EEF36E31A8338690004852F /* WWMenuView.m in Sources */,
 				3EAD3FB31AA057C300AA053F /* UIScrollView+MJRefresh.m in Sources */,
-				CFC169A11AB08D87007D821A /* AnswerCell.m in Sources */,
 				CF87A0B71AB8657F002D3CF8 /* SubjectViewController.m in Sources */,
 				3EAD3FB21AA057C300AA053F /* UIScrollView+MJExtension.m in Sources */,
 				3EBB45001A80BF2A001E534B /* MKAnnotationView+WebCache.m in Sources */,
@@ -1367,14 +1366,15 @@
 				3E7F130E1A88BA9000A2D34C /* TimeLineModel.m in Sources */,
 				3EAD3FB71AA05B3D00AA053F /* CoachListModel.m in Sources */,
 				CF797BD11A826A3A003581BC /* EMBAMineMenuView.m in Sources */,
-				CFC169A61AB08DA6007D821A /* AnswerViewController.m in Sources */,
 				CF87A0BA1AB872FB002D3CF8 /* SubjectCell.m in Sources */,
 				3EBB45581A80BFB4001E534B /* SizeToLeftLabelCell.m in Sources */,
 				3EBB45441A80BF5A001E534B /* AFURLResponseSerialization.m in Sources */,
 				3EBB450A1A80BF2A001E534B /* UIImage+GIF.m in Sources */,
+				CF7987981AC1BBF500E02360 /* ExaminationCell.m in Sources */,
 				3EA59D301A845F8F00DA9472 /* CoachDetailViewController.m in Sources */,
 				3EBB45641A80C02E001E534B /* BaseViewController.m in Sources */,
 				3EDC272B1A8B308400A9EAC0 /* OrderCoachViewController.m in Sources */,
+				CF7987951AC1BBDA00E02360 /* AnswerCell.m in Sources */,
 				CF87A0BD1AB88484002D3CF8 /* KnowledgeDetailViewController.m in Sources */,
 				3E7F12FC1A88832100A2D34C /* FindPwdViewController.m in Sources */,
 			);

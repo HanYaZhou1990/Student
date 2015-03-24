@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PublicConfig.h"
+#import "UIImageView+WebCache.h"
 
 @interface ExaminationCell : UITableViewCell
 

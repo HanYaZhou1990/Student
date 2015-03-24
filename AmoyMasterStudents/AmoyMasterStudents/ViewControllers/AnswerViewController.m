@@ -21,6 +21,9 @@
     
     self.title = @"模拟考试";
     
+    _questionsArray = [NSArray array];
+    _currentInteger = 0;
+    
     [self leftBarItem];
     
     _cellSelectedView = [[UIView alloc] init];
@@ -53,20 +56,61 @@
     [button addTarget:self action:@selector(next:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
+    [self getAllQuesstionWithSubjectType:NO];
+    
 }
 - (void)next:(UIButton *)sender {
-    [UIView beginAnimations:@"animation" context:nil];
-    [UIView setAnimationDuration:1.5];
-    self.view.userInteractionEnabled = NO;
-    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:_questionTableView cache:YES];
-    [UIView commitAnimations];
-    self.view.userInteractionEnabled = YES;
+//    [UIView beginAnimations:@"animation" context:nil];
+//    [UIView setAnimationDuration:1.5];
+//    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:_questionTableView cache:YES];
+//    [UIView commitAnimations];
+    _currentInteger ++;
+    [_questionTableView reloadData];
+    [UIView transitionWithView:_questionTableView duration:1.0 options:UIViewAnimationOptionTransitionCurlUp animations:^{
+        sender.userInteractionEnabled = NO;
+    } completion:^(BOOL finished) {
+        sender.userInteractionEnabled = YES;
+    }];
 }
+
+/*获取考题列表，NO：科目一  YES：科目四*/
+- (void)getAllQuesstionWithSubjectType:(BOOL)subjectType {
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_mockExam_init];
+    /*car   truce  bus*/
+    NSDictionary *params = @{@"type":@"car",@"preloadAmount":@"100",@"token":userToken};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        
+        DLog(@"**********%@",[PublicConfig dictionaryToJson:responseDic]);
+        
+        NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+        if ([resultCode boolValue]==NO){
+            NSDictionary *dataDic = [responseDic valueForKey:@"data"];
+            if (dataDic){
+                _questionsArray = dataDic[@"questions"];
+                [_questionTableView reloadData];
+            }
+        }else{
+            NSString *msgStr = [responseDic valueForKey:@"msg"];
+            [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取考题列表失败"]];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [SVProgressHUD showErrorWithStatus:@"获取考题列表请求失败"];
+    }];
+}
+
 #pragma mark -
 #pragma mark UITableViewDataSource -
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"第一题/共100题";
+    return [NSString stringWithFormat:@"第 %lu 题/共100题",(unsigned long)_currentInteger+1];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
@@ -76,13 +120,23 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    /*_questionsArray 储存所有的考题，通过全局的，通过_currentInteger来取现在展示的是第几题，通过第几题里边的options里边的元素个数＋1得到这个tableView的行数*/
+    if (_questionsArray.count == 0) {
+        return 0;
+    }else{
+        return [_questionsArray[_currentInteger][@"options"] count]+1;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        CGFloat questionHeight = [PublicConfig height:@"你过来，看看这个题选哪个，选错了打死你" widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
-        return questionHeight + 20 + 180;
+        if ([_questionsArray[_currentInteger][@"images"] count] == 0) {
+            CGFloat questionHeight = [PublicConfig height:_questionsArray[indexPath.row][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
+            return questionHeight + 20;
+        }else {
+            CGFloat questionHeight = [PublicConfig height:_questionsArray[indexPath.row][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
+            return questionHeight + 20 + 180;
+        }
     }else{
         return 44;
     }
@@ -92,13 +146,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         ExaminationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.questionString = @"你过来，看看这个题选哪个，选错了打死你";
-        cell.imageString = @"png.png";
+        cell.questionString = _questionsArray[_currentInteger][@"content"];
+        if ([_questionsArray[_currentInteger][@"images"] count] == 0) {
+            
+        }else {
+            cell.imageString = _questionsArray[_currentInteger][@"images"][0];
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
         AnswerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"answerCell" forIndexPath:indexPath];
         cell.selectedBackgroundView = _cellSelectedView;
+        cell.contentString =[NSString stringWithFormat:@"%@.%@",_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"],_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"content"]];
         return cell;
     }
 }

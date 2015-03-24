@@ -46,7 +46,7 @@
     }
     
     _contentlable.frame = CGRectMake(CGRectGetMaxX(_pointImageView.frame)+10, 0, SCREEN_WIDTH - (CGRectGetMaxX(_pointImageView.frame)+10) -10 , 44);
-    _contentlable.text = @"A.你选错了";
+    _contentlable.text = _contentString;
 }
 
 - (void)awakeFromNib {}

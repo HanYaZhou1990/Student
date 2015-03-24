@@ -30,8 +30,7 @@
 
 //打印函数
 #ifdef DEBUG
-//#define DLog(fmt, ...) NSLog((@"[FileName:%s]\n" "[FunctionName:%s]\n" "[LineNumber:%d] \n" fmt), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); //打印函数
-#define DLog(fmt, ...) NSLog((fmt), ##__VA_ARGS__); //打印函数
+#define DLog(fmt, ...) NSLog((@"[FileName:%s]\n" "[FunctionName:%s]\n" "[LineNumber:%d] \n" fmt), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__); //打印函数
 #define DLOGDATA(data)             LSLOG(@"%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding])  //数据打印函数
 #else
 #define DLog(...);
@@ -114,7 +113,8 @@
 //预约驾校
 #define trainee_course_orderCourse @"/trainee/course/orderCourse"
 
-
+//考试初始化
+#define trainee_mockExam_init @"/trainee/mockExam/init"
 
 
 

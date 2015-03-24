@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 #import "ExaminationCell.h"
 #import "AnswerCell.h"
+#import "AFNetworking.h"
 
 typedef enum {
     AnswerViewControllerSubjectTypeOne,
@@ -30,4 +31,8 @@ typedef enum{
 @property (nonatomic, assign) AnswerViewControllerModelsType    modelsType;
 
 @property (nonatomic, strong) UITableView                       *questionTableView;
+/*纪录考题数据*/
+@property (nonatomic, strong) NSArray                           *questionsArray;
+/*纪录当前是第几题 ******从零开始*********/
+@property (nonatomic, assign) NSUInteger                        currentInteger;
 @end
