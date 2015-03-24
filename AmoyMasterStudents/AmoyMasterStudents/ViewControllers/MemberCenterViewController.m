@@ -48,7 +48,7 @@
     self.title = @"个人中心";
     
     sectionOneLArray = @[@"昵称",@"当前账号",@"联系方式",@"修改密码"];
-    sectionTwoLArray = @[@"当前教练",@"我的时间线",@"当前学习进度",@"当前考试进度",@"身份证名称",@"身份证照片"];
+    sectionTwoLArray = @[@"当前教练",@"我的时间线",@"当前学习进度",@"当前考试进度"];
     
     [self setTheTableView];
     
@@ -548,10 +548,6 @@
                     useStr = @"暂无信息";
                 }
                 cell.detailTextLabel.text = useStr;
-            }
-            else if (indexPath.row==4)
-            {
-                cell.detailTextLabel.text = @"暂无信息";
             }
         }
         if (indexPath.section==3)
