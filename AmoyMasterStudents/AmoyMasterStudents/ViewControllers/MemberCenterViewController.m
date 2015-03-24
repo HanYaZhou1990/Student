@@ -15,6 +15,7 @@
 #import "PublicSaveViewController.h"
 #import "MessageSave.h"
 #import "UIImageView+WebCache.h"
+#import "UserInfoModel.h"
 
 @interface MemberCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,PublicSaveViewControllerDelegate>
 {
@@ -25,6 +26,7 @@
     UIImageView *headImageView;
     NSString *userNameString;
     NSString *headImageUrl;
+    UserInfoModel *userInfoModel;
 }
 @end
 
@@ -50,6 +52,7 @@
     
     [self setTheTableView];
     
+    [self getUserInfo];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMemberData) name:refreshMemberCenterVCNotification object:nil];
 }
@@ -67,9 +70,46 @@
 
 #pragma mark -
 #pragma mark - 数据相关
+
+//获取用户信息
+-(void)getUserInfo
+{
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_info];
+    NSDictionary *params = @{@"token":[PublicConfig valueForKey:userToken]};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSDictionary *responseDic = (NSDictionary *)responseObject;
+         //打印结果 方便查看
+         NSString *responseString = [PublicConfig dictionaryToJson:responseDic];
+         DLog(@"返回结果字符串 : %@",responseString);
+         
+         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+         if ([resultCode boolValue]==NO)
+         {
+              NSDictionary *useDic= [responseDic valueForKey:@"data"];
+              userInfoModel = [[UserInfoModel alloc]initWithDictionary:useDic];
+              headImageUrl = userInfoModel.avatar;
+              userNameString = userInfoModel.nickname;
+              [myTableView reloadData];
+         }
+         else
+         {
+             DLog(@"获取个人信息失败");
+             [SVProgressHUD showErrorWithStatus:@"获取个人信息失败"];
+         }
+     }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         DLog(@"获取个人信息请求失败");
+         [SVProgressHUD showErrorWithStatus:@"获取个人信息请求失败"];
+     }];
+}
 -(void)refreshMemberData
 {
     //刷新数据
+    [self getUserInfo];
 }
 
 #pragma mark -
@@ -421,17 +461,17 @@
             cell.textLabel.text = [sectionOneLArray objectAtIndex:indexPath.row];
             if (indexPath.row==0)
             {
-                cell.detailTextLabel.text = [PublicConfig isSpaceString:userNameString andReplace:@"韩亚周"];
+                cell.detailTextLabel.text = [PublicConfig isSpaceString:userNameString andReplace:@"匿名"];
             }
             else if (indexPath.row==1)
             {
-                cell.detailTextLabel.text = @"hanyz";
+                cell.detailTextLabel.text = [PublicConfig isSpaceString:userInfoModel.account andReplace:@"账号为空"];
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             else if (indexPath.row==2)
             {
-                cell.detailTextLabel.text = @"15093387753";
+                cell.detailTextLabel.text = [PublicConfig isSpaceString:userInfoModel.cellphone andReplace:@"无"];
             }
         }
         if (indexPath.section==2)
@@ -441,7 +481,29 @@
             cell.textLabel.text = [sectionTwoLArray objectAtIndex:indexPath.row];
             if (indexPath.row==0)
             {
-                cell.detailTextLabel.text = @"友谊驾校/孙璋";
+                NSString *schoolName = [PublicConfig isSpaceString:userInfoModel.school_name andReplace:@""];
+                NSString *masterName = [PublicConfig isSpaceString:userInfoModel.master_name andReplace:@""];
+                NSString *useStr;
+                if (schoolName.length>0)
+                {
+                    useStr = schoolName;
+                    if (masterName.length>0)
+                    {
+                        useStr = [NSString stringWithFormat:@"%@/%@",schoolName,masterName];
+                    }
+                }
+                else
+                {
+                    if (masterName.length>0)
+                    {
+                        useStr = masterName;
+                    }
+                    else
+                    {
+                        useStr = @"暂无信息";
+                    }
+                }
+                cell.detailTextLabel.text = useStr;
             }
             else if (indexPath.row==1)
             {
@@ -450,15 +512,46 @@
             }
             else if (indexPath.row==2)
             {
-                cell.detailTextLabel.text = @"1.倒库(1/20)";
+                NSString *currentCourseName = [PublicConfig isSpaceString:userInfoModel.current_course_name andReplace:@""];
+                NSString *currentCoursePhase = [PublicConfig isSpaceString:userInfoModel.current_course_phase andReplace:@""];
+                NSString *totalCourses = [PublicConfig isSpaceString:userInfoModel.total_courses andReplace:@""];
+                NSString *useStr;
+                if (currentCourseName.length>0)
+                {
+                    useStr = currentCourseName;
+                    if (currentCoursePhase.length>0&&totalCourses.length>0)
+                    {
+                        useStr = [NSString stringWithFormat:@"%@(%@/%@)",currentCourseName,currentCoursePhase,totalCourses];
+                    }
+                }
+                else
+                {
+                    useStr = @"暂无信息";
+                }
+                cell.detailTextLabel.text = useStr;
             }
             else if (indexPath.row==3)
             {
-                cell.detailTextLabel.text = @"笔试-通过(模拟考80分)";
+                NSString *currentExamName = [PublicConfig isSpaceString:userInfoModel.current_exam_name andReplace:@""];
+                NSString *currentExamStatus = [PublicConfig isSpaceString:userInfoModel.current_exam_status andReplace:@""];
+                NSString *useStr;
+                if (currentExamName.length>0)
+                {
+                    useStr = currentExamName;
+                    if (currentExamStatus.length>0)
+                    {
+                        useStr = [NSString stringWithFormat:@"%@-%@",currentExamName,currentExamStatus];
+                    }
+                }
+                else
+                {
+                    useStr = @"暂无信息";
+                }
+                cell.detailTextLabel.text = useStr;
             }
             else if (indexPath.row==4)
             {
-                cell.detailTextLabel.text = @"韩亚周";
+                cell.detailTextLabel.text = @"暂无信息";
             }
         }
         if (indexPath.section==3)
@@ -467,7 +560,8 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.textLabel.text = @"红包金额";
-            cell.detailTextLabel.text = @"50元";
+            NSString *rewardBalance = [PublicConfig isSpaceString:userInfoModel.reward_balance andReplace:@"0"];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@元",rewardBalance];;
         }
         if (indexPath.section==4)
         {

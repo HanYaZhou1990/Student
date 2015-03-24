@@ -80,41 +80,6 @@
 }
 
 #pragma mark
-#pragma mark 获取用户信息相关
-//获取用户信息
--(void)getUserInfo
-{
-    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_info];
-    
-    NSDictionary *params = nil;
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         
-         NSDictionary *responseDic = (NSDictionary *)responseObject;
-         
-         //打印结果 方便查看
-         NSString *responseString = [PublicConfig dictionaryToJson:responseDic];
-         DLog(@"返回结果字符串 : %@",responseString);
-         
-         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
-         if ([resultCode boolValue]==NO)
-         {
-             DLog(@"获取个人信息成功");
-         }
-         else
-         {
-             DLog(@"获取个人信息失败");
-         }
-     }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         DLog(@"获取个人信息请求失败");
-     }];
-}
-
-#pragma mark
 #pragma mark 登录相关
 
 -(void)getLoginState

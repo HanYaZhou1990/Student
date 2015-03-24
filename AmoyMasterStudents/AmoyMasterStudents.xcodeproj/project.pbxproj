@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045794571AC116B700CD97CD /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045794561AC116B700CD97CD /* UserInfoModel.m */; };
 		3E44596A1A89D4E7001C1B7B /* CoachDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4459691A89D4E7001C1B7B /* CoachDetailModel.m */; };
 		3E7F12F31A88460800A2D34C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F12F21A88460800A2D34C /* LoginViewController.m */; };
 		3E7F12F61A88461900A2D34C /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F12F51A88461900A2D34C /* RegisterViewController.m */; };
@@ -205,6 +206,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		045794551AC116B700CD97CD /* UserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoModel.h; sourceTree = "<group>"; };
+		045794561AC116B700CD97CD /* UserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoModel.m; sourceTree = "<group>"; };
 		3E4459681A89D4E7001C1B7B /* CoachDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachDetailModel.h; sourceTree = "<group>"; };
 		3E4459691A89D4E7001C1B7B /* CoachDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachDetailModel.m; sourceTree = "<group>"; };
 		3E7F12F11A88460800A2D34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -811,6 +814,8 @@
 				3E4459691A89D4E7001C1B7B /* CoachDetailModel.m */,
 				3EAD3FB51AA05B3D00AA053F /* CoachListModel.h */,
 				3EAD3FB61AA05B3D00AA053F /* CoachListModel.m */,
+				045794551AC116B700CD97CD /* UserInfoModel.h */,
+				045794561AC116B700CD97CD /* UserInfoModel.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -1149,6 +1154,7 @@
 				TargetAttributes = {
 					3EBB44901A80BB5F001E534B = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = J479P99V7R;
 					};
 					3EBB44A91A80BB5F001E534B = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -1337,6 +1343,7 @@
 				3EBB45031A80BF2A001E534B /* SDWebImageCompat.m in Sources */,
 				3E8714091AA217B600106A5C /* NoticeViewController.m in Sources */,
 				3EBB44971A80BB5F001E534B /* main.m in Sources */,
+				045794571AC116B700CD97CD /* UserInfoModel.m in Sources */,
 				3EBB44DE1A80BF1D001E534B /* SVProgressHUD.m in Sources */,
 				3E7F13021A88834600A2D34C /* ChangePwdViewController.m in Sources */,
 				3EBB45461A80BF5A001E534B /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1492,7 +1499,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 炜 刘 (NMQ6MB533H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
 				INFOPLIST_FILE = AmoyMasterStudents/Info.plist;
@@ -1503,7 +1510,7 @@
 					"$(PROJECT_DIR)/AmoyMasterStudents/Libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ab009fec-d40b-4207-b478-e27f7ceb7791";
+				PROVISIONING_PROFILE = "9adb4dcd-4762-4731-ae3e-094f6d0f01a8";
 			};
 			name = Debug;
 		};
@@ -1512,7 +1519,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 炜 刘 (NMQ6MB533H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
 				INFOPLIST_FILE = AmoyMasterStudents/Info.plist;
@@ -1523,7 +1530,7 @@
 					"$(PROJECT_DIR)/AmoyMasterStudents/Libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ab009fec-d40b-4207-b478-e27f7ceb7791";
+				PROVISIONING_PROFILE = "9adb4dcd-4762-4731-ae3e-094f6d0f01a8";
 			};
 			name = Release;
 		};
