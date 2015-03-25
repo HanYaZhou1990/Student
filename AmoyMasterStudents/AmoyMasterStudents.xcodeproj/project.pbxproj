@@ -1154,7 +1154,7 @@
 				TargetAttributes = {
 					3EBB44901A80BB5F001E534B = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = J479P99V7R;
+						DevelopmentTeam = 2WD8S8GE47;
 					};
 					3EBB44A91A80BB5F001E534B = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -1478,7 +1478,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1501,7 +1501,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
 				INFOPLIST_FILE = AmoyMasterStudents/Info.plist;
@@ -1512,7 +1512,7 @@
 					"$(PROJECT_DIR)/AmoyMasterStudents/Libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0a2ea1b2-42a2-42a2-b450-edd6c48fb339";
+				PROVISIONING_PROFILE = "b643450e-21bf-4d44-aa4a-8f788663cc00";
 			};
 			name = Debug;
 		};
@@ -1521,7 +1521,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AmoyMasterStudents/AmoyMasterStudents-Prefix.pch";
 				INFOPLIST_FILE = AmoyMasterStudents/Info.plist;
@@ -1532,7 +1532,7 @@
 					"$(PROJECT_DIR)/AmoyMasterStudents/Libs",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0a2ea1b2-42a2-42a2-b450-edd6c48fb339";
+				PROVISIONING_PROFILE = "b643450e-21bf-4d44-aa4a-8f788663cc00";
 			};
 			name = Release;
 		};
