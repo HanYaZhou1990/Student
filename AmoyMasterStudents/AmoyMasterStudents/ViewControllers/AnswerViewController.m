@@ -9,7 +9,10 @@
 #import "AnswerViewController.h"
 
 @interface AnswerViewController () {
-    UIView    *_cellSelectedView;
+    UIView           *_cellSelectedView;
+    NSMutableArray   *_answerArray;/*保存答案*/
+    NSString         *_examTokenString;/*这套题的examToken*/
+    NSString   *aS;
 }
 @end
 
@@ -22,7 +25,10 @@
     self.title = @"模拟考试";
     
     _questionsArray = [NSArray array];
+    _answerArray = [NSMutableArray array];
     _currentInteger = 0;
+    _examTokenString = @"";
+    aS  = @"";
     
     [self leftBarItem];
     
@@ -60,17 +66,17 @@
     
 }
 - (void)next:(UIButton *)sender {
-//    [UIView beginAnimations:@"animation" context:nil];
-//    [UIView setAnimationDuration:1.5];
-//    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:_questionTableView cache:YES];
-//    [UIView commitAnimations];
     _currentInteger ++;
-    [_questionTableView reloadData];
-    [UIView transitionWithView:_questionTableView duration:1.0 options:UIViewAnimationOptionTransitionCurlUp animations:^{
-        sender.userInteractionEnabled = NO;
-    } completion:^(BOOL finished) {
-        sender.userInteractionEnabled = YES;
-    }];
+    if (_currentInteger == _questionsArray.count) {
+        [[[UIAlertView alloc] initWithTitle:@"" message:@"考试完毕，提交试卷" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+    }else {
+        [_questionTableView reloadData];
+        [UIView transitionWithView:_questionTableView duration:0.5 options:UIViewAnimationOptionTransitionCurlUp animations:^{
+            sender.userInteractionEnabled = NO;
+        } completion:^(BOOL finished) {
+            sender.userInteractionEnabled = YES;
+        }];
+    }
 }
 
 /*获取考题列表，NO：科目一  YES：科目四*/
@@ -94,6 +100,7 @@
             NSDictionary *dataDic = [responseDic valueForKey:@"data"];
             if (dataDic){
                 _questionsArray = dataDic[@"questions"];
+                _examTokenString = dataDic[@"examToken"];
                 [_questionTableView reloadData];
             }
         }else{
@@ -131,10 +138,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         if ([_questionsArray[_currentInteger][@"images"] count] == 0) {
-            CGFloat questionHeight = [PublicConfig height:_questionsArray[indexPath.row][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
+            CGFloat questionHeight = [PublicConfig height:_questionsArray[_currentInteger][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
             return questionHeight + 20;
         }else {
-            CGFloat questionHeight = [PublicConfig height:_questionsArray[indexPath.row][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
+            CGFloat questionHeight = [PublicConfig height:_questionsArray[_currentInteger][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
             return questionHeight + 20 + 180;
         }
     }else{
@@ -166,12 +173,39 @@
 #pragma mark UITableViewDelegate-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [_answerArray addObject:@{@"code":_questionsArray[_currentInteger][@"code"],@"value":_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"]}];
 }
 
 -(void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - 
+#pragma mark UIAlertViewDelegate -
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_mockExam_submit];
+    NSError *error = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:_answerArray options:kNilOptions error:&error];
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    string = [string stringByReplacingOccurrencesOfString:@"[" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"},{" withString:@"};{"];
+    NSDictionary *params = @{@"examToken":_examTokenString,@"answerSheet":string,@"token":[PublicConfig valueForKey:userToken]};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        
+        DLog(@"**********%@",[PublicConfig dictionaryToJson:responseDic]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [SVProgressHUD showErrorWithStatus:@"提交答案请求失败"];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

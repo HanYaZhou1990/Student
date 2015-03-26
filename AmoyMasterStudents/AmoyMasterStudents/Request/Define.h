@@ -116,8 +116,8 @@
 //考试初始化
 #define trainee_mockExam_init @"/trainee/mockExam/init"
 
-
-
+//考试结束提交答案
+#define trainee_mockExam_submit  @"/trainee/mockExam/submit"
 
 
 

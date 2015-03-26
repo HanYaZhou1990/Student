@@ -14,5 +14,5 @@
 /*!导航的标题*/
 @property (nonatomic, strong) NSString      *titleString;
 /*!code*/
-@property (nonatomic, strong) NSString      *codeString;
+@property (nonatomic, strong) NSString      *detailUrlString;
 @end

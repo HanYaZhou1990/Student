@@ -33,7 +33,7 @@
     [super viewDidLoad];
     
     _selectedIndex = 0;
-    _pageNumber = 1;
+    _pageNumber = 0;
     _sectionString = @"";
     
     _dataSourceArray = [NSMutableArray array];
@@ -95,7 +95,7 @@
         [_knowledgeTableView headerEndRefreshing];
         return;
     }else {
-        _pageNumber = 1;
+        _pageNumber = 0;
         [self refreshDate:_sectionString andFormartType:@"0"];
     }
 }
@@ -116,7 +116,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_knowledge_paginationListItems];
     
-    NSDictionary *params = @{@"section":sectionString,@"page":[NSString stringWithFormat:@"%ld",(long)_pageNumber],@"amount":@"10",@"token":userToken};
+    NSDictionary *params = @{@"section":sectionString,@"page":[NSString stringWithFormat:@"%ld",(long)_pageNumber],@"amount":@"2",@"token":userToken};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
@@ -127,33 +127,20 @@
         NSDictionary *responseDic = (NSDictionary *)responseObject;
         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
         if ([resultCode boolValue]==NO){
-            id something = [responseDic valueForKey:@"data"];
-            if ([something isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *dataDic = [responseDic valueForKey:@"data"];
-                if (dataDic)
-                    {
-                    if (![formartType isEqualToString:@"1"])
-                        {
-                        [_dataSourceArray removeAllObjects];
-                    }
-                    for (NSString *keyString in [dataDic allKeys])
-                        {
-                        [_dataSourceArray addObject:dataDic[keyString]];
-                        [_knowledgeTableView reloadData];
-                        }
+            NSDictionary *dataDic = [responseDic valueForKey:@"data"];
+            if (dataDic){
+                if ([formartType isEqualToString:@"0"]) {
+                    [_dataSourceArray removeAllObjects];
                 }
-            }else {
-                [SVProgressHUD showErrorWithStatus:@"没有新文章"];
-                [_dataSourceArray removeAllObjects];
+                [_dataSourceArray addObjectsFromArray:dataDic[@"list"]];
                 [_knowledgeTableView reloadData];
-                _pageNumber = 1;
             }
         }else{
             NSString *msgStr = [responseDic valueForKey:@"msg"];
             [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取文章列表失败"]];
             [_dataSourceArray removeAllObjects];
             [_knowledgeTableView reloadData];
-            _pageNumber = 1;
+            _pageNumber = 0;
             
         }
     }
@@ -206,7 +193,7 @@
     if (_selectedIndex == 0) {return;}
     KnowledgeDetailViewController *detailViewController = [[KnowledgeDetailViewController alloc] init];
     detailViewController.titleString = _dataSourceArray[indexPath.row][@"title"];
-    detailViewController.codeString = _dataSourceArray[indexPath.row][@"code"];
+    detailViewController.detailUrlString = _dataSourceArray[indexPath.row][@"detailUrl"];
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
