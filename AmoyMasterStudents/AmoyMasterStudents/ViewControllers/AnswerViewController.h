@@ -10,6 +10,7 @@
 #import "ExaminationCell.h"
 #import "AnswerCell.h"
 #import "AFNetworking.h"
+#import "YYLable.h"
 
 typedef enum {
     AnswerViewControllerSubjectTypeOne,

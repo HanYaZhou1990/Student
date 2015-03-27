@@ -261,9 +261,11 @@
     }else if (indexOfButton == 1) {
         _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _sectionString = @"C2S1";
+        _pageNumber = 0;
         [self refreshDate:_sectionString andFormartType:@"0"];
     }else {
         _knowledgeTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _pageNumber = 0;
         _sectionString = @"C3S1";
         [self refreshDate:_sectionString andFormartType:@"0"];
     }

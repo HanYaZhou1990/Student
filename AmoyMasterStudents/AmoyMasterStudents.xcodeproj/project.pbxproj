@@ -166,6 +166,7 @@
 		CF1766C41ABB233D00D7C926 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C31ABB233D00D7C926 /* CoreTelephony.framework */; };
 		CF1766C61ABB235E00D7C926 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C51ABB235E00D7C926 /* Security.framework */; };
 		CF1766C81ABB238200D7C926 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1766C71ABB238200D7C926 /* libsqlite3.dylib */; };
+		CF2989891AC5B1B200B6F6CD /* YYLable.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2989881AC5B1B200B6F6CD /* YYLable.m */; };
 		CF5B7E551ABC5A9C00E79D9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5B7E541ABC5A9C00E79D9A /* AppDelegate.m */; };
 		CF62A1561AA2088F0031C816 /* ExamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF62A1551AA2088F0031C816 /* ExamViewController.m */; };
 		CF6997F41A87BB7100F3CD1C /* modelTest_btn_test.png in Resources */ = {isa = PBXBuildFile; fileRef = CF6997F31A87BB7100F3CD1C /* modelTest_btn_test.png */; };
@@ -440,6 +441,8 @@
 		CF1766C31ABB233D00D7C926 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		CF1766C51ABB235E00D7C926 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CF1766C71ABB238200D7C926 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		CF2989871AC5B1B200B6F6CD /* YYLable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYLable.h; sourceTree = "<group>"; };
+		CF2989881AC5B1B200B6F6CD /* YYLable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYLable.m; sourceTree = "<group>"; };
 		CF5B7E531ABC5A9C00E79D9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CF5B7E541ABC5A9C00E79D9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CF62A1541AA2088F0031C816 /* ExamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamViewController.h; sourceTree = "<group>"; };
@@ -793,6 +796,8 @@
 				3EBB44D21A80BE31001E534B /* ValidateTool.m */,
 				3E7F12F71A884B6B00A2D34C /* WWTextField.h */,
 				3E7F12F81A884B6B00A2D34C /* WWTextField.m */,
+				CF2989871AC5B1B200B6F6CD /* YYLable.h */,
+				CF2989881AC5B1B200B6F6CD /* YYLable.m */,
 			);
 			path = ToolKit;
 			sourceTree = "<group>";
@@ -1290,6 +1295,7 @@
 				3EBB45471A80BF5A001E534B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				3EBF7E5A1AA45C9600572B98 /* NoticeTwoViewController.m in Sources */,
 				3EBB45061A80BF2A001E534B /* SDWebImageDownloaderOperation.m in Sources */,
+				CF2989891AC5B1B200B6F6CD /* YYLable.m in Sources */,
 				CF8C6C4E1AC440C8000DF512 /* KnowledgeCell.m in Sources */,
 				3EBB450F1A80BF2A001E534B /* UIView+WebCacheOperation.m in Sources */,
 				3EAD3FB41AA057C300AA053F /* UIView+MJExtension.m in Sources */,

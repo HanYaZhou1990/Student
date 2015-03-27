@@ -45,7 +45,7 @@
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = leftBarButton;
     
-    _questionTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT) style:UITableViewStylePlain];
+    _questionTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT-44) style:UITableViewStylePlain];
     _questionTableView.dataSource = self;
     _questionTableView.delegate = self;
     _questionTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -54,6 +54,9 @@
     _questionTableView.tableFooterView = [UIView new];
     [self.view addSubview:_questionTableView];
     
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    YYLable *lable = [[YYLable alloc] initWithFrame:CGRectMake(0, 0, rect.size.width, 44) outTime:5400];
+    [self.view addSubview:lable ];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"下一题" forState:UIControlStateNormal];
@@ -155,7 +158,7 @@
         ExaminationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.questionString = _questionsArray[_currentInteger][@"content"];
         if ([_questionsArray[_currentInteger][@"images"] count] == 0) {
-            
+            cell.imageString = nil;
         }else {
             cell.imageString = _questionsArray[_currentInteger][@"images"][0];
         }
@@ -173,6 +176,9 @@
 #pragma mark UITableViewDelegate-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+        return;
+    }
     [_answerArray addObject:@{@"code":_questionsArray[_currentInteger][@"code"],@"value":_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"]}];
 }
 
