@@ -191,6 +191,7 @@
 		CF8C6C511AC440C8000DF512 /* ExaminationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8C6C451AC440C8000DF512 /* ExaminationCell.m */; };
 		CF8C6C521AC440C8000DF512 /* AnswerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8C6C471AC440C8000DF512 /* AnswerCell.m */; };
 		CF8C6C531AC440C8000DF512 /* SubjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8C6C491AC440C8000DF512 /* SubjectCell.m */; };
+		CF8E06401AC860DB0066BA17 /* ExamResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E063F1AC860DB0066BA17 /* ExamResultViewController.m */; };
 		CFC169A31AB08D91007D821A /* png.png in Resources */ = {isa = PBXBuildFile; fileRef = CFC169A21AB08D91007D821A /* png.png */; };
 /* End PBXBuildFile section */
 
@@ -491,6 +492,8 @@
 		CF8C6C471AC440C8000DF512 /* AnswerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerCell.m; sourceTree = "<group>"; };
 		CF8C6C481AC440C8000DF512 /* SubjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectCell.h; sourceTree = "<group>"; };
 		CF8C6C491AC440C8000DF512 /* SubjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectCell.m; sourceTree = "<group>"; };
+		CF8E063E1AC860DB0066BA17 /* ExamResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamResultViewController.h; sourceTree = "<group>"; };
+		CF8E063F1AC860DB0066BA17 /* ExamResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamResultViewController.m; sourceTree = "<group>"; };
 		CFC169A21AB08D91007D821A /* png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = png.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -538,6 +541,8 @@
 				CF8C6C241AC44060000DF512 /* SubjectViewController.m */,
 				CF8C6C251AC44060000DF512 /* KnowledgeDetailViewController.h */,
 				CF8C6C261AC44060000DF512 /* KnowledgeDetailViewController.m */,
+				CF8E063E1AC860DB0066BA17 /* ExamResultViewController.h */,
+				CF8E063F1AC860DB0066BA17 /* ExamResultViewController.m */,
 			);
 			name = "学车知识_Knowledge";
 			sourceTree = "<group>";
@@ -1374,6 +1379,7 @@
 				3EDC272B1A8B308400A9EAC0 /* OrderCoachViewController.m in Sources */,
 				CF8C6C281AC44060000DF512 /* KnowledgeDetailViewController.m in Sources */,
 				3E7F12FC1A88832100A2D34C /* FindPwdViewController.m in Sources */,
+				CF8E06401AC860DB0066BA17 /* ExamResultViewController.m in Sources */,
 				CF8C6C4D1AC440C8000DF512 /* KnoledgeCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

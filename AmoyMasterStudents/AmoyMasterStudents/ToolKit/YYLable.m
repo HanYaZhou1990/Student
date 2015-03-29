@@ -17,12 +17,24 @@
         self.backgroundColor = [UIColor whiteColor];
         self.font = [UIFont systemFontOfSize:20];
         self.textAlignment = NSTextAlignmentCenter;
+        self.layer.cornerRadius = 18;
+        self.clipsToBounds = YES;
+        self.backgroundColor = RGBA(244, 244, 244, 1);
+        self.textColor = UIColorFromRGB(0x666666);
         [self timerWithOutTime:timeOut];
     }
     return self;
 }
 
+- (void)setOutTime:(int)outTime {
+    [self setTime:outTime];
+}
+
 - (void)timerWithOutTime:(int)timeOut {
+    [self setTime:timeOut];
+}
+
+- (void)setTime:(int)timeOut {
     __block int timeout=timeOut; /*倒计时时间*/
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);

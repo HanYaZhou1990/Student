@@ -10,6 +10,8 @@
 
 @interface YYLable : UILabel
 
+/*!倒计时时间*/
+@property (nonatomic, assign) int outTime;
 /*!倒计时的时间*/
 - (id)initWithFrame:(CGRect)frame outTime:(int)timeOut;
 

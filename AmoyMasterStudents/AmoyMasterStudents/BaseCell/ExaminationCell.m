@@ -38,6 +38,7 @@
         
         
         _questionImageView = [[UIImageView alloc] init];
+        _questionImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:_questionImageView];
         }
     return self;

@@ -119,6 +119,9 @@
 //考试结束提交答案
 #define trainee_mockExam_submit  @"/trainee/mockExam/submit"
 
+//结束考试
+#define  trainee_mockExam_end @"/trainee/mockExam/end"
+
 
 
 
