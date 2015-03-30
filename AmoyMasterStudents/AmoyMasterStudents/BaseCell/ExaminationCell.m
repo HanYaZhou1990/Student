@@ -47,7 +47,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     _numberLable.frame = CGRectMake(10, 10, 40, 20);
-    _numberLable.text = @"1 .";
+    _numberLable.text = _numberString;
     
     CGFloat leftWidth = CGRectGetMaxX(_numberLable.frame);
     

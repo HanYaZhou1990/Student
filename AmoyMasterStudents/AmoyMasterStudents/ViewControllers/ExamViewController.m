@@ -103,19 +103,19 @@
         switch (sender.tag) {
             case 0:
             {
-            viewController.subjectType = AnswerViewControllerSubjectTypeThree;
+            viewController.subjectType = AnswerViewControllerSubjectTypeFour;
             viewController.modelsType = AnswerViewControllerModelsTypeCar;
             }
                 break;
             case 1:
             {
-            viewController.subjectType = AnswerViewControllerSubjectTypeThree;
+            viewController.subjectType = AnswerViewControllerSubjectTypeFour;
             viewController.modelsType = AnswerViewControllerModelsTypeTruck;
             }
                 break;
             case 2:
             {
-            viewController.subjectType = AnswerViewControllerSubjectTypeThree;
+            viewController.subjectType = AnswerViewControllerSubjectTypeFour;
             viewController.modelsType = AnswerViewControllerModelsTypeBus;
             }
                 break;

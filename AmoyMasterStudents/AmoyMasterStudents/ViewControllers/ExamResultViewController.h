@@ -7,7 +7,19 @@
 //
 
 #import "BaseViewController.h"
+#import "AnswerView.h"
+#import "WrongViewController.h"
+
+typedef enum {
+    ExamResultViewControllerSubjectTypeOne,/*科目一*/
+    ExamResultViewControllerSubjectTypeFour,/*科目四*/
+}ExamResultViewControllerSubjectType;
 
 @interface ExamResultViewController : BaseViewController
+
+/*!科目类型*/
+@property (nonatomic, assign) ExamResultViewControllerSubjectType   subjectType;
+/*!从上个页面传过来的提交试卷以后返回的数据中的Data*/
+@property (nonatomic, strong) NSDictionary    *dataDictionary;
 
 @end

@@ -73,7 +73,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"下一题" forState:UIControlStateNormal];
     [button setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
-    button.frame = CGRectMake(SCREEN_WIDTH - 100, SCREEN_HEIGHT -NAV_HEIGHT - 100, 80, 40);
+    button.frame = CGRectMake(SCREEN_WIDTH - 100, SCREEN_HEIGHT -NAV_HEIGHT - 100, 100, 64);
     [button addTarget:self action:@selector(next:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
@@ -85,11 +85,23 @@
     _currentInteger ++;
     if (_currentInteger >= _questionsArray.count-1) {
         [sender setTitle:@"提交" forState:UIControlStateNormal];
+        if (!(_answerArray.count < _currentInteger)) {
+            if (_currentInteger >= _questionsArray.count) {
+                _currentInteger = _currentInteger -1;
+                [self showAlertViewWithMessage:@"答题完毕，提交试卷"];
+                return;
+            }
+        }else {
+            _currentInteger = _currentInteger -1;
+            [SVProgressHUD showErrorWithStatus:@"请选择一个合适答案"];
+        }
     }
     /*必须把展示的这一题做完，不做的话，不切换到下一题*/
     if (!(_answerArray.count < _currentInteger)) {
         if (_currentInteger >= _questionsArray.count) {
+            _currentInteger = _currentInteger -1;
             [self showAlertViewWithMessage:@"答题完毕，提交试卷"];
+            return;
         }else {
             [_questionTableView reloadData];
             [UIView transitionWithView:_questionTableView duration:0.5 options:UIViewAnimationOptionTransitionCurlUp animations:^{
@@ -141,7 +153,7 @@
 #pragma mark UITableViewDataSource -
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return [NSString stringWithFormat:@"第 %lu 题/共%lu题",(unsigned long)_currentInteger+1,(NSInteger)_questionsArray.count];
+    return [NSString stringWithFormat:@"第 %lu 题/共%lu题",(unsigned long)_currentInteger+1,(long)_questionsArray.count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
@@ -178,6 +190,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         ExaminationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.numberString = [NSString stringWithFormat:@"%02li.",_currentInteger+1];
         cell.questionString = _questionsArray[_currentInteger][@"content"];
         if ([_questionsArray[_currentInteger][@"images"] count] == 0) {
             cell.imageString = nil;
@@ -278,13 +291,17 @@
         
         NSDictionary *responseDic = (NSDictionary *)responseObject;
         
-        DLog(@"%@",[PublicConfig dictionaryToJson:responseDic]);
-        
         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
         if ([resultCode boolValue]==NO){
             NSDictionary *dataDic = [responseDic valueForKey:@"data"];
             if (dataDic){
                 ExamResultViewController *resultViewController = [[ExamResultViewController alloc] init];
+                resultViewController.dataDictionary = dataDic;
+                if (self.subjectType == AnswerViewControllerSubjectTypeOne) {
+                    resultViewController.subjectType = ExamResultViewControllerSubjectTypeOne;
+                }else {
+                    resultViewController.subjectType = ExamResultViewControllerSubjectTypeFour;
+                }
                 [self.navigationController pushViewController:resultViewController animated:YES];
             }
         }else{

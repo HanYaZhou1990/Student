@@ -15,7 +15,7 @@
 
 typedef enum {
     AnswerViewControllerSubjectTypeOne,
-    AnswerViewControllerSubjectTypeThree,
+    AnswerViewControllerSubjectTypeFour,
 }AnswerViewControllerSubjectType;
 
 typedef enum{
