@@ -7,6 +7,8 @@
 //
 
 #import "BaseViewController.h"
+#import "ExaminationCell.h"
+#import "AnswerCell.h"
 
 /*用于展示用户的错题*/
 @interface WrongViewController : BaseViewController
