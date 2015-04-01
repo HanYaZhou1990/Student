@@ -9,6 +9,7 @@
 #import "WrongViewController.h"
 
 @interface WrongViewController () <UITableViewDataSource,UITableViewDelegate> {
+    UIView                    *_cellSelectedView;
     UITableView               *_wrongQuestionTableView;
 }
 
@@ -19,6 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"查看错题";
+    
+    _cellSelectedView = [[UIView alloc] init];
+    _cellSelectedView.backgroundColor = [UIColor whiteColor];
     
     [self leftBarItem];
     
@@ -48,21 +52,75 @@
 
 #pragma mark - 
 #pragma mark UITableViewDataSource -
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return _wrongArray.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    NSInteger questionIndex = [[NSString stringWithFormat:@"%ld",[_wrongArray[section][@"order"] integerValue]] integerValue];
+    return [_questionArray[questionIndex-1][@"options"] count]+1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        NSInteger questionIndex = [[NSString stringWithFormat:@"%ld",[_wrongArray[indexPath.section][@"order"] integerValue]] integerValue];
+
+        if ([_questionArray[questionIndex-1][@"images"] count] == 0) {
+            CGFloat questionHeight = [PublicConfig height:_questionArray[questionIndex-1][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
+            return questionHeight + 20;
+        }else {
+            CGFloat questionHeight = [PublicConfig height:_questionArray[questionIndex-1][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
+            return questionHeight + 20 + 180;
+        }
+    }else {
+        return 64;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSInteger questionIndex = [[NSString stringWithFormat:@"%ld",[_wrongArray[indexPath.section][@"order"] integerValue]] integerValue];
+
     if (indexPath.row == 0) {
         ExaminationCell *questionCell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        questionCell.numberString = [NSString stringWithFormat:@"02."];
-        questionCell.questionString = @"This is the question,please answer it now !";
+        questionCell.numberString = [NSString stringWithFormat:@"%02li.",[_wrongArray[indexPath.section][@"order"] integerValue]];
+        questionCell.questionString = _questionArray[questionIndex-1][@"content"];
+        if ([_questionArray[questionIndex-1][@"images"] count] == 0) {
+            questionCell.imageString = nil;
+        }else {
+            questionCell.imageString = _questionArray[questionIndex-1][@"images"][0];
+        }
         questionCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return questionCell;
     }else {
         AnswerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"answerCell" forIndexPath:indexPath];
-        cell.contentString = @"A:This is the answer !";
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.selectedBackgroundView = _cellSelectedView;
+        cell.userInteractionEnabled = NO;
+        NSString *userAnserString = [NSString stringWithFormat:@"%@",_wrongArray[indexPath.section][@"sa"]];
+        if ([userAnserString isEqualToString:@"A"] && indexPath.row == 1) {
+            cell.cellType = AnswerCellTypeSee;
+        }else if ([userAnserString isEqualToString:@"B"] && indexPath.row == 2) {
+            cell.cellType = AnswerCellTypeSee;
+        }else if ([userAnserString isEqualToString:@"C"] && indexPath.row == 3) {
+            cell.cellType = AnswerCellTypeSee;
+        }else if ([userAnserString isEqualToString:@"D"] && indexPath.row == 4) {
+            cell.cellType = AnswerCellTypeSee;
+        }else{
+            cell.cellType = AnswerCellTypeExam;
+        }
+        NSString *answerString = [NSString stringWithFormat:@"%@",_wrongArray[indexPath.section][@"ca"]];
+        if ([answerString isEqualToString:@"A"] && indexPath.row == 1) {
+            cell.contentString =[NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+        }else if ([answerString isEqualToString:@"B"] && indexPath.row == 2) {
+            cell.contentString =[NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+        }else if ([answerString isEqualToString:@"C"] && indexPath.row == 3) {
+            cell.contentString =[NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+        }else if ([answerString isEqualToString:@"D"] && indexPath.row == 4) {
+            cell.contentString =[NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+        }else{
+            cell.contentString =[NSString stringWithFormat:@"%@.%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"]];
+        }
         return cell;
     }
 }

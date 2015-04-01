@@ -30,7 +30,7 @@
         lable.tag=(i+1);
         lable.textAlignment = NSTextAlignmentCenter;
 //        lable.text = [NSString stringWithFormat:@"%02li:%@",(long)lable.tag,_answerArray[i][@"ca"]];
-        lable.text = [NSString stringWithFormat:@"%02li:%@",(long)[_answerArray[i][@"number"] integerValue],_answerArray[i][@"ca"]];
+        lable.text = [NSString stringWithFormat:@"%02li:%@",(long)[_answerArray[i][@"order"] integerValue],_answerArray[i][@"ca"]];
         lable.font = [UIFont systemFontOfSize:16.0];
         lable.adjustsFontSizeToFitWidth = YES;
         lable.textColor = UIColorFromRGB(0x666666);

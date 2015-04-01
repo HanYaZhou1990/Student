@@ -21,5 +21,6 @@ typedef enum {
 @property (nonatomic, assign) ExamResultViewControllerSubjectType   subjectType;
 /*!从上个页面传过来的提交试卷以后返回的数据中的Data*/
 @property (nonatomic, strong) NSDictionary    *dataDictionary;
-
+/*!传过来所有的问题，在错题展示的时候使用*/
+@property (nonatomic, strong) NSArray         *questionArray;
 @end

@@ -99,11 +99,13 @@
 #pragma mark 前往错题展示页 -
 - (void)goToWrongViewController:(UIButton *)sender {
     WrongViewController *errorViewController = [[WrongViewController alloc] init];
+    errorViewController.wrongArray = _dataDictionary[@"questions"];
+    errorViewController.questionArray = _questionArray;
     [self.navigationController pushViewController:errorViewController animated:YES];
 }
 
 -(void)backAction{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popToViewController:self.navigationController.viewControllers[self.navigationController.viewControllers.count -3] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

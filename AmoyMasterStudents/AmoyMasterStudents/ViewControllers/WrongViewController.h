@@ -13,4 +13,9 @@
 /*用于展示用户的错题*/
 @interface WrongViewController : BaseViewController
 
+/*! 所有题(根据错题里的order取题) */
+@property (nonatomic, strong) NSArray    *questionArray;
+/*! 所有的错题 */
+@property (nonatomic, strong) NSArray    *wrongArray;
+
 @end

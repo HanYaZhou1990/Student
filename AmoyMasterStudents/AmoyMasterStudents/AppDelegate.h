@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "XGPush.h"
 #import "XGSetting.h"
+#import "CurriculumEvaluationViewController.h"
 
 #define _IPHONE80_ 80000
 

@@ -129,6 +129,9 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSDictionary *responseDic = (NSDictionary *)responseObject;
+        
+        DLog(@"%@",[PublicConfig dictionaryToJson:responseDic]);
+        
         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
         if ([resultCode boolValue]==NO){
             NSDictionary *dataDic = [responseDic valueForKey:@"data"];
@@ -182,7 +185,7 @@
             return questionHeight + 20 + 180;
         }
     }else{
-        return 44;
+        return 64;
     }
     
 }
@@ -291,12 +294,15 @@
         
         NSDictionary *responseDic = (NSDictionary *)responseObject;
         
+        DLog(@"%@",[PublicConfig dictionaryToJson:responseDic]);
+        
         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
         if ([resultCode boolValue]==NO){
             NSDictionary *dataDic = [responseDic valueForKey:@"data"];
             if (dataDic){
                 ExamResultViewController *resultViewController = [[ExamResultViewController alloc] init];
                 resultViewController.dataDictionary = dataDic;
+                resultViewController.questionArray = _questionsArray;
                 if (self.subjectType == AnswerViewControllerSubjectTypeOne) {
                     resultViewController.subjectType = ExamResultViewControllerSubjectTypeOne;
                 }else {

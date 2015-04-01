@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    AnswerCellTypeExam,    /*考试时候的cell*/
+    AnswerCellTypeSee,    /*查看错题的时候的cell*/
+}AnswerCellType;
+
 @interface AnswerCell : UITableViewCell
 
-@property (nonatomic,strong) NSString   *contentString;
+/*!默认是考试的时候的cell*/
+@property (nonatomic, assign) AnswerCellType    cellType;
+
+@property (nonatomic,strong) NSString           *contentString;
 
 @end

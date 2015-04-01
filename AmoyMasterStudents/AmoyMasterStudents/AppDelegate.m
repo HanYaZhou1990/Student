@@ -119,6 +119,7 @@
     UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     controller.navigationBarHidden = YES;
     self.window.rootViewController = controller;
+    [controller pushViewController:[CurriculumEvaluationViewController new] animated:YES];
     [self.window makeKeyAndVisible];
     
     return YES;

@@ -39,10 +39,14 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (self.selected) {
+    if (_cellType == 0) {
+        if (self.selected) {
+            _pointImageView.image = [UIImage imageNamed:@"radio_default_checked.png"];
+        }else{
+            _pointImageView.image = [UIImage imageNamed:@"radio_default.png"];
+        }
+    }else {
         _pointImageView.image = [UIImage imageNamed:@"radio_default_checked.png"];
-    }else{
-        _pointImageView.image = [UIImage imageNamed:@"radio_default.png"];
     }
     
     _contentlable.frame = CGRectMake(CGRectGetMaxX(_pointImageView.frame)+10, 0, SCREEN_WIDTH - (CGRectGetMaxX(_pointImageView.frame)+10) -10 , 44);
