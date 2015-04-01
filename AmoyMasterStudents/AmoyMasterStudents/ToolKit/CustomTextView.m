@@ -37,6 +37,7 @@
         _contentTextView.font = [UIFont systemFontOfSize:16.0];
         _contentTextView.backgroundColor = UIColorFromRGB(0xF0F0F0);
         _contentTextView.returnKeyType = UIReturnKeyDone;
+        _contentTextView.textColor = UIColorFromRGB(0x01bc8e);
         [self addSubview:_contentTextView];
         
     }

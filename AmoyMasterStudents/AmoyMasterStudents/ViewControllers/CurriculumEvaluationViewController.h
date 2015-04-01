@@ -12,8 +12,9 @@
 #import "CustomSegument.h"
 #import "ComplaintViewController.h"
 #import "BadReviewView.h"
+#import "AFNetworking.h"
 
 /*!评论页面*/
-@interface CurriculumEvaluationViewController : BaseViewController <UITextViewDelegate,CustomSegumentDelegate,CWStarRateViewDelegate>
+@interface CurriculumEvaluationViewController : BaseViewController <UITextViewDelegate,CustomSegumentDelegate,CWStarRateViewDelegate,BadReviewViewDelegate>
 
 @end

@@ -67,10 +67,10 @@
         if (sender.tag == btn.tag)
             {
             [btn setSelected:YES];
-//            if ([_delegate respondsToSelector:@selector(fromView:didSelectIndex:)])
-//                {
-//                [_delegate fromView:self didSelectIndex:sender.tag-10];
-//                }
+            if ([_delegate respondsToSelector:@selector(selectFrom:selectedIndex:)])
+                {
+                [_delegate selectFrom:self selectedIndex:sender.tag-10];
+                }
             }
         else
             {

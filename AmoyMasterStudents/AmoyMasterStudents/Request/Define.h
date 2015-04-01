@@ -122,8 +122,11 @@
 //结束考试
 #define  trainee_mockExam_end @"/trainee/mockExam/end"
 
+//评价教练
+#define trainee_course_comment @"/trainee/course/comment"
 
-
+//投诉教练
+#define trainee_course_complain @"/trainee/course/complain"
 
 
 

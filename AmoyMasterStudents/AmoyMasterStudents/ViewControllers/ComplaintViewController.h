@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 #import "CustomTextView.h"
 #import "CustomSegument.h"
+#import "AFNetworking.h"
 
 /*投诉页面*/
 @interface ComplaintViewController : BaseViewController <UITextViewDelegate,CustomSegumentDelegate>

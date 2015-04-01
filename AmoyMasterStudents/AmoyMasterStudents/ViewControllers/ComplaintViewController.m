@@ -8,7 +8,10 @@
 
 #import "ComplaintViewController.h"
 
-@interface ComplaintViewController ()
+@interface ComplaintViewController () {
+    CustomTextView          *_textView;
+    NSString                *_complainType;
+}
 
 @end
 
@@ -31,6 +34,8 @@
     [super viewDidLoad];
     
     [self leftBarItem];
+    
+    _complainType = @"0";
     
     UIScrollView *backgroundScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT)];
     backgroundScrollView.backgroundColor = UIColorFromRGB(0x01bc8e);
@@ -59,12 +64,12 @@
     [backView addSubview:teachName];
     
     
-    CustomTextView *textView = [[CustomTextView alloc] initWithFrame:CGRectMake(-0.5, CGRectGetMaxY(titLable.frame), width+1, 160)];
-    textView.contentTextView.delegate = self;
-    [backView addSubview:textView];
+    _textView = [[CustomTextView alloc] initWithFrame:CGRectMake(-0.5, CGRectGetMaxY(titLable.frame), width+1, 160)];
+    _textView.contentTextView.delegate = self;
+    [backView addSubview:_textView];
     
     
-    UILabel *rewardsLab = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(textView.frame)+10, 180, 20)];
+    UILabel *rewardsLab = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_textView.frame)+10, 180, 20)];
     rewardsLab.text = @"期望处理结果:";
     rewardsLab.textColor = [UIColor blackColor];
     rewardsLab.font = [UIFont systemFontOfSize:16.0];
@@ -82,11 +87,31 @@
     [submitButton setBackgroundImage:[UIImage imageNamed:@"evaluation_btn_complete_active.png"] forState:UIControlStateHighlighted];
     [submitButton addTarget:self action:@selector(submitButtonCliecked:) forControlEvents:UIControlEventTouchUpInside];
     [backView addSubview:submitButton];
-    
 }
 
 - (void)submitButtonCliecked:(UIButton *)sender {
-    DLog(@"提交");
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
+    
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_course_comment];
+    
+    NSDictionary *params = @{@"class_id":@"111",@"master_id":@"111",@"comment":_textView.contentTextView.text,@"complain_type":_complainType,@"suggest":@"",@"token":[PublicConfig valueForKey:userToken]};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+        if ([resultCode boolValue]==NO){
+            /*这里处理评论成功的代码*/
+        }else {
+            NSString *msgStr = [responseDic valueForKey:@"msg"];
+            [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"投诉失败"]];
+        }
+        DLog(@"responseDic = %@",[PublicConfig dictionaryToJson:responseDic]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [SVProgressHUD showErrorWithStatus:@"投诉请求失败"];
+    }];
 }
 
 #pragma mark -
@@ -102,7 +127,7 @@
 #pragma mark -
 #pragma mark CustomSegumentDelegate -
 - (void)fromView:(UIView *)view didSelectIndex:(NSInteger)indexOfButton {
-    DLog(@"%ld",(long)indexOfButton);
+    _complainType = [NSString stringWithFormat:@"%ld",(long)indexOfButton];
 }
 
 - (void)didReceiveMemoryWarning {
