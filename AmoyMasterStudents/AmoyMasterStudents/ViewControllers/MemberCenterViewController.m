@@ -17,14 +17,14 @@
 #import "UIImageView+WebCache.h"
 #import "UserInfoModel.h"
 
-@interface MemberCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,PublicSaveViewControllerDelegate>
+@interface MemberCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,PublicSaveViewControllerDelegate, UIAlertViewDelegate>
 {
     UITableView *myTableView;
     NSArray *sectionOneLArray;
     NSArray *sectionTwoLArray;
     
     UIImageView *headImageView;
-    NSString *userNameString;
+    NSString *userNameString; // 当前教练
     NSString *headImageUrl;
     UserInfoModel *userInfoModel;
 }
@@ -57,6 +57,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMemberData) name:refreshMemberCenterVCNotification object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self refreshMemberData];
+}
+
 //设置tableview属性
 - (void)setTheTableView
 {
@@ -75,6 +80,7 @@
 -(void)getUserInfo
 {
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_info];
+    
     NSDictionary *params = @{@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -94,8 +100,13 @@
               userNameString = userInfoModel.nickname;
               [myTableView reloadData];
          }
-         else
+         else if([responseObject[@"code"] intValue] == 255)
          {
+             DLog(@"获取个人信息失败");
+             [SVProgressHUD showErrorWithStatus:@"获取个人信息失败,请登录"];
+             [[NSNotificationCenter defaultCenter]postNotificationName:logoutDidSuccessNotification object:nil];
+             
+         }else{
              DLog(@"获取个人信息失败");
              [SVProgressHUD showErrorWithStatus:@"获取个人信息失败"];
          }
@@ -126,7 +137,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_updateAvatar];
     
-    NSDictionary *param = @{@"token":userToken};
+    NSDictionary *param = @{@"token":[PublicConfig valueForKey:userToken]};
     
     //上传图片请求
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -267,6 +278,8 @@
     }
 }
 
+
+
 #pragma -
 #pragma mark UIImagePickerControllerDelegate
 
@@ -368,10 +381,35 @@
     MessageSave *messageSave = (MessageSave *)sender;
     if ([messageSave.titleString isEqualToString:@"修改昵称"])
     {
-        //昵称
         userNameString = messageSave.saveMessage;
     }
-    [myTableView reloadData];
+    NSString *url = [NSString stringWithFormat:@"%@%@", BASE_PLAN_URL, trainee_traineeWrite_modifyNickName];
+    
+    NSDictionary *nickNameParam = @{@"nickname":userNameString};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager POST:url parameters:nickNameParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        DLog(@"memberCenter --- %@", responseObject);
+        if ([responseObject[@"code"] intValue] == 0) {
+            [myTableView reloadData];
+            [SVProgressHUD showSuccessWithStatus:@"修改昵称成功"];
+            
+        }else{
+            
+            [SVProgressHUD showErrorWithStatus:@"修改昵称失败"];
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD showErrorWithStatus:@"修改昵称请求失败"];
+        
+    }];
+    
+    
+   
+    
 }
 
 #pragma mark -
@@ -556,8 +594,9 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.textLabel.text = @"红包金额";
-            NSString *rewardBalance = [PublicConfig isSpaceString:userInfoModel.reward_balance andReplace:@"0"];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@元",rewardBalance];;
+//            NSString *rewardBalance = [PublicConfig isSpaceString:userInfoModel.reward_balance andReplace:@"0"];
+//            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@元",rewardBalance];
+            cell.detailTextLabel.text = @"暂不开放";
         }
         if (indexPath.section==4)
         {
@@ -569,6 +608,7 @@
     
     return cell;
 }
+
 
 #pragma mark -
 #pragma mark - UITableViewDelegate
@@ -621,10 +661,37 @@
     
     if (indexPath.section==4)
     {
-        //发送登录协议
-        [[NSNotificationCenter defaultCenter]postNotificationName:logoutDidSuccessNotification object:nil];
+        //发送退出登录协议
+        UIAlertView *logoutAlert = [[UIAlertView alloc]initWithTitle:@"退出登录" message:@"确认退出登录?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+        [logoutAlert show];
+        
     }
 }
+
+
+
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;{
+    
+    if(buttonIndex == 1){
+        NSString *url = [NSString stringWithFormat:@"%@%@", BASE_PLAN_URL, trainee_traineeRead_logout];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager POST:url parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if ([responseObject[@"code"] intValue] == 0) {
+                DLog(@"退出登录成功");
+                [[NSNotificationCenter defaultCenter]postNotificationName:logoutDidSuccessNotification object:nil];
+            }else{
+                [SVProgressHUD showErrorWithStatus:@"退出登录失败"];
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"退出登录请求失败，请检查网络"];
+        }];
+        
+    }
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

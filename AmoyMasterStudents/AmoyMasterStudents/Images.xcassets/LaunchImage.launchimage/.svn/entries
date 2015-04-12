@@ -1,15 +1,15 @@
 10
 
 dir
-41
+267
 svn://yazhou@120.24.236.14/taosf/trainee_ios/trunk/%E9%99%B6%E5%B8%88%E5%82%85/AmoyMasterStudents/AmoyMasterStudents/Images.xcassets/LaunchImage.launchimage
 svn://yazhou@120.24.236.14/taosf
 
 
 
-2015-02-08T14:13:43.335001Z
-39
-yazhou
+2015-04-11T03:01:41.733597Z
+255
+tina
 
 
 
@@ -26,16 +26,84 @@ yazhou
 
 85aa817d-5c75-4d84-90fa-e6aa40419b5f
 
+.DS_Store
+file
+
+
+
+
+2015-04-12T09:53:20.000000Z
+5020e61c39b5518afa41fe24e3dc7d27
+2015-04-01T17:43:25.574880Z
+243
+yazhou
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6148
+
+Default@2x.png
+file
+
+
+
+
+2015-04-12T09:53:20.000000Z
+240b470ee853f3d06f60414b9e37d26d
+2015-04-11T03:01:41.733597Z
+255
+tina
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+504723
+
 Contents.json
 file
 
 
 
 
-2015-02-08T14:58:24.000000Z
-32542eb4dab6fb46f121b550efd44ba8
-2015-02-08T14:13:43.335001Z
-39
+2015-04-12T09:53:20.000000Z
+d23a3914c8b64d8e5101eadd7c767d5f
+2015-04-01T17:43:25.574880Z
+243
 yazhou
 
 
@@ -58,5 +126,107 @@ yazhou
 
 
 
-378
+989
+
+Default-736h@3x.png
+file
+
+
+
+
+2015-04-12T09:53:21.000000Z
+618a36ea6d05ab54a7fc5f075c1b4b03
+2015-04-11T03:01:41.733597Z
+255
+tina
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+672496
+
+Default-568h@2x.png
+file
+
+
+
+
+2015-04-12T09:53:21.000000Z
+9d2b46229d9c07ff4bc1ddf71d4bfb36
+2015-04-11T03:01:41.733597Z
+255
+tina
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+507888
+
+Default-667h@2x.png
+file
+
+
+
+
+2015-04-12T09:53:21.000000Z
+f2a79c2b51ddd688e9eb114140112e63
+2015-04-11T03:01:41.733597Z
+255
+tina
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+583374
 

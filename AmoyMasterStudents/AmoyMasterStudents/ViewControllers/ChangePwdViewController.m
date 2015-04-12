@@ -10,6 +10,7 @@
 #import "WWTextField.h"
 #import "ValidateTool.h"
 #import "AFNetworking.h"
+#import "NSString+MD5.h"
 
 @interface ChangePwdViewController ()<UITextFieldDelegate>
 {
@@ -73,7 +74,8 @@
     phoneTextField.textColor = [UIColor blackColor];
     phoneTextField.borderStyle = UITextBorderStyleNone;
     phoneTextField.delegate =self;
-    phoneTextField.placeholder = @"请输入手机号码";
+    phoneTextField.text = [PublicConfig valueForKey:userAccount];
+    phoneTextField.userInteractionEnabled = NO;
     if (self.phoneStr.length>0)
     {
         phoneTextField.text = self.phoneStr;
@@ -250,10 +252,14 @@
     }
     else
     {
+        // 取出来的是加密密码
         NSString *userPwdStr = [PublicConfig valueForKey:userPassword];
-        if (![userPwdStr isEqualToString:oldPwdStr])
+        NSString *oldPwsStrMD5 = [NSString md5StringFromString:oldPwdStr];
+        
+        if (![userPwdStr isEqualToString:oldPwsStrMD5])
         {
             [PublicConfig waringInfo:@"原密码输入不正确"];
+            return;
         }
     }
     
@@ -313,7 +319,10 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_changePassword];
     
-    NSDictionary *params = @{@"password_old":oldPassword,@"password_new":newPassword,@"password_new_":newPassword,@"vCode":passCode,@"token":userToken};
+    NSString *oldMd5Password = [NSString md5StringFromString:oldPassword];
+    NSString *newMd5Password = [NSString md5StringFromString:newPassword];
+    
+    NSDictionary *params = @{@"password_old":oldMd5Password,@"password_new":newMd5Password,@"password_new_":newMd5Password,@"vCode":passCode,@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     operation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -329,8 +338,14 @@
                       NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
                       if ([resultCode boolValue]==NO)
                       {
+                          // 修改密码成功
+                          [PublicConfig setValue:newMd5Password forKey:userPassword];
+                          
+                          [SVProgressHUD showSuccessWithStatus:@"密码修改成功"];
+                          
                           [[NSNotificationCenter defaultCenter]postNotificationName:refreshMemberCenterVCNotification object:nil];
                           [self.navigationController popViewControllerAnimated:YES];
+                          
                       }
                       else
                       {
@@ -352,7 +367,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendPwdChangeSMS];
     
-    NSDictionary *params = @{@"cellphone":hp,@"token":userToken};
+    NSDictionary *params = @{@"cellphone":hp,@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

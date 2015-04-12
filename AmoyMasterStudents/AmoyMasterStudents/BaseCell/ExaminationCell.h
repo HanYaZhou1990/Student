@@ -12,7 +12,7 @@
 
 @interface ExaminationCell : UITableViewCell
 /*!题号，现在做的是第几题*/
-@property (nonatomic, strong) NSString   *numberString;
+//@property (nonatomic, strong) NSString   *numberString;
 /*!问题内容*/
 @property (nonatomic, strong) NSString   *questionString;
 /*!如果问题有图片，用来展示图片*/

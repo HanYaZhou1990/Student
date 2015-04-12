@@ -14,4 +14,6 @@
 /*投诉页面*/
 @interface ComplaintViewController : BaseViewController <UITextViewDelegate,CustomSegumentDelegate>
 
+@property (nonatomic, assign) int class_id;
+
 @end

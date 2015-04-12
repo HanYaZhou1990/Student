@@ -12,6 +12,7 @@
     NSMutableArray      *_dataSourceArray;
     UITableView         *_subjectTableView;
     NSInteger          _pageNumber;
+    NSString           *_amount; // 一次请求的数据条数
 }
 
 @end
@@ -24,6 +25,7 @@
     self.title = _titleString;
     
     _pageNumber = 0;
+    _amount = @"10";
     
     [self leftBarItem];
     
@@ -61,6 +63,14 @@
     }
 }
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    [self subjectHeaderRefreshing];
+}
+
+
 #pragma mark 获取表格数据
 
 - (void)subjectHeaderRefreshing
@@ -80,7 +90,8 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_knowledge_paginationListItems];
     
-    NSDictionary *params = @{@"section":sectionString,@"page":[NSString stringWithFormat:@"%ld",(long)_pageNumber],@"amount":@"2",@"token":userToken};
+    NSDictionary *params = @{@"section":sectionString,@"page":[NSString stringWithFormat:@"%ld",(long)_pageNumber],@"amount":_amount,@"token":[PublicConfig valueForKey:userToken]};
+    
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
@@ -143,6 +154,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SubjectCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    
+    //修改分隔线长度
+    UIEdgeInsets edgeInset = tableView.separatorInset;
+    tableView.separatorInset = UIEdgeInsetsMake(edgeInset.top, 0, edgeInset.bottom, edgeInset.right);
+    tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    
+    NSString *readedStr = _dataSourceArray[indexPath.row][@"readed"];
+    if([readedStr intValue] == 0){ // 未读
+        cell.imageView.image = [UIImage imageNamed:@"icon_point"];
+    }else if ([readedStr intValue] == 1){ // 已读
+        cell.imageView.image = [UIImage imageNamed:@"icon_null"];
+    }
+    
     cell.textLabel.text = _dataSourceArray[indexPath.row][@"title"];
     cell.detailTextLabel.text = _dataSourceArray[indexPath.row][@"description"];
     return cell;

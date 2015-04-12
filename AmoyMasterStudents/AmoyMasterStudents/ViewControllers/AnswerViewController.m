@@ -19,6 +19,9 @@
     
     YYLable          *_lable;
     long long        _tiemDate;
+    dispatch_source_t _timer;
+    
+    NSMutableArray    *_currentMutableArray;
 }
 @end
 
@@ -27,6 +30,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"模拟考试";
@@ -38,6 +46,7 @@
     
     _questionsArray = [NSArray array];
     _answerArray = [NSMutableArray array];
+    _currentMutableArray = [NSMutableArray array];
     _currentInteger = 0;
     _examTokenString = @"";
     
@@ -77,7 +86,11 @@
     [button addTarget:self action:@selector(next:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
-    [self getAllQuesstionWithSubjectType:NO];
+    if(self.subjectType == AnswerViewControllerSubjectTypeOne){
+        [self getAllQuesstionWithSubjectType:NO];
+    }else if(self.subjectType == AnswerViewControllerSubjectTypeFour){
+        [self getAllQuesstionWithSubjectType:YES];
+    }
     
 }
 
@@ -103,6 +116,7 @@
             [self showAlertViewWithMessage:@"答题完毕，提交试卷"];
             return;
         }else {
+            [_currentMutableArray removeAllObjects];
             [_questionTableView reloadData];
             [UIView transitionWithView:_questionTableView duration:0.5 options:UIViewAnimationOptionTransitionCurlUp animations:^{
                 sender.userInteractionEnabled = NO;
@@ -122,7 +136,8 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_mockExam_init];
     /*car   truce  bus*/
-    NSDictionary *params = @{@"type":@"car",@"preloadAmount":@"100",@"token":userToken};
+    NSString *type = (subjectType == NO ? @"car" : @"car4");
+    NSDictionary *params = @{@"type":type,@"preloadAmount":@"100",@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -145,10 +160,12 @@
         }else{
             NSString *msgStr = [responseDic valueForKey:@"msg"];
             [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"获取考题列表失败"]];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [SVProgressHUD showErrorWithStatus:@"获取考题列表请求失败"];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
 }
 
@@ -193,7 +210,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         ExaminationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.numberString = [NSString stringWithFormat:@"%02li.",_currentInteger+1];
+//        cell.numberString = [NSString stringWithFormat:@"%02li.",_currentInteger+1];
         cell.questionString = _questionsArray[_currentInteger][@"content"];
         if ([_questionsArray[_currentInteger][@"images"] count] == 0) {
             cell.imageString = nil;
@@ -203,9 +220,19 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
+        NSString *answer = [NSString stringWithFormat:@"%@.%@",_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"],_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"content"]];
+        NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:answer attributes:@{}];
+        
         AnswerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"answerCell" forIndexPath:indexPath];
+        if ([_questionsArray[_currentInteger][@"type"] isEqualToString:@"TFQ"]
+            || [_questionsArray[_currentInteger][@"type"] isEqualToString:@"MCQ"]) {
+            cell.questionType = AnswerCellQuestionTypeMCQ;
+        }else {
+            cell.questionType = AnswerCellQuestionTypeMCQM;
+        }
         cell.selectedBackgroundView = _cellSelectedView;
-        cell.contentString =[NSString stringWithFormat:@"%@.%@",_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"],_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"content"]];
+        cell.contentString = attributeString;
+        cell.mySelected = NO;
         return cell;
     }
 }
@@ -218,15 +245,84 @@
         return;
     }
     /*解决同一题，选择了两次，数组中就插入了两个答案的bug*/
-    if ([_answerArray.lastObject[@"code"] isEqualToString:_questionsArray[_currentInteger][@"code"]]) {
-        [_answerArray replaceObjectAtIndex:_answerArray.count-1 withObject:@{@"code":_questionsArray[_currentInteger][@"code"],@"value":_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"]}];
+    /*[MCQ, MCQM, TFQ]，分别代表单选题，多选题和是非题*/
+    AnswerCell *cell = (AnswerCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    if ([_questionsArray[_currentInteger][@"type"] isEqualToString:@"TFQ"]
+        || [_questionsArray[_currentInteger][@"type"] isEqualToString:@"MCQ"]) {
+        if ([_answerArray.lastObject[@"code"] isEqualToString:_questionsArray[_currentInteger][@"code"]]) {
+            [_answerArray replaceObjectAtIndex:_answerArray.count-1 withObject:@{@"code":_questionsArray[_currentInteger][@"code"],@"value":_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"]}];
+        }else {
+            [_answerArray addObject:@{@"code":_questionsArray[_currentInteger][@"code"],@"value":_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"]}];
+        }
     }else {
-        [_answerArray addObject:@{@"code":_questionsArray[_currentInteger][@"code"],@"value":_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"]}];
+        NSDictionary *dic = @{@"code":_questionsArray[_currentInteger][@"code"],@"value":_questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"]};
+        if (cell.mySelected) {
+            cell.mySelected = NO;
+            if ([_currentMutableArray containsObject:dic]) {
+                [_currentMutableArray removeObject:dic];
+            }else {
+                
+            }
+        }else {
+            cell.mySelected = YES;
+            if ([_currentMutableArray containsObject:dic]) {
+                
+            }else {
+                [_currentMutableArray addObject:dic];
+            }
+         }/*
+        NSString *choiceString = _questionsArray[_currentInteger][@"options"][indexPath.row-1][@"optChar"];
+        if (cell.mySelected) {
+            cell.mySelected = NO;
+            if ([_currentMutableArray containsObject:choiceString]) {
+                [_currentMutableArray removeObject:choiceString];
+            }else {
+                
+            }
+        }else {
+            cell.mySelected = YES;
+            if ([_currentMutableArray containsObject:choiceString]) {
+                
+            }else {
+                [_currentMutableArray addObject:choiceString];
+            }
+        }
+        NSError *error = nil;
+        NSData *answerData = [NSJSONSerialization dataWithJSONObject:_currentMutableArray options:kNilOptions error:&error];
+        NSString *answerString = [[NSString alloc] initWithData:answerData encoding:NSUTF8StringEncoding];
+        answerString = [answerString stringByReplacingOccurrencesOfString:@"[" withString:@""];
+        answerString = [answerString stringByReplacingOccurrencesOfString:@"]" withString:@""];
+        answerString = [answerString stringByReplacingOccurrencesOfString:@"\",\"" withString:@","];
+        DLog(@"*****%@",_currentMutableArray);
+        DLog(@"*****%@",answerString);
+        NSDictionary *answerDic = @{@"code":_questionsArray[_currentInteger][@"code"],@"value":answerString};
+        DLog(@"*************%@",answerDic);
+        if ([_answerArray.lastObject[@"code"] isEqualToString:_questionsArray[_currentInteger][@"code"] ]) {
+            [_answerArray replaceObjectAtIndex:_answerArray.count-1 withObject:answerDic];
+        }else {
+            [_answerArray addObject:answerDic];
+        }*/
+        if (_currentMutableArray.count > 0) {
+            NSString *string =@"";
+            for (NSDictionary *dictionary in _currentMutableArray) {
+                string = [string stringByAppendingString:[NSString stringWithFormat:@"%@,",dictionary[@"value"]]];
+            }
+            string = [string stringByReplacingOccurrencesOfString:@"\"," withString:@","];
+            NSDictionary *answerDic = @{@"code":_questionsArray[_currentInteger][@"code"],@"value":string};
+            DLog(@"*************%@",answerDic);
+            if ([_answerArray.lastObject[@"code"] isEqualToString:_questionsArray[_currentInteger][@"code"]]) {
+                [_answerArray replaceObjectAtIndex:_answerArray.count-1 withObject:answerDic];
+            }else {
+                [_answerArray addObject:answerDic];
+            }
+        }
     }
 }
 
 -(void)backAction
 {
+    
     /*点击返回按钮的时候，如果已经做完就提交试卷，如果没做完，就放弃考试*/
     if (_currentInteger == _questionsArray.count) {
         [self showAlertViewWithMessage:@"答题完毕，提交试卷"];
@@ -238,16 +334,20 @@
 #pragma mark - 
 #pragma mark UIAlertViewDelegate -
 - (void)showAlertViewWithMessage:(NSString *)messageString {
-    [[[UIAlertView alloc] initWithTitle:@"" message:messageString delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"" message:messageString delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil] show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    /*!提交试卷*/
-    if ([alertView.message isEqualToString:@"放弃考试，提交试卷"]) {
-        [self giveUpExamination];
-    }else {
-        [self examinationOver];
+
+    if (buttonIndex == 1) {
+        /*!提交试卷*/
+        if ([alertView.message isEqualToString:@"放弃考试，提交试卷"]) {
+            [self giveUpExamination];
+        }else {
+            [self examinationOver];
+        }
     }
+    
 }
 
 #pragma mark -
@@ -263,11 +363,16 @@
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDic = (NSDictionary *)responseObject;
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        dispatch_source_cancel(_timer);
         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
         if ([resultCode boolValue]==NO){
             [self.navigationController popViewControllerAnimated:YES];
         }else {
+            dispatch_source_cancel(_timer);
             NSString *msgStr = [responseDic valueForKey:@"msg"];
+            if ([msgStr isEqualToString:@"无效的ExamToken"] || [msgStr isEqualToString:@"答案格式错误："]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
             [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"提交试卷失败"]];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -291,11 +396,8 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        
+        dispatch_source_cancel(_timer);
         NSDictionary *responseDic = (NSDictionary *)responseObject;
-        
-        DLog(@"%@",[PublicConfig dictionaryToJson:responseDic]);
-        
         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
         if ([resultCode boolValue]==NO){
             NSDictionary *dataDic = [responseDic valueForKey:@"data"];
@@ -312,6 +414,9 @@
             }
         }else{
             NSString *msgStr = [responseDic valueForKey:@"msg"];
+            if ([msgStr isEqualToString:@"无效的ExamToken"] | [msgStr isEqualToString:@"答案格式错误："]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
             [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"提交试卷失败"]];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -322,10 +427,8 @@
 
 #pragma mark -
 #pragma mark 监测时间 -
-- (void)monitorTheTime {
+- (void)monitorTheTime{
     __block int timeout=6000; /*倒计时时间*/
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
     dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); /*每秒执行*/
     dispatch_source_set_event_handler(_timer, ^{
         if(timeout<=0){
@@ -341,10 +444,10 @@
                 if (_tiemDate <= [[NSDate date] timeIntervalSince1970]) {
                     /*考试结束时间到*/
                     [self showAlertViewWithMessage:@"考试结束，提交试卷"];
+                    dispatch_source_cancel(_timer);
                 }
             });
             timeout--;
-            
         }
     });
     dispatch_resume(_timer);

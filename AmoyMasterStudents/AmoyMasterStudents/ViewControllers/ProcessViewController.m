@@ -24,6 +24,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
+        // 设置导航栏的按钮颜色
+        [[UINavigationBar appearance] setTintColor:TSFSutentColor];
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"学车进程" image:[UIImage imageNamed:@"icon_main_process.png"] selectedImage:[UIImage imageNamed:@"icon_main_process.png"]];
     }
     return self;
@@ -36,8 +38,11 @@
     
     [self setTheTableView];
     
+    
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)];
+    rightItem.style = UIBarButtonItemStylePlain;
     self.navigationItem.rightBarButtonItem = rightItem;
+
     
     dataSource = [[NSMutableArray alloc]init];
     
@@ -71,7 +76,7 @@
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_timeLine_list];
-    NSDictionary *params = @{@"token":userToken};
+    NSDictionary *params = @{@"token":[PublicConfig valueForKey:userToken]};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDic = (NSDictionary *)responseObject;

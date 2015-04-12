@@ -13,26 +13,30 @@
 #import "AFNetworking.h"
 #import "MJRefresh.h"
 #import "CoachListModel.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface CoachViewController ()<WWMenuViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@interface CoachViewController ()<WWMenuViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, CLLocationManagerDelegate>
 {
-    UITableView *myTableView;
+    UITableView     *myTableView;
+    NSInteger       _pageNumber;
+    NSInteger       _currentPageNumber;
+    NSString        *totalNumber;
+    NSMutableArray  *dataSource;
     
-    NSInteger _pageNumber;
-    NSInteger _currentPageNumber;
+    NSString        *requestType;           //请求类型标示
+    NSString        *currentRequestType;    //当前请求字符串
     
-    NSString *totalNumber;
-    
-    NSMutableArray *dataSource;
-    
-    NSString *requestType;//请求类型标示
-    NSString *currentRequestType;//当前请求字符串
-    
-    UITextField *searchTextField;
-    NSString *searchStr;//上次参数字符串
-    NSString *currentSearchStr;//搜索字符串
+    UITextField     *searchTextField;
+    NSString        *searchStr;             //上次参数字符串
+    NSString        *currentSearchStr;      //搜索字符串
     
 }
+
+@property (nonatomic, strong) CLLocationManager *clManager; // 位置管理器
+@property (nonatomic, assign) CLLocationDegrees knowledLongitude; // 经度
+@property (nonatomic, assign) CLLocationDegrees knowledLatitude; // 纬度
+
+
 @end
 
 @implementation CoachViewController
@@ -60,10 +64,24 @@
     
     dataSource = [[NSMutableArray alloc]init];
     
-    requestType = @"1";//附近
+    requestType = @"1";//评价最好
     
-    [self coachListHeaderRefreshing];
+    CLLocationManager *clManager = [[CLLocationManager alloc] init];
+    self.clManager = clManager;
+    // 获取用户的授权(允许获取位置授权)
+    if(self.clManager != nil){
+        [self.clManager requestAlwaysAuthorization];
+        self.clManager.delegate = self;
+        // 开始更新位置
+        [self.clManager startUpdatingLocation];
+    }
+    
+    searchTextField.text = @"";
+    requestType = @"1";//评价最好
+    [self rightButtonAction];
+    
 }
+
 
 - (void)leftBarItem
 {
@@ -123,9 +141,9 @@
     menuView.delegate = self;
     menuView.imageWidth = 30.0f;
     menuView.btnInformationAry = @[
-                                   @[@"附近",[UIImage imageNamed:@"icon_location.png"],[UIImage imageNamed:@"icon_location_active.png"]],
-                                   @[@"最便宜",[UIImage imageNamed:@"icon_cheap.png"],[UIImage imageNamed:@"icon_cheap_active.png"]],
                                    @[@"评价最好",[UIImage imageNamed:@"icon_evaluation.png"],[UIImage imageNamed:@"icon_evaluation_active.png"]],
+                                   @[@"最便宜",[UIImage imageNamed:@"icon_cheap.png"],[UIImage imageNamed:@"icon_cheap_active.png"]],
+                                   @[@"附近",[UIImage imageNamed:@"icon_location.png"],[UIImage imageNamed:@"icon_location_active.png"]],
                                    @[@"学员最多",[UIImage imageNamed:@"icon_trainee.png"],[UIImage imageNamed:@"icon_trainee_active.png"]],
                                    @[@"驾照类型",[UIImage imageNamed:@"icon_knowledge.png"],[UIImage imageNamed:@"icon_knowledge_active.png"]]];
     [self.view addSubview:menuView];
@@ -162,42 +180,42 @@
     {
         case 0:
         {
-            //附近
-            requestType = @"1";
+            //评价最好
+            if ([requestType isEqualToString:@"1"])
+            {
+                requestType = @"2";
+            }
+            else if ([requestType isEqualToString:@"2"])
+            {
+                requestType = @"1";
+            }
+            else
+            {
+                requestType = @"1";
+            }
         }
             break;
         case 1:
         {
             //最便宜
-            if ([requestType isEqualToString:@"2"])
+            if ([requestType isEqualToString:@"3"])
+            {
+                requestType = @"4";
+            }
+            else if ([requestType isEqualToString:@"4"])
             {
                 requestType = @"3";
             }
-            else if ([requestType isEqualToString:@"3"])
-            {
-                requestType = @"2";
-            }
             else
             {
-                requestType = @"2";
+                requestType = @"3";
             }
         }
             break;
         case 2:
         {
-            //评价最好
-            if ([requestType isEqualToString:@"4"])
-            {
-                requestType = @"5";
-            }
-            else if ([requestType isEqualToString:@"5"])
-            {
-                requestType = @"4";
-            }
-            else
-            {
-                requestType = @"4";
-            }
+            //附近
+            requestType = @"5";
         }
             break;
         case 3:
@@ -290,52 +308,53 @@
     NSString *pageIndexStr = [NSString stringWithFormat:@"%ld",(long)pageIndex];
     NSString *pageSizeStr = @"10";
     
+    
     NSDictionary *params; //去掉组合排列
-    if ([requestType isEqualToString:@"1"])
+    if ([requestType isEqualToString:@"5"])
     {
         //点击附近 离我最近 评分最高
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"position":@"1",@"token":userToken};
-    }
-    else if ([requestType isEqualToString:@"2"])
-    {
-        //点击最便宜 价格最便宜 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"1",@"token":userToken};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"lng":@(self.knowledLongitude),@"lat":@(self.knowledLatitude),@"token":[PublicConfig valueForKey:userToken]};
     }
     else if ([requestType isEqualToString:@"3"])
     {
-        //点击最便宜 价格贵 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"-1",@"token":userToken};
+        //点击最便宜 价格最便宜 评分最高
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"1",@"token":[PublicConfig valueForKey:userToken]};
     }
     else if ([requestType isEqualToString:@"4"])
     {
+        //点击最便宜 价格贵 评分最高
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"price":@"-1",@"token":[PublicConfig valueForKey:userToken]};
+    }
+    else if ([requestType isEqualToString:@"1"])
+    {
         //点击最评价最好  评分最高 离我最近
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"-1",@"token":userToken};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"-1",@"token":[PublicConfig valueForKey:userToken]};
         
     }
-    else if ([requestType isEqualToString:@"5"])
+    else if ([requestType isEqualToString:@"2"])
     {
         //点击最评价最好  评分最低 离我最近
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"1",@"token":userToken};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"comment":@"1",@"token":[PublicConfig valueForKey:userToken]};
     }
     else if ([requestType isEqualToString:@"6"])
     {
         //点击学员最多  正在学习人数最多 评分最高
-         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"-1",@"token":userToken};
+         params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"-1",@"token":[PublicConfig valueForKey:userToken]};
     }
     else if ([requestType isEqualToString:@"7"])
     {
         //点击学员最多  正在学习人数最少 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"1",@"token":userToken};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"trainee":@"1",@"token":[PublicConfig valueForKey:userToken]};
     }
     else if ([requestType isEqualToString:@"8"])
     {
         //点击驾校类型  C2照 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"4",@"token":userToken};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"C2",@"token":[PublicConfig valueForKey:userToken]};
     }
     else if ([requestType isEqualToString:@"9"])
     {
         //点击学员最多  C1照 评分最高
-        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"3",@"token":userToken};
+        params= @{@"cur_page":pageIndexStr,@"page_size":pageSizeStr,@"license":@"C1",@"token":[PublicConfig valueForKey:userToken]};
     }
     
     if (currentSearchStr.length>0)
@@ -503,6 +522,38 @@
     textField.text = @"";
     return YES;
 }
+
+#pragma UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    // 滑动列表的时候收起键盘
+    [searchTextField resignFirstResponder];
+}
+
+
+#pragma mark - CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    //此处locations存储了持续更新的位置坐标值，取最后一个值为最新位置，如果不想让其持续更新位置，则在此方法中获取到一个值之后让locationManager stopUpdatingLocation
+    CLLocation *currentLocation = [locations lastObject];
+    CLLocationCoordinate2D coor = currentLocation.coordinate;
+    self.knowledLatitude = coor.latitude;
+    self.knowledLongitude = coor.longitude;
+    
+    if(self.knowledLatitude != 0 && self.knowledLongitude != 0){
+        [self.clManager stopUpdatingLocation];
+        self.clManager = nil;
+    }
+    
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error {
+    
+    if (error.code == kCLErrorDenied) {
+        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@",error.userInfo]];
+    }
+}
+
 
 
 - (void)didReceiveMemoryWarning {

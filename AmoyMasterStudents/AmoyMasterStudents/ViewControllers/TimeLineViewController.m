@@ -71,7 +71,7 @@
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_timeLine_list];
-    NSDictionary *params = @{@"token":userToken};
+    NSDictionary *params = @{@"token":[PublicConfig valueForKey:userToken]};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDic = (NSDictionary *)responseObject;

@@ -10,7 +10,7 @@
 
 @interface WrongViewController () <UITableViewDataSource,UITableViewDelegate> {
     UIView                    *_cellSelectedView;
-    UITableView               *_wrongQuestionTableView;
+    UITableView               *_wrongQuestionTableView; // 错题展示-错题题目
 }
 
 @end
@@ -25,6 +25,8 @@
     _cellSelectedView.backgroundColor = [UIColor whiteColor];
     
     [self leftBarItem];
+    
+    
     
     _wrongQuestionTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT) style:UITableViewStylePlain];
     _wrongQuestionTableView.dataSource = self;
@@ -58,13 +60,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger questionIndex = [[NSString stringWithFormat:@"%ld",[_wrongArray[section][@"order"] integerValue]] integerValue];
+    NSInteger questionIndex = [[NSString stringWithFormat:@"%ld",(long)[_wrongArray[section][@"order"] integerValue]] integerValue];
     return [_questionArray[questionIndex-1][@"options"] count]+1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        NSInteger questionIndex = [[NSString stringWithFormat:@"%ld",[_wrongArray[indexPath.section][@"order"] integerValue]] integerValue];
+        NSInteger questionIndex = [[NSString stringWithFormat:@"%ld",(long)[_wrongArray[indexPath.section][@"order"] integerValue]] integerValue];
 
         if ([_questionArray[questionIndex-1][@"images"] count] == 0) {
             CGFloat questionHeight = [PublicConfig height:_questionArray[questionIndex-1][@"content"] widthOfFatherView:SCREEN_WIDTH-60 textFont:[UIFont systemFontOfSize:16.0]];
@@ -84,8 +86,9 @@
 
     if (indexPath.row == 0) {
         ExaminationCell *questionCell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        questionCell.numberString = [NSString stringWithFormat:@"%02li.",[_wrongArray[indexPath.section][@"order"] integerValue]];
-        questionCell.questionString = _questionArray[questionIndex-1][@"content"];
+        NSString *numberString = [NSString stringWithFormat:@"%02li.",[_wrongArray[indexPath.section][@"order"] integerValue]];
+        NSString *questionString = [NSString stringWithFormat:@"%@ %@",numberString,_questionArray[questionIndex-1][@"content"]];
+        questionCell.questionString = questionString;
         if ([_questionArray[questionIndex-1][@"images"] count] == 0) {
             questionCell.imageString = nil;
         }else {
@@ -111,19 +114,31 @@
         }
         NSString *answerString = [NSString stringWithFormat:@"%@",_wrongArray[indexPath.section][@"ca"]];
         if ([answerString isEqualToString:@"A"] && indexPath.row == 1) {
-            cell.contentString =[NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+            NSString *answer = [NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+            NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:answer attributes:@{NSForegroundColorAttributeName:TSFSutentColor}];
+            cell.contentString = attributeString;
         }else if ([answerString isEqualToString:@"B"] && indexPath.row == 2) {
-            cell.contentString =[NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+            NSString *answer = [NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+            NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:answer attributes:@{NSForegroundColorAttributeName:TSFSutentColor}];
+            cell.contentString = attributeString;
         }else if ([answerString isEqualToString:@"C"] && indexPath.row == 3) {
-            cell.contentString =[NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+            NSString *answer = [NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+            NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:answer attributes:@{NSForegroundColorAttributeName:TSFSutentColor}];
+            cell.contentString = attributeString;
         }else if ([answerString isEqualToString:@"D"] && indexPath.row == 4) {
-            cell.contentString =[NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+            NSString *answer = [NSString stringWithFormat:@"%@.%@%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"],@" (正确答案)"];
+            NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:answer attributes:@{NSForegroundColorAttributeName:TSFSutentColor}];
+            cell.contentString = attributeString;
         }else{
-            cell.contentString =[NSString stringWithFormat:@"%@.%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"]];
+            NSString *answer = [NSString stringWithFormat:@"%@.%@",_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"optChar"],_questionArray[questionIndex-1][@"options"][indexPath.row-1][@"content"]];
+            NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:answer attributes:@{}];
+            cell.contentString = attributeString;
         }
         return cell;
     }
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

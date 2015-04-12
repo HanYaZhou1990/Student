@@ -574,59 +574,62 @@
     [bgView addSubview:lineLabel];
     
     [self setTimeInfoViewByHeight:heightTemp];
+//    scrollUseView.contentSize = CGSizeMake(SCREEN_WIDTH, heightTemp);
 }
 
 -(void)setTimeInfoViewByHeight:(CGFloat)height
 {
     UIView *bgView = [[UIView alloc]init];
     bgView.backgroundColor = [UIColor whiteColor];
-    bgView.frame = CGRectMake(0, height, SCREEN_WIDTH, 280);
+    bgView.frame = CGRectMake(0, height, SCREEN_WIDTH, 80);
     [scrollUseView addSubview:bgView];
     
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.frame = CGRectMake(15, 20, SCREEN_WIDTH-30, 15);
-    titleLabel.textAlignment = NSTextAlignmentLeft;
-    titleLabel.textColor = RGBA(0, 165, 109, 1);
-    titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:14];
-    titleLabel.text = @"教练2015年时间表";
-    [bgView addSubview:titleLabel];
+//    UILabel *titleLabel = [[UILabel alloc] init];
+//    titleLabel.frame = CGRectMake(15, 20, SCREEN_WIDTH-30, 15);
+//    titleLabel.textAlignment = NSTextAlignmentLeft;
+//    titleLabel.textColor = RGBA(0, 165, 109, 1);
+//    titleLabel.backgroundColor = [UIColor clearColor];
+//    titleLabel.font = [UIFont boldSystemFontOfSize:14];
+//    titleLabel.text = @"教练2015年时间表";
+//    [bgView addSubview:titleLabel];
+
     
     //时间表
-    UIImageView *contentImgView =  [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-293)/2, 45, 293, 173)];
-    contentImgView.image = [UIImage imageNamed:@"square_detail_timetable_bg.png"];
-    [bgView addSubview:contentImgView];
+//    UIImageView *contentImgView =  [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-293)/2, 45, 293, 173)];
+//    contentImgView.image = [UIImage imageNamed:@"square_detail_timetable_bg.png"];
+//    [bgView addSubview:contentImgView];
     
-    UILabel *timeLabel = [[UILabel alloc] init];
-    timeLabel.frame = CGRectMake(0, 0, 293, 23);
-    timeLabel.textAlignment = NSTextAlignmentCenter;
-    timeLabel.textColor = [UIColor whiteColor];
-    timeLabel.backgroundColor = [UIColor clearColor];
-    timeLabel.font = [UIFont boldSystemFontOfSize:13];
-    timeLabel.text = @"2015年";
-    [contentImgView addSubview:timeLabel];
+//    UILabel *timeLabel = [[UILabel alloc] init];
+//    timeLabel.frame = CGRectMake(0, 0, 293, 23);
+//    timeLabel.textAlignment = NSTextAlignmentCenter;
+//    timeLabel.textColor = [UIColor whiteColor];
+//    timeLabel.backgroundColor = [UIColor clearColor];
+//    timeLabel.font = [UIFont boldSystemFontOfSize:13];
+//    timeLabel.text = @"2015年";
+//    [contentImgView addSubview:timeLabel];
+
     
-    for (int i=0; i<coachDetailModel.timeArray.count; i++){
-        long xx = i%4;
-        long yy = i/4;
-        
-        UILabel *stateLabel = [[UILabel alloc] init];
-        stateLabel.frame = CGRectMake(xx*(293/4), 38+50*yy, 68, 50);
-        stateLabel.textAlignment = NSTextAlignmentRight;
-        stateLabel.textColor = [UIColor grayColor];
-        stateLabel.backgroundColor = [UIColor clearColor];
-        stateLabel.font = [UIFont systemFontOfSize:13];
-        stateLabel.text = [coachDetailModel.timeArray objectAtIndex:i];
-        [contentImgView addSubview:stateLabel];
-    }
+//    for (int i=0; i<coachDetailModel.timeArray.count; i++){
+//        long xx = i%4;
+//        long yy = i/4;
+//        
+//        UILabel *stateLabel = [[UILabel alloc] init];
+//        stateLabel.frame = CGRectMake(xx*(293/4), 38+50*yy, 68, 50);
+//        stateLabel.textAlignment = NSTextAlignmentRight;
+//        stateLabel.textColor = [UIColor grayColor];
+//        stateLabel.backgroundColor = [UIColor clearColor];
+//        stateLabel.font = [UIFont systemFontOfSize:13];
+//        stateLabel.text = [coachDetailModel.timeArray objectAtIndex:i];
+//        [contentImgView addSubview:stateLabel];
+//    }
     
     //教练地址
-    UIImageView *contentLabelImgView =  [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-293)/2, 228, 293, 39.5)];
+    UIImageView *contentLabelImgView =  [[UIImageView alloc] initWithFrame:CGRectMake(10, 20, self.view.width - 20, 50)];
     contentLabelImgView.image = [UIImage imageNamed:@"square_detail_location.png"];
     [bgView addSubview:contentLabelImgView];
     
     UILabel *addressLabel = [[UILabel alloc] init];
-    addressLabel.frame = CGRectMake(30, 5, 263, 20);
+    addressLabel.frame = CGRectMake(30, 9, 263, 20);
     addressLabel.textAlignment = NSTextAlignmentLeft;
     addressLabel.textColor = [UIColor whiteColor];
     addressLabel.backgroundColor = [UIColor clearColor];
@@ -725,7 +728,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_course_orderCourse];
     
-    NSDictionary *params = @{@"master_id":_masterId,@"class_type":@"1",@"token":[PublicConfig valueForKey:userToken]};
+    NSDictionary *params = @{@"master_id":_masterId,@"class_type":@(btnType),@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -739,6 +742,7 @@
                 /*预约成功*/
                 OrderCoachViewController *vc = [[OrderCoachViewController alloc]init];
                 vc.orderType = @"1";
+                vc.coachDict = @{@"master_name":coachDetailModel.master_name, @"cellphone":coachDetailModel.cellphone};
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }else{
@@ -807,15 +811,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

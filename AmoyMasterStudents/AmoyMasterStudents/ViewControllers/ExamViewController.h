@@ -11,7 +11,7 @@
 
 typedef enum {
     ExamViewControllerTypeOne,
-    ExamViewControllerTypeThree,
+    ExamViewControllerTypeFour,
 }ExamViewControllerType;
 
 @interface ExamViewController : BaseViewController

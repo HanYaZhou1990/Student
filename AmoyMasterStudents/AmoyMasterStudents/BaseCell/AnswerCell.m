@@ -33,24 +33,38 @@
         _contentlable.numberOfLines = 0;
         [self.contentView addSubview:_contentlable];
         
+        _mySelected = NO;
+        
         }
     return self;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (_cellType == 0) {
-        if (self.selected) {
+    if (_questionType == AnswerCellQuestionTypeMCQ || _questionType == AnswerCellQuestionTypeTFQ) {
+        if (_cellType == 0) {
+            if (self.selected) {
+                _pointImageView.image = [UIImage imageNamed:@"radio_default_checked.png"];
+            }else{
+                _pointImageView.image = [UIImage imageNamed:@"radio_default.png"];
+            }
+        }else {
             _pointImageView.image = [UIImage imageNamed:@"radio_default_checked.png"];
-        }else{
-            _pointImageView.image = [UIImage imageNamed:@"radio_default.png"];
         }
     }else {
-        _pointImageView.image = [UIImage imageNamed:@"radio_default_checked.png"];
+        if (_cellType == 0) {
+            if (self.mySelected) {
+                _pointImageView.image = [UIImage imageNamed:@"radio_default_checked.png"];
+            }else {
+                _pointImageView.image = [UIImage imageNamed:@"radio_default.png"];
+            }
+        }else {
+            _pointImageView.image = [UIImage imageNamed:@"radio_default_checked.png"];
+        }
     }
     
     _contentlable.frame = CGRectMake(CGRectGetMaxX(_pointImageView.frame)+10, 0, SCREEN_WIDTH - (CGRectGetMaxX(_pointImageView.frame)+10) -10 , 44);
-    _contentlable.text = _contentString;
+    _contentlable.attributedText = _contentString;
 }
 
 - (void)awakeFromNib {}

@@ -10,6 +10,7 @@
 #import "WWTextField.h"
 #import "ValidateTool.h"
 #import "AFNetworking.h"
+#import "NSString+MD5.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 {
@@ -293,8 +294,9 @@
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"注册中..." animated:YES];
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_register];
+    NSString *md5Password = [NSString md5StringFromString:password];
     
-    NSDictionary *params = @{@"account":phoneNumber,@"password":password};
+    NSDictionary *params = @{@"account":phoneNumber,@"password":md5Password,@"v_code":captchaTextField.text};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     registerOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -310,7 +312,8 @@
                            NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
                            if ([resultCode boolValue]==NO)
                            {
-                               [PublicConfig waringInfo:@"注册成功"];
+//                               [PublicConfig waringInfo:@"注册成功"];
+                               [SVProgressHUD showSuccessWithStatus:@"注册成功"];
                                //注册成功 返回去登陆
                                [self.navigationController popViewControllerAnimated:YES];
                            }
@@ -330,34 +333,34 @@
 //给用户发送短信验证码
 -(void)getValidCodeData:(NSString *)hp
 {
-    //        [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"获取验证码中..." animated:YES];
-    //
-    //        NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,@""];
-    //
-    //        NSDictionary *params = @{@"cellphone":@""};
-    //
-    //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    //        validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-    //                      {
-    //                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    //
-    //                          NSDictionary *responseDic = (NSDictionary *)responseObject;
-    //                          NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
-    //                          if ([resultCode boolValue]==NO)
-    //                          {
-    //                              DLog(@"验证码获取成功");
-    //                          }
-    //                          else
-    //                          {
-    //                              NSString *msgStr = [responseDic valueForKey:@"msg"];
-    //                              [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"验证码获取失败"]];
-    //                          }
-    //                      }
-    //                           failure:^(AFHTTPRequestOperation *operation, NSError *error)
-    //                      {
-    //                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    //                          [SVProgressHUD showErrorWithStatus:@"验证码获取请求失败"];
-    //                      }];
+    [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"获取验证码中..." animated:YES];
+
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendRegisterSMS];
+
+    NSDictionary *params = @{@"cellphone":phoneTextField.text};
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+                  {
+                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+                      NSDictionary *responseDic = (NSDictionary *)responseObject;
+                      NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
+                      if ([resultCode boolValue]==NO)
+                      {
+                          DLog(@"验证码获取成功");
+                      }
+                      else
+                      {
+                          NSString *msgStr = [responseDic valueForKey:@"msg"];
+                          [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"验证码获取失败"]];
+                      }
+                  }
+                       failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                  {
+                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                      [SVProgressHUD showErrorWithStatus:@"验证码获取请求失败"];
+                  }];
 }
 
 #pragma mark -
@@ -407,15 +410,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

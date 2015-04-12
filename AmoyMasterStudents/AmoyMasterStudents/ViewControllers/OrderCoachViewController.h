@@ -11,5 +11,7 @@
 @interface OrderCoachViewController : BaseViewController
 
 @property (nonatomic,strong) NSString *orderType; //1成功
+@property (nonatomic, strong) NSDictionary *coachDict;
+
 
 @end

@@ -46,18 +46,19 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    _numberLable.frame = CGRectMake(10, 10, 40, 20);
-    _numberLable.text = _numberString;
+//    _numberLable.frame = CGRectMake(10, 10, 40, 20);
+//    _numberLable.text = _numberString;
+//    CGFloat leftWidth = CGRectGetMaxX(_numberLable.frame);
     
-    CGFloat leftWidth = CGRectGetMaxX(_numberLable.frame);
-    
-    CGFloat questionHeight = [PublicConfig height:_questionString widthOfFatherView:SCREEN_WIDTH-(leftWidth + 20) textFont:[UIFont systemFontOfSize:16.0]];
-    _questionLable.frame = CGRectMake(leftWidth, 10, SCREEN_WIDTH-(leftWidth + 20), questionHeight);
+    CGFloat padding = 15;
+    CGFloat questionWidth = SCREEN_WIDTH-2*padding;
+    CGFloat questionHeight = [PublicConfig height:_questionString widthOfFatherView:questionWidth textFont:[UIFont systemFontOfSize:16.0]];
+    _questionLable.frame = CGRectMake(padding, 10, questionWidth, questionHeight);
     _questionLable.text = _questionString;
     
     if (_imageString && _imageString.length > 0) {
         _questionImageView.hidden = NO;
-        _questionImageView.frame = CGRectMake(leftWidth, CGRectGetMaxY(_questionLable.frame), SCREEN_WIDTH-(leftWidth + 20), 180);
+        _questionImageView.frame = CGRectMake(_questionLable.x, CGRectGetMaxY(_questionLable.frame)+10, questionWidth, 180);
         NSString *__imageUrl = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)_imageString, nil, nil, kCFStringEncodingUTF8));
         [_questionImageView sd_setImageWithURL:[NSURL URLWithString:__imageUrl] placeholderImage:[UIImage imageNamed:@"account_default_avatar.png"] completed:^(UIImage *image,NSError *error,SDImageCacheType cacheType, NSURL *imageURL){}];
     }else{

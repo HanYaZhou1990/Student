@@ -27,9 +27,9 @@
     UILabel *scoreLable = [[UILabel alloc]init];
     scoreLable.bounds = CGRectMake(0, 0, 80, 40);
     scoreLable.center = CGPointMake(SCREEN_WIDTH/2, 40);
-    scoreLable.text = [NSString stringWithFormat:@"%@",_dataDictionary[@"score"]];
+    scoreLable.text = [NSString stringWithFormat:@"%@分",_dataDictionary[@"score"]];
     scoreLable.font = [UIFont systemFontOfSize:44.0];
-    scoreLable.textColor = UIColorFromRGB(0x666666);
+    scoreLable.textColor = TSFSutentColor;
     scoreLable.adjustsFontSizeToFitWidth = YES;
     scoreLable.textAlignment = NSTextAlignmentCenter;
     [answerScrollView addSubview:scoreLable];
@@ -58,10 +58,10 @@
     
     
     UILabel *titleLable = [[UILabel alloc]init];
-    titleLable.frame = CGRectMake(15, CGRectGetMaxY(wakeLable.frame)+10, 200, 20);
-    titleLable.text = @"题目答案如下:";
+    titleLable.frame = CGRectMake(15, CGRectGetMaxY(wakeLable.frame)+20, SCREEN_HEIGHT - 2*15, 20);
+    titleLable.text = @"题目答案如下(绿色为出错题目):";
     titleLable.font = [UIFont systemFontOfSize:16.0];
-    titleLable.textColor = UIColorFromRGB(0x666666);
+    titleLable.textColor = TSFSutentColor;
     [answerScrollView addSubview:titleLable];
     
     NSArray *array = [[NSArray alloc] initWithArray:_dataDictionary[@"questions"]];
@@ -76,7 +76,8 @@
     [checkButton setTitle:@"查看出错题目" forState:UIControlStateNormal];
     [checkButton setTitleColor:UIColorFromRGB(0xF0F0F0) forState:UIControlStateNormal];
     checkButton.frame = CGRectMake(15, CGRectGetMaxY(allAnswersView.frame)+20, SCREEN_WIDTH - 30, 44);
-    [checkButton setBackgroundColor:UIColorFromRGB(0x666666)];
+    [checkButton setBackgroundImage:[UIImage imageNamed:@"btn_confirm"] forState:UIControlStateNormal];
+    [checkButton setBackgroundImage:[UIImage imageNamed:@"btn_confirm"] forState:UIControlStateHighlighted];
     [checkButton addTarget:self action:@selector(goToWrongViewController:) forControlEvents:UIControlEventTouchUpInside];
     [answerScrollView addSubview:checkButton];
     
@@ -98,8 +99,21 @@
 #pragma mark -
 #pragma mark 前往错题展示页 -
 - (void)goToWrongViewController:(UIButton *)sender {
+    NSMutableArray *wrongArray = [NSMutableArray array];
+    DLog(@"_dataDictionary --- %@",_dataDictionary);
+    NSArray *answerArray = _dataDictionary[@"questions"];
+    for (int index = 0; index < answerArray.count; index++) {
+        NSString *is_correct = answerArray[index][@"is_correct"];
+        if ([is_correct intValue] ==0) { // 错题
+            [wrongArray addObject:answerArray[index]];
+        }
+    }
+    
+    DLog(@"wrongArray -- %@",wrongArray);
+
+    
     WrongViewController *errorViewController = [[WrongViewController alloc] init];
-    errorViewController.wrongArray = _dataDictionary[@"questions"];
+    errorViewController.wrongArray = wrongArray;
     errorViewController.questionArray = _questionArray;
     [self.navigationController pushViewController:errorViewController animated:YES];
 }

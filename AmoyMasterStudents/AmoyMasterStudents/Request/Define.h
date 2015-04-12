@@ -37,10 +37,11 @@
 #define DLOGDATA(...);
 #endif
 
-
 #define userAccount     @"userAccount" //用户账号唯一标识符id 若为空 未登录
 #define userPassword    @"userPassword" //用户密码
 #define userToken       @"userToken" //登陆成功返回的token，登陆后所有接口都加此参数
+
+#define DEST_PATH_DeviceToken [NSHomeDirectory() stringByAppendingString:@"/Library/Preferences/deviceToken.plist"] // 存储deviceToken路径
 
 #define refreshMemberCenterVCNotification @"refreshMemberCenterVCNotification" //刷新个人中心界面
 
@@ -69,6 +70,9 @@
 //学员更改联系方式
 #define trainee_traineeWrite_updateContact  @"/trainee/traineeWrite/updateContact"
 
+// 修改昵称
+#define trainee_traineeWrite_modifyNickName @"/trainee/traineeWrite/modifyNickName"
+
 //学员学员上传头像
 #define trainee_traineeWrite_updateAvatar  @"/trainee/traineeWrite/uploadAvatar"
 
@@ -76,14 +80,21 @@
 //学员登录接口
 #define trainee_traineeRead_login  @"/trainee/traineeRead/login"
 
+// 退出登录接口
+#define trainee_traineeRead_logout @"/trainee/traineeRead/logout"
+
+
 //获取学员个人信息
 #define trainee_traineeRead_info  @"/trainee/traineeRead/info"
 
 //学员发送密码重置验证码短信
 #define trainee_traineeRead_sendPwdResetSMS  @"/trainee/traineeRead/sendPwdResetSMS"
 
+// 学员注册获取验证码
+#define trainee_traineeRead_sendRegisterSMS @"/trainee/traineeRead/sendRegisterSMS"
+
 //请求获取找回密码的凭据
-#define trainee_traineeRead_requestPwdRese  @"/trainee/traineeRead/requestPwdRese"
+#define trainee_traineeRead_requestPwdReset  @"/trainee/traineeRead/requestPwdReset"
 
 //获取更改联系方式手机验证码
 #define trainee_traineeRead_sendUpdateContactSMS  @"/trainee/traineeRead/sendUpdateContactSMS"
@@ -100,6 +111,9 @@
 
 //教练详情
 #define trainee_master_info  @"/trainee/master/info"
+
+// 取消预约已经预约的教练
+#define trainee_course_cancelOrder @"/trainee/course/cancelOrder"
 
 //分页获取的文章列表内容
 #define trainee_knowledge_paginationListItems @"/trainee/knowledge/paginationListItems"
@@ -127,6 +141,25 @@
 
 //投诉教练
 #define trainee_course_complain @"/trainee/course/complain"
+
+//响应教练排课
+#define trainee_course_replyOrder @"/trainee/course/replyOrder"
+
+// 课程结束确认
+#define trainee_course_finishClass @"/trainee/course/finishClass"
+
+// 确认上课
+#define trainee_course_confirm @"/trainee/course/confirm"
+
+// 拒绝上某堂课
+#define trainee_course_reject @"/trainee/course/reject"
+
+// 查询排课详情(给自己请求使用)
+#define trainee_course_getPlanDetail @"/trainee/course/getPlanDetail"
+
+// 查询是否正在上课/上课结束
+#define trainee_course_check @"/trainee/course/check"
+
 
 
 

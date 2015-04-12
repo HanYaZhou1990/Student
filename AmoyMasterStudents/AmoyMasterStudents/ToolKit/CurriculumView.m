@@ -32,7 +32,9 @@
         
         
         _starRateView = [[CWStarRateView alloc] initWithFrame:CGRectMake(100, 8, CGRectGetMaxX(frame)-CGRectGetMaxX(_titleLab.frame)-20, 28) numberOfStars:5];
-        _starRateView.scorePercent = 1;
+        _starRateView.centerY = _titleLab.centerY;
+        // 默认为0分
+        _starRateView.scorePercent = 0;
         _starRateView.allowIncompleteStar = NO;
         _starRateView.hasAnimation = NO;
         _starRateView.isTap = YES;

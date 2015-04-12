@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = _titleString;
+//    self.title = _titleString;
     
     [self leftBarItem];
     
@@ -67,7 +67,7 @@
  
  NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_knowledge_detail];
  
- NSDictionary *params = @{@"code":_codeString,@"markRead":@"true",@"token":userToken};
+ NSDictionary *params = @{@"code":_codeString,@"markRead":@"true",@"token":[PublicConfig valueForKey:userToken]};
  
  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){

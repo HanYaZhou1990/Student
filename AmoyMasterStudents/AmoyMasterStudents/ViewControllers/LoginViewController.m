@@ -12,6 +12,7 @@
 #import "ValidateTool.h"
 #import "FindPwdViewController.h"
 #import "AFNetworking.h"
+#import "NSString+MD5.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 {
@@ -174,8 +175,21 @@
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"登录中..." animated:YES];
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_login];
+    NSString *md5Password = [NSString md5StringFromString:userPswField.text];
     
-    NSDictionary *params = @{@"account":userNameField.text,@"password":userPswField.text,@"type":@"2"}; //type 设备类型(1android 2iphone)
+    // 取出push的deviceToken
+//    NSString *documentDirectorty = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES)[0];
+//    NSString *path = [documentDirectorty stringByAppendingPathComponent:DeviceTokenFileName];
+//    NSDictionary *deviceTokenDict = [NSDictionary dictionaryWithContentsOfFile:path];
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:DEST_PATH_DeviceToken];
+    DLog(@"dict --- %@", dict);
+    NSString *deviceToken = dict[@"deviceToken"];
+    
+    if (!deviceToken) {
+        deviceToken = @"";
+    }
+    NSDictionary *params = @{@"account":userNameField.text,@"password":md5Password,@"push_token":deviceToken,@"push_account":userNameField.text,@"type":@"2"}; //type 设备类型(1android 2iphone)
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -193,7 +207,7 @@
                               {
                                   [PublicConfig setValue:userNameField.text forKey:userAccount];
                                   
-                                  [PublicConfig setValue:userPswField.text forKey:userPassword];
+                                  [PublicConfig setValue:md5Password forKey:userPassword];
                                   
                                   NSString *dataStr = [responseDic valueForKey:@"data"];
                                   dataStr = [PublicConfig isSpaceString:@"" andReplace:dataStr];

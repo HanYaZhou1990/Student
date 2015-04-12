@@ -10,6 +10,7 @@
 #import "WWTextField.h"
 #import "ValidateTool.h"
 #import "AFNetworking.h"
+#import "NSString+MD5.h"
 
 @interface ChangePhoneViewController ()<UITextFieldDelegate>
 {
@@ -73,7 +74,8 @@
     phoneTextField.textColor = [UIColor blackColor];
     phoneTextField.borderStyle = UITextBorderStyleNone;
     phoneTextField.delegate =self;
-    phoneTextField.placeholder = @"请输入原手机号码";
+    phoneTextField.text = [PublicConfig valueForKey:userAccount];
+    phoneTextField.userInteractionEnabled = NO;
     phoneTextField.returnKeyType = UIReturnKeyNext;
     phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:phoneTextField];
@@ -284,7 +286,9 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeWrite_updateContact];
     
-    NSDictionary *params = @{@"cellphone":phoneNumber,@"cellphoneNew":newPhoneNumer,@"password":password,@"vCode":passCode,@"token":userToken};
+    NSString *md5Password = [NSString md5StringFromString:password];
+    
+    NSDictionary *params = @{@"cellphone":phoneNumber,@"cellphoneNew":newPhoneNumer,@"password":md5Password,@"vCode":passCode,@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     operation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -300,18 +304,33 @@
                              NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
                              if ([resultCode boolValue]==NO)
                              {
+                                 // 保存新的联系方式和token
+                                 [PublicConfig setValue:newPhoneNumer forKey:userAccount];
+                                 
+                                 [PublicConfig setValue:md5Password forKey:userPassword];
+                                 
+                                 NSString *dataStr = [responseDic valueForKey:@"data"];
+                                 dataStr = [PublicConfig isSpaceString:@"" andReplace:dataStr];
+                                 DLog(@"%@-------", dataStr);
+                                 [PublicConfig setValue:dataStr forKey:userToken];
+
+                                 
                                  [[NSNotificationCenter defaultCenter]postNotificationName:refreshMemberCenterVCNotification object:nil];
                                  [self.navigationController popViewControllerAnimated:YES];
+                                 
+                                 
                              }
                              else
                              {
                                  NSString *msgStr = [responseDic valueForKey:@"msg"];
+                                 DLog(@"修改联系方式请求失败%@",responseObject);
                                  [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"修改联系方式失败"]];
                              }
                          }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error)
                          {
                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                             DLog(@"修改联系方式请求失败%@",error);
                              [SVProgressHUD showErrorWithStatus:@"修改联系方式请求失败"];
                          }];
 }
@@ -323,7 +342,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendUpdateContactSMS];
     
-    NSDictionary *params = @{@"cellphone":hp,@"token":userToken};
+    NSDictionary *params = @{@"cellphone":hp,@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

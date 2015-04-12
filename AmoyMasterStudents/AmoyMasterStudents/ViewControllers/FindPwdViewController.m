@@ -193,7 +193,7 @@
     [[NSRunLoop currentRunLoop]addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
-//注册
+//找回密码
 -(void)findPwdButtonClick
 {
     //发送注册请求 请求成功返回
@@ -251,9 +251,9 @@
 {
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
     
-    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_requestPwdRese];
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_requestPwdReset];
     
-            NSDictionary *params = @{@"cellphone":phoneNumber,@"vCode":passCode,@"token":userToken};
+            NSDictionary *params = @{@"cellphone":phoneNumber,@"vCode":passCode,@"token":[PublicConfig valueForKey:userToken]};
     
             AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
             findPwdOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -284,8 +284,9 @@
                           }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error)
                           {
+                              DLog(@"error %@",error);
                               [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                              [SVProgressHUD showErrorWithStatus:@"找回密码验证请求失败"];
+                              [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"找回密码验证请求失败%@",error]];
                           }];
 }
 
@@ -296,7 +297,7 @@
     
         NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_traineeRead_sendPwdResetSMS];
     
-        NSDictionary *params = @{@"cellphone":hp,@"token":userToken};
+        NSDictionary *params = @{@"cellphone":hp,@"token":[PublicConfig valueForKey:userToken]};
     
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         validOperation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

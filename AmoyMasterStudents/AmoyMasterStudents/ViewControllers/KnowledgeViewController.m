@@ -8,11 +8,15 @@
 
 #import "KnowledgeViewController.h"
 #import "NoticeViewController.h"
-@interface KnowledgeViewController (){
+
+@interface KnowledgeViewController () 
+{
     NSInteger          _selectedIndex;
     NSMutableArray     *_dataSourceArray;
     NSInteger          _pageNumber;
     NSString           *_sectionString;
+    NSString           *_amount; // 一次加载数据的条数(刷新)
+    
 }
 
 @end
@@ -35,10 +39,11 @@
     _selectedIndex = 0;
     _pageNumber = 0;
     _sectionString = @"";
+    _amount = @"10";
     
     _dataSourceArray = [NSMutableArray array];
     
-    [self setRightNavigationBar];
+//    [self setRightNavigationBar];
     
     YZKnowledgeHeaderView *headerView = [[YZKnowledgeHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 84)];
     headerView.delegate = self;
@@ -65,6 +70,12 @@
     _knowledgeTableView.footerRefreshingText = @"正在帮您加载中";
 }
 
+// 更新用户资料
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self knowledgeHeaderRefreshing];
+}
+
 //设置右边的添加按键
 - (void)setRightNavigationBar
 {
@@ -88,7 +99,6 @@
 }
 
 #pragma mark 获取表格数据
-
 - (void)knowledgeHeaderRefreshing{
     if (_selectedIndex == 0) {
         [_knowledgeTableView footerEndRefreshing];
@@ -116,7 +126,7 @@
     
     NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_knowledge_paginationListItems];
     
-    NSDictionary *params = @{@"section":sectionString,@"page":[NSString stringWithFormat:@"%ld",(long)_pageNumber],@"amount":@"2",@"token":userToken};
+    NSDictionary *params = @{@"section":sectionString,@"page":[NSString stringWithFormat:@"%ld",(long)_pageNumber],@"amount":_amount,@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject){
@@ -180,6 +190,18 @@
         return cell;
     }else {
         SubjectCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SubjectCell" forIndexPath:indexPath];
+        
+        //修改分隔线长度
+        UIEdgeInsets edgeInset = tableView.separatorInset;
+        tableView.separatorInset = UIEdgeInsetsMake(edgeInset.top, 0, edgeInset.bottom, edgeInset.right);
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        NSString *readedStr = _dataSourceArray[indexPath.row][@"readed"];
+        if([readedStr intValue] == 0){ // 未读
+            cell.imageView.image = [UIImage imageNamed:@"icon_point"];
+        }else if ([readedStr intValue] == 1){ // 已读
+            cell.imageView.image = [UIImage imageNamed:@"icon_null"];
+        }
+        
         cell.textLabel.text = _dataSourceArray[indexPath.row][@"title"];
         cell.detailTextLabel.text = _dataSourceArray[indexPath.row][@"description"];
         return cell;
@@ -192,6 +214,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (_selectedIndex == 0) {return;}
     KnowledgeDetailViewController *detailViewController = [[KnowledgeDetailViewController alloc] init];
+    
     detailViewController.titleString = _dataSourceArray[indexPath.row][@"title"];
     detailViewController.detailUrlString = _dataSourceArray[indexPath.row][@"detailUrl"];
     [self.navigationController pushViewController:detailViewController animated:YES];
@@ -204,12 +227,12 @@
     switch (button.tag) {
         case 0:
         {
-        viewController.examType = ExamViewControllerTypeOne;
+            viewController.examType = ExamViewControllerTypeOne;
         }
             break;
         case 3:
         {
-        viewController.examType = ExamViewControllerTypeThree;
+            viewController.examType = ExamViewControllerTypeFour;
         }
             break;
             
@@ -225,22 +248,26 @@
     switch (button.tag) {
         case 0:
         {
-        subjectVC.titleString = @"科目一";
+            subjectVC.titleString = @"科目一";
+
         }
             break;
         case 1:
         {
-        subjectVC.titleString = @"科目二";
+            subjectVC.titleString = @"科目二";
+
         }
             break;
         case 2:
         {
-        subjectVC.titleString = @"科目三";
+            subjectVC.titleString = @"科目三";
+
         }
             break;
         case 3:
         {
-        subjectVC.titleString = @"科目四";
+            subjectVC.titleString = @"科目四";
+
         }
             break;
             
@@ -270,6 +297,7 @@
         [self refreshDate:_sectionString andFormartType:@"0"];
     }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

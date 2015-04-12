@@ -26,10 +26,13 @@
         
         _titleLab = [[UILabel alloc] init];
         _titleLab.bounds = CGRectMake(0, 0, 80, 22);
-        _titleLab.text = @"教练评分:";
+        _titleLab.text = @"我的评价:";
         _titleLab.userInteractionEnabled = NO;
         _titleLab.textColor = [UIColor blackColor];
         _titleLab.center = CGPointMake(50, 11);
+        _titleLab.font = [UIFont systemFontOfSize:16.0];
+        _titleLab.y = 7;
+
         [self addSubview:_titleLab];
 
         

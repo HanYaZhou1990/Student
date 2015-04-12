@@ -7,9 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "RootTabViewController.h"
-@interface AppDelegate ()
+#import "NotificationTool.h"
 
+
+@interface AppDelegate ()
+@property (nonatomic, strong) RootTabBarController *rootViewController;
 @end
 
 @implementation AppDelegate
@@ -100,6 +102,7 @@
     
     [self pushWithOptions:launchOptions];
     
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UIApplication sharedApplication] setStatusBarHidden:YES]; //偏移
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xF0F0F0)];//设置导航栏背景颜色
@@ -115,14 +118,56 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    RootTabViewController *rootViewController = [[RootTabViewController alloc] init];
+    RootTabBarController *rootViewController = [[RootTabBarController alloc] init];
+    self.rootViewController = rootViewController;
     UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     controller.navigationBarHidden = YES;
     self.window.rootViewController = controller;
-//    [controller pushViewController:[CurriculumEvaluationViewController new] animated:YES];
     [self.window makeKeyAndVisible];
     
+    
+    // 添加友盟数据统计
+    [self umengTrack];
+ 
+//  应用程序关闭后收到推送消息，被点击后消息内容在launchOptions里
+    if (launchOptions) {
+        // launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"]里面的内容才是推送内容，和下面的didReceiveRemoteNotification的userInfo才是一样的，所以要取出来传值过去
+        DLog(@"launchOptions :%@", launchOptions);
+        NSDictionary *notificationContent = launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+        [[[NotificationTool alloc]init] displayNotificationWithRootViewController:rootViewController notificationContent:notificationContent];
+        
+    }else{
+        
+// 收到推送没有点击的时候或者没有收到推送，主动向服务器请求数据，判断当前是否在上课状态，或者是否上课结束状态
+         NSString *url = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_course_check];
+
+         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+         [manager POST:url parameters:@{} success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+         DLog(@"didFinishLaunchingWithOptions --- responseObject :%@", responseObject);
+         if([responseObject[@"code"] intValue] == 0){
+         NSDictionary *notificationContent = responseObject[@"data"];
+             DLog(@"notificationContent - %@", notificationContent);
+             if (notificationContent) {
+                 [[[NotificationTool alloc]init] displayNotificationWithRootViewController:rootViewController notificationContent:notificationContent];
+             }else{
+                 
+             }
+         }else{
+             DLog(@"没有上课或者上课已经或者其他原因%@", responseObject);
+         }
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             DLog(@"请求服务器失败%@",error);
+         }];
+     }
     return YES;
+}
+
+
+- (void)umengTrack{
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    
+    [MobClick startWithAppkey:@"551e4dabfd98c5ec5c0005a3" reportPolicy:SEND_INTERVAL   channelId:@""];
 }
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
@@ -176,7 +221,13 @@
     
     
     NSString * deviceTokenStr = [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
-
+    
+    
+    NSMutableDictionary *deviceTokenDict = [NSMutableDictionary dictionary];
+    [deviceTokenDict setObject:deviceTokenStr forKey:@"deviceToken"];
+    [deviceTokenDict writeToFile:DEST_PATH_DeviceToken atomically:YES];
+    
+    
     //打印获取的deviceToken的字符串
     NSLog(@"deviceTokenStr is %@",deviceTokenStr);
 }
@@ -190,35 +241,39 @@
     
 }
 
+#pragma mark - 前台和后台推送消息过来执行该方法
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-    /*{
-     aps =     {
-     alert = "\U521a\U624d\U90a3\U4e00\U53d1\U6ca1\U8f93\U5165\Uff0c\U518d\U6765\U4e00\U53d1\U5427\Uff0c\U53cd\U6b63\U4e0d\U8981\U94b1....";
-     sound = default;
-     };
-     xg =     {
-     bid = 30744837;
-     ts = 1426840273;
-     };
-     }*/
     DLog(@"%@",userInfo);
         //推送反馈(app运行时)
+    // 显示推送内容
+    [[[NotificationTool alloc] init] displayNotificationWithRootViewController:self.rootViewController notificationContent:userInfo];
     [XGPush handleReceiveNotification:userInfo];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
+#pragma mark - 应用进入到前台的时候调用这个方法，那么只需要在这个方法里向服务器发送请求看当前是否在上课状态，如果上课状态，就直接跳转到上课界面
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+     NSString *url = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_course_check];
+     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+     [manager POST:url parameters:@{} success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+     DLog(@"applicationWillEnterForeground --- responseObject :%@", responseObject);
+     if([responseObject[@"code"] intValue] == 0){
+     NSDictionary *notificationContent = responseObject[@"data"];
+     [[[NotificationTool alloc]init] displayNotificationWithRootViewController:self.rootViewController notificationContent:notificationContent];
+     }else{
+     DLog(@"没有上课或者上课结束状态或者其他原因")
+     }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     DLog(@"请求服务器失败");
+     }];
+     
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

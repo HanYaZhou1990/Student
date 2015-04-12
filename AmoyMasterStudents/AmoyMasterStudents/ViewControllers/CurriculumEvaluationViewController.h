@@ -17,4 +17,6 @@
 /*!评论页面*/
 @interface CurriculumEvaluationViewController : BaseViewController <UITextViewDelegate,CustomSegumentDelegate,CWStarRateViewDelegate,BadReviewViewDelegate>
 
+@property (nonatomic, strong) NSDictionary *curriculumDict;
+
 @end

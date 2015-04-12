@@ -17,19 +17,6 @@
 
 @implementation ComplaintViewController
 
-- (void)leftBarItem
-{
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setImage:[UIImage imageNamed:@"icon_return.png"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"icon_return.png"] forState:UIControlStateHighlighted];
-    backButton.frame = CGRectMake(0, 0, 21.5, 13.5);    [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = leftBarButton;
-}
--(void)backAction {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -92,9 +79,9 @@
 - (void)submitButtonCliecked:(UIButton *)sender {
     [MBProgressHUD showHUDAddedToExt:self.view showMessage:@"加载中..." animated:YES];
     
-    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_course_comment];
+    NSString *useUrl = [NSString stringWithFormat:@"%@%@",BASE_PLAN_URL,trainee_course_complain];
     
-    NSDictionary *params = @{@"class_id":@"111",@"master_id":@"111",@"comment":_textView.contentTextView.text,@"complain_type":_complainType,@"suggest":@"",@"token":[PublicConfig valueForKey:userToken]};
+    NSDictionary *params = @{@"class_id":@(self.class_id),@"comment":_textView.contentTextView.text,@"complain_type":_complainType,@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -103,6 +90,9 @@
         NSString *resultCode = [responseDic valueForKey:@"code"]; //0成功 1失败
         if ([resultCode boolValue]==NO){
             /*这里处理评论成功的代码*/
+            [SVProgressHUD showSuccessWithStatus:@"投诉已提交，感谢您的建议"];
+            [self tabBarControllerSelectIndex:2];
+            
         }else {
             NSString *msgStr = [responseDic valueForKey:@"msg"];
             [SVProgressHUD showErrorWithStatus:[PublicConfig isSpaceString:msgStr andReplace:@"投诉失败"]];
@@ -127,8 +117,39 @@
 #pragma mark -
 #pragma mark CustomSegumentDelegate -
 - (void)fromView:(UIView *)view didSelectIndex:(NSInteger)indexOfButton {
-    _complainType = [NSString stringWithFormat:@"%ld",(long)indexOfButton];
+    _complainType = [NSString stringWithFormat:@"%ld",(long)indexOfButton + 1];
 }
+
+
+#pragma 返回按钮
+- (void)leftBarItem
+{
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setImage:[UIImage imageNamed:@"icon_return.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"icon_return.png"] forState:UIControlStateHighlighted];
+    backButton.frame = CGRectMake(0, 0, 21.5, 13.5);    [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = leftBarButton;
+}
+-(void)backAction {
+    [self tabBarControllerSelectIndex:2];
+}
+
+- (void)tabBarControllerSelectIndex:(int)selectIndex{
+    UINavigationController *viewC = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    NSArray *childVcs = viewC.childViewControllers;
+    for (int index = 0; index < childVcs.count; index++) {
+        if ([childVcs[index] isMemberOfClass:[RootTabBarController class]]) {
+            RootTabBarController *rootVc = childVcs[index];
+            DLog(@"%@ rootviewcontroller --- ", rootVc);
+            rootVc.navigationController.navigationBarHidden = YES;
+            rootVc.navigationItem.hidesBackButton = YES;
+            rootVc.selectedIndex = selectIndex;
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

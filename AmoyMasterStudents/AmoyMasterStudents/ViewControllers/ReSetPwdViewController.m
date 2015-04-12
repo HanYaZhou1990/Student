@@ -10,6 +10,7 @@
 #import "WWTextField.h"
 #import "RegisterViewController.h"
 #import "AFNetworking.h"
+#import "NSString+MD5.h"
 
 @interface ReSetPwdViewController ()<UITextFieldDelegate>
 {
@@ -164,7 +165,9 @@
     
     NSString *tokenStr = [PublicConfig isSpaceString:self.dataStr andReplace:@""];
     
-    NSDictionary *params = @{@"token":tokenStr,@"password":password,@"password_":password,@"token":userToken};
+    NSString *md5Password = [NSString md5StringFromString:password];
+    
+    NSDictionary *params = @{@"token":tokenStr,@"password":md5Password,@"password_":md5Password,@"token":[PublicConfig valueForKey:userToken]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     operation =  [manager POST:useUrl parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
